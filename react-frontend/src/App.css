@@ -1,0 +1,13 @@
+body {
+  font-family: 'Raleway', sans-serif;
+}
+
+h2 {
+  font-weight: 700;
+}
+
+.img {
+  height: 18rem;
+  width: 100%;
+  object-fit: cover;
+}
