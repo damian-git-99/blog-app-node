@@ -1,6 +1,6 @@
 import React from 'react'
-import { NavBar } from './NavBar'
-import { PostEntry } from './PostEntry'
+import { NavBar } from '../components/NavBar'
+import { PostEntry } from '../components/PostEntry'
 import { Container, Row } from 'react-bootstrap'
 
 export const Home = () => {
