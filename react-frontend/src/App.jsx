@@ -7,10 +7,8 @@ import './App.css';
 
 function App() {
   return (
-    <main className="App mt-5">
-      <header className="container">
-        <NavBar />
-      </header>
+    <main className="mt-5">
+      <NavBar />
 
       <Container className="mt-5 p-0 p-md-3">
         <Row>
