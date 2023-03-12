@@ -1,5 +1,6 @@
 body {
   font-family: 'Raleway', sans-serif;
+  line-height: 2;
 }
 
 h2 {
@@ -7,7 +8,7 @@ h2 {
 }
 
 .img {
-  height: 18rem;
+  height: 17rem;
   width: 100%;
   object-fit: cover;
 }
