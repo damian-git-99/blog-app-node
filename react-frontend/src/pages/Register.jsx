@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import { Container, Col, Row, Form, Button } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { register } from '../api/authApi'
 import { isThereAnEmptyField } from '../utils/stringValidations'
 import { errorMessage, successMessage } from '../utils/alerts'
 
 export const Register = () => {
+  const navigate = useNavigate();
   const initialform = {
     email: '',
     password: '',
@@ -35,6 +36,7 @@ export const Register = () => {
       .then(data => {
         setform(initialform);
         successMessage("User registration successful");
+        navigate('/login');
       })
       .catch(e => {
         errorMessage(e.message);
