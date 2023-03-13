@@ -2,6 +2,13 @@
 
 A blog application using node js with react
 
+## Content
+- Objective
+- Use Cases
+- Diagrams
+- Architecture
+- How To tun Application
+
 ## Objective
 The goal of this project is to build a blog application that allows users to post and read articles online. The application must be easy to use.
 
@@ -14,7 +21,6 @@ The goal of this project is to build a blog application that allows users to pos
 - Users can edit and delete their own articles.
 
 ## Diagrams
-## Data model
 ## Architecture
 The application will be designed using the client-server architecture. The backend will be built on Node.js and will use a MongoDB database to store the data. The frontend will be built in React and will communicate with the backend through a RESTful API.
 
