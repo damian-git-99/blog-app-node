@@ -1,6 +1,8 @@
 import express from 'express';
 import cors from 'cors';
+import 'express-async-errors'
 import { authRouter } from './auth/authRoutes';
+import { connectDB } from './config/dbConfig';
 const app = express();
 const port = 4000;
 const corsOptions = {
@@ -8,6 +10,7 @@ const corsOptions = {
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 
+connectDB();
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(authRouter)
