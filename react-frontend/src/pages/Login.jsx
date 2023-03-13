@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import { Container, Col, Row, Form, Button } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { login } from '../api/authApi'
 import { isThereAnEmptyField } from '../utils/stringValidations'
 import { errorMessage, successMessage } from '../utils/alerts'
 
 export const Login = () => {
+  const navigate = useNavigate();
   const initialform = {
     email: '',
     password: '',
@@ -29,6 +30,7 @@ export const Login = () => {
       .then(data => {
         setform(initialform);
         successMessage('you have successfully logged in')
+        navigate('/');
       })
       .catch(e => {
         errorMessage(e.message);
