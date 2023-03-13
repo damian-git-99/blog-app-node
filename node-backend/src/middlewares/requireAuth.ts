@@ -8,7 +8,10 @@ export const requireAuth = (
 ) => {
   const { token } = req.cookies;
   if (!token) {
-    next()
+    res.status(401)
+      .json({
+        error: 'Invalid token'
+      });
     return
   }
   try {
