@@ -3,7 +3,7 @@ import { Container, Col, Row, Form, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { register } from '../api/authApi'
 import { isThereAnEmptyField } from '../utils/stringValidations'
-import { errorMessage } from '../utils/alerts'
+import { errorMessage, successMessage } from '../utils/alerts'
 
 export const Register = () => {
   const initialform = {
@@ -26,9 +26,15 @@ export const Register = () => {
       return;
     }
 
+    if (password !== repeatPassword) {
+      errorMessage("Passwords do not match");
+      return;
+    }
+
     register({ ...form })
       .then(data => {
         setform(initialform);
+        successMessage("User registration successful");
       })
       .catch(e => {
         errorMessage(e.message);
