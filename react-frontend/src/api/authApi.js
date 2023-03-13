@@ -17,3 +17,20 @@ export const register = async (user) => {
     throw err;
   }
 }
+
+export const login = async (user) => {
+  const config = {
+    withCredentials: true,
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  };
+  try {
+    const { data } = await axios.post(`${URL}/login`, user, config);
+    return data;
+  } catch (error) {
+    const message = error?.response?.data?.error || error.message;
+    const err = new Error(message);
+    throw err;
+  }
+}
