@@ -11,7 +11,9 @@ export const register = async (user) => {
   try {
     const { data } = await axios.post(`${URL}/register`, user, config);
     return data;
-  } catch (err) {
-    console.log(err)
+  } catch (error) {
+    const message = error?.response?.data?.error || error.message;
+    const err = new Error(message);
+    throw err;
   }
 }
