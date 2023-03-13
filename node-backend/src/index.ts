@@ -3,6 +3,7 @@ import cors from 'cors';
 import 'express-async-errors'
 import { authRouter } from './auth/authRoutes';
 import { connectDB } from './config/dbConfig';
+import { errorHandler } from './middlewares/errorHandler';
 const app = express();
 const port = 4000;
 const corsOptions = {
@@ -13,6 +14,7 @@ const corsOptions = {
 connectDB();
 app.use(cors(corsOptions));
 app.use(express.json());
-app.use(authRouter)
+app.use(authRouter);
+app.use(errorHandler);
 
 app.listen(port, () => console.log(`listening on port ${port}!`))
