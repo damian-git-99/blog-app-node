@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { Container, Col, Row, Form, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { register } from '../api/authApi'
+import { isThereAnEmptyField } from '../utils/stringValidations'
+import { errorMessage } from '../utils/alerts'
 
 export const Register = () => {
   const initialform = {
@@ -18,9 +20,20 @@ export const Register = () => {
   };
 
   const handleSubmit = (e) => {
+    e.preventDefault();
+    if (isThereAnEmptyField(email, password, repeatPassword)){
+      errorMessage("No field must be empty");
+      return;
+    }
+
     register({ ...form })
-      .then(data => console.log(data))
-      .catch(e => console.log(e))
+      .then(data => {
+        console.log('entro')
+        setform(initialform);
+      })
+      .catch(e => {
+        errorMessage(e.message);
+      })
   };
 
   return (
@@ -33,17 +46,20 @@ export const Register = () => {
               className='mb-2 py-3 fs-5 fw-light' 
               type="email" name='email' placeholder='Email...'
               value={email}
-              onChange={handleFormChange} />
+              onChange={handleFormChange}
+              autoComplete="off" />
             <Form.Control 
               className='mb-3 py-3 fs-5 fw-light' 
               type="password" name='password' placeholder='Password...' 
               value={password}
-              onChange={handleFormChange} />
+              onChange={handleFormChange}
+              autoComplete="on" />
             <Form.Control 
               className='mb-3 py-3 fs-5 fw-light' 
               type="password" name='repeatPassword' placeholder='Repeat Password...'
               value={repeatPassword}
-              onChange={handleFormChange} />
+              onChange={handleFormChange}
+              autoComplete="off" />
             <Button
               type='submit' 
               size='lg' 
