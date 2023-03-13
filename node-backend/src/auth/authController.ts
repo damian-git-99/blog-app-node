@@ -15,7 +15,13 @@ export const login = async (req: Request, res: Response) => {
   const { email, password } = req.body;
   const { token } = await authService.login({ email, password });
   res.status(200)
-    .cookie('token', token)
+    .cookie('token', token, { sameSite: 'none', secure: true, signed: false })
     .json('ok')
+};
+
+//@route Post /logout
+export const logout = async (req: Request, res: Response) => {
+  res.cookie('token', null, { sameSite: 'none', secure: true, signed: false })
+    .json('ok');
 };
 
