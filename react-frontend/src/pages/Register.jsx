@@ -28,7 +28,6 @@ export const Register = () => {
 
     register({ ...form })
       .then(data => {
-        console.log('entro')
         setform(initialform);
       })
       .catch(e => {
@@ -38,7 +37,7 @@ export const Register = () => {
 
   return (
     <Container className="mt-5">
-      <Row className='vh-100 justify-content-center align-items-center'>
+      <Row className='justify-content-center align-items-center'>
         <Col md={5} >
           <h3 className='text-center mb-3'>Register</h3>
           <Form action='' onSubmit={handleSubmit} >

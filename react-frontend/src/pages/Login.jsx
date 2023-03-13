@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 export const Login = () => {
   return (
     <Container className="mt-5">
-      <Row className='vh-100 justify-content-center align-items-center'>
+      <Row className='justify-content-center align-items-center'>
         <Col md={5} >
           <h3 className='text-center mb-1'>Login</h3>
           <Form>
