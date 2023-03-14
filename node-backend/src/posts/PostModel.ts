@@ -5,7 +5,7 @@ export interface Post {
   title: string;
   summary: string;
   content: string;
-  image: string;
+  image: string | undefined;
   category: string;
   time_to_read: number;
 }
@@ -29,8 +29,7 @@ const postSchema = new mongoose.Schema<Post>({
     required: true
   },
   image: {
-    type: String,
-    required: true
+    type: String
   },
   category: {
     type: String,
