@@ -13,10 +13,13 @@ export const register = async (req: Request, res: Response) => {
 //@route Post /login
 export const login = async (req: Request, res: Response) => {
   const { email, password } = req.body;
-  const { token } = await authService.login({ email, password });
+  const { token, email: userEmail, id } = await authService.login({ email, password });
   res.status(200)
     .cookie('token', token, { sameSite: 'none', secure: true, signed: false })
-    .json('ok')
+    .json({
+      id: 'id',
+      email: userEmail
+    })
 };
 
 //@route Post /logout
