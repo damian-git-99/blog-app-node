@@ -41,7 +41,7 @@ export const NavBar = () => {
             {userInfo && (
                 <ul className="navbar-nav">
                   <li className="nav-item">
-                    <Link className="nav-link" to={'/login'}>Create new Post</Link>
+                    <Link className="nav-link" to={'/create'}>Create new Post</Link>
                   </li>
                   <li className="nav-item">
                     <Link className="nav-link" to={'/login'}>{userInfo.email}</Link>

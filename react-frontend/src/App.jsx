@@ -6,6 +6,7 @@ import './App.css';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
 import { Layout } from './pages/Layout';
+import { CreatePost } from './pages/CreatePost';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route index element={ <Home /> } />
         <Route path={'/login'} element={ <Login /> } />
         <Route path={'/register'} element={ <Register /> } />
+        <Route path={'/create'} element={ <CreatePost /> } />
       </Route>
     </Routes>
   );
