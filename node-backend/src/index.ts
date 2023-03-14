@@ -6,6 +6,7 @@ import { authRouter } from './auth/authRoutes';
 import { connectDB } from './config/dbConfig';
 import { errorHandler } from './middlewares/errorHandler';
 import { userRouter } from './user/userRoutes';
+import { postRouter } from './posts/postRoutes';
 
 connectDB();
 const app = express();
@@ -22,6 +23,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(authRouter);
 app.use('/users', userRouter);
+app.use('/posts', postRouter);
 app.use(errorHandler);
 
 app.listen(port, () => console.log(`listening on port ${port}!`))
