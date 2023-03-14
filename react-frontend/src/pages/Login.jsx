@@ -1,11 +1,13 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Container, Col, Row, Form, Button } from 'react-bootstrap'
 import { useNavigate, Link } from 'react-router-dom'
 import { login } from '../api/authApi'
 import { isThereAnEmptyField } from '../utils/stringValidations'
 import { errorMessage, successMessage } from '../utils/alerts'
+import { UserContext } from '../context/userContext'
 
 export const Login = () => {
+  const { setUserInfo } = useContext(UserContext);
   const navigate = useNavigate();
   const initialform = {
     email: '',
@@ -29,6 +31,7 @@ export const Login = () => {
     login({ ...form })
       .then(data => {
         setform(initialform);
+        setUserInfo({ ...data })
         successMessage('you have successfully logged in')
         navigate('/');
       })
