@@ -11,15 +11,14 @@ export const errorHandler = (
   res: Response,
   next: NextFunction
 ): Response<any, Record<string, any>> => {
-  const { message } = err
-
+  
   if (err instanceof CustomError) {
     return res
       .status(err.statusCode)
       .send({ error: err.message })
   }
   
-  return res.status(400).send({
-    errors: [{ message }]
-  })
+  return res
+      .status(500)
+      .send({ error: err.message })
 }
