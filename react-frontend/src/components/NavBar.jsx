@@ -12,6 +12,7 @@ export const NavBar = () => {
         setUserInfo(data);
       })
       .catch(error => {
+        setUserInfo(undefined);
         console.log(error)
       })
   }, []);
