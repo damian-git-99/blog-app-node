@@ -7,6 +7,9 @@ export const cratePost = async (userId: string, post: Post, file: Express.Multer
     const response = await uploadImage(file);
     imageName = response?.secure_url!;
   }
-  // todo upload image to cloudinary
   await PostModel.create({ ...post, image: imageName, user: userId })
+}
+
+export const getPosts = () => {
+  return PostModel.find({}).select('title category time_to_read summary image');
 }

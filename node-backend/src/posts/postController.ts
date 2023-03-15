@@ -7,3 +7,11 @@ export const createPost = async (req: Request, res: Response) => {
   await postService.cratePost(userId, {...req.body}, req.file);
   res.send('ok');
 }
+
+//@route GET posts/
+export const getPosts = async (req: Request, res: Response) => {
+  const posts = await postService.getPosts();
+  res.json({
+    posts
+  });
+}
