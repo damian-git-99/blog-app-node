@@ -43,3 +43,17 @@ export const getMyPosts = async () => {
     throw err;
   }
 }
+
+export const deletePostById = async (postId) => {
+  const config = {
+    withCredentials: true
+  };
+  try {
+    const { data } = await axios.delete(`${URL}/${postId}`, config);
+    return data;
+  } catch (error) {
+    const message = error?.response?.data?.error || error.message;
+    const err = new Error(message);
+    throw err;
+  }
+}

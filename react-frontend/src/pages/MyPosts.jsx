@@ -1,9 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Col, Container, Row, Table } from 'react-bootstrap'
-import { getMyPosts } from '../api/postApi';
+import { deletePostById, getMyPosts } from '../api/postApi';
+import { confirmDialog, errorMessage, successMessage } from '../utils/alerts';
+import { UserContext } from '../context/userContext';
+import { useNavigate } from 'react-router-dom';
 
 export const MyPosts = () => {
+  // todo: move this to another component to avoid repeating code
+  const { userInfo } = useContext(UserContext);
+  const navigate = useNavigate();
+  if (!userInfo) navigate('/login')
+  // todo ------------------------------
+
   const [posts, setPosts] = useState(null)
+  const [postDelete, setPostDelete] = useState(false)
 
   useEffect(() => {
     getMyPosts()
@@ -13,7 +23,20 @@ export const MyPosts = () => {
       .catch(e => {
         console.error(e)
       })
-  }, []);
+  }, [postDelete]);
+
+  const deletePost = (postId) => {
+    confirmDialog(() => {
+      deletePostById(postId)
+        .then(_ => {
+          setPostDelete(true);
+          successMessage("Post successfully deleted")
+        })
+        .catch(error => {
+          errorMessage(error.message)
+        })
+    })
+  }
 
   return (
     <Container className="mt-5">
@@ -36,10 +59,11 @@ export const MyPosts = () => {
                     <td>{post.title}</td>
                     <td>{post.category}</td>
                     <td><i className="text-primary fa-solid fa-pen"></i></td>
-                    <td><i className="text-danger fa-solid fa-trash"></i></td>
-                    <td>{post.isPublish ? 
-                        (<i className="text-success fa-solid fa-check"></i>) 
-                        : (<i className="text-danger fa-solid fa-xmark "></i>)}</td>
+                    <td><i onClick={() => deletePost(post._id)} className="text-danger fa-solid fa-trash"></i></td>
+                    <td><i 
+                      className={ post.isPublish ? 'text-success fa-solid fa-check': 'text-danger fa-solid fa-xmark'}>
+                      </i>
+                    </td>
                   </tr>
                 ))
               )}
