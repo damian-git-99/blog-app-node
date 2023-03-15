@@ -10,7 +10,7 @@ A blog application using node js with react
 - How To tun Application
 
 ## Objective
-The goal of this project is to build a blog application that allows users to post and read articles online. The application must be easy to use.
+The goal of this project is to build a blog application that allows users to post and read articles online.
 
 ## Use Cases
 - Users can register in the application by providing their email and password.
@@ -19,10 +19,13 @@ The goal of this project is to build a blog application that allows users to pos
 - Users can log out of the application.
 - Users can create and publish posts in the app.
 - Posts can include text and images.
-- Users can edit and delete their own posts.
+- Users can view a feed of recently published posts from other users.
+- Users can view the published posts of a particular user.
+- Users can view a feed of their posts including unpublished posts.
+- Users can delete their own posts.
+- Users can edit their own posts.
 
 ## later
-- Users can view a feed of recent posts from other users.
 - Users can search for specific posts using keywords.
 - Users can mark posts as "favorites" to save them and access them later.
 - Users can follow other users to receive updates on their posts.
@@ -38,3 +41,13 @@ The goal of this project is to build a blog application that allows users to pos
 The application will be designed using the client-server architecture. The backend will be built on Node.js and will use a MongoDB database to store the data. The frontend will be built in React and will communicate with the backend through a RESTful API.
 
 ![App Architecture](https://i.ibb.co/sbg27tc/Captura-de-pantalla-2023-03-13-161407.png)
+
+## How To run The Application
+
+To run this project, you will need to add the following environment variables to your backend .env file
+
+`cloudinary_cloud_name`
+
+`cloudinary_api_key`
+
+`cloudinary_api_key`
