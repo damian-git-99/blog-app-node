@@ -15,3 +15,12 @@ export const getRecentlyPublishedPosts = async (req: Request, res: Response) => 
     posts
   });
 }
+
+//@route GET posts/my-posts
+export const getMyPosts = async (req: Request, res: Response) => {
+  const userId = req.currentUser?.id!;
+  const posts = await postService.getMyPostsById(userId);
+  res.json({
+    posts
+  });
+}

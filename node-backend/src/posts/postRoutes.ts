@@ -1,7 +1,7 @@
 import express from 'express';
 import multer from 'multer';
 import { requireAuth } from '../middlewares/requireAuth';
-import { createPost } from './postController';
+import { createPost, getMyPosts } from './postController';
 import { getRecentlyPublishedPosts } from './postController';
 const router = express.Router();
 const upload = multer();
@@ -11,7 +11,8 @@ router.post('/',
   createPost);
 
 router.get('/', getRecentlyPublishedPosts );
+router.get('/my-posts', requireAuth, getMyPosts );
 
 export {
   router as postRouter
-}
+} 
