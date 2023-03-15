@@ -8,6 +8,7 @@ export interface Post {
   image: string | undefined;
   category: string;
   time_to_read: number;
+  isPublish: boolean;
 }
 
 const postSchema = new mongoose.Schema<Post>({
@@ -38,6 +39,10 @@ const postSchema = new mongoose.Schema<Post>({
   time_to_read: {
     type: Number,
     required: true
+  },
+  isPublish: {
+    type: Boolean,
+    default: false
   }
 });
 

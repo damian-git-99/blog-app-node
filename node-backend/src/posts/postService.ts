@@ -11,5 +11,6 @@ export const cratePost = async (userId: string, post: Post, file: Express.Multer
 }
 
 export const getPosts = () => {
-  return PostModel.find({}).select('title category time_to_read summary image');
+  return PostModel.find({ isPublish: true })
+    .select('title category time_to_read summary image');
 }

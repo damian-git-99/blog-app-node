@@ -10,7 +10,7 @@ router.post('/',
   [requireAuth, upload.single('file')],
   createPost);
 
-router.get('/', requireAuth, getPosts );
+router.get('/', getPosts );
 
 export {
   router as postRouter
