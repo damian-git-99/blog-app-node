@@ -9,8 +9,8 @@ export const createPost = async (req: Request, res: Response) => {
 }
 
 //@route GET posts/
-export const getPosts = async (req: Request, res: Response) => {
-  const posts = await postService.getPosts();
+export const getRecentlyPublishedPosts = async (req: Request, res: Response) => {
+  const posts = await postService.getRecentlyPublishedPosts()
   res.json({
     posts
   });
