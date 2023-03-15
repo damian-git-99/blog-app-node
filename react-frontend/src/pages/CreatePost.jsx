@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css'
 import { Col, Container, Row, Button, Form } from 'react-bootstrap';
 import { createPost } from '../api/postApi';
 import { errorMessage, successMessage } from '../utils/alerts';
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../context/userContext';
 
 const modules = {
   toolbar: [
@@ -29,7 +30,9 @@ const formats = [
 ]
 
 export const CreatePost = () => {
+  const { userInfo } = useContext(UserContext);
   const navigate = useNavigate();
+  if (!userInfo) navigate('/login')
   const initialForm = {
     title: '',
     summary: '',
