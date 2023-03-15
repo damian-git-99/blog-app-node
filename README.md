@@ -25,7 +25,7 @@ The goal of this project is to build a blog application that allows users to pos
 - Users can delete their own posts.
 - Users can edit their own posts.
 
-## later
+## Use cases for later
 - Users can search for specific posts using keywords.
 - Users can mark posts as "favorites" to save them and access them later.
 - Users can follow other users to receive updates on their posts.
@@ -35,6 +35,14 @@ The goal of this project is to build a blog application that allows users to pos
 - Users can configure their privacy preferences to determine who can see their posts and profile.
 - Users can view their profile and statistics, such as the number of followers and posts made.
 - Users can change their profile information, such as their email.
+- Users can reset their password if they forget it, by receiving a password reset email with a unique link.
+- Users can filter the feed of published posts by specific categories or tags.
+- Users can view a list of their own liked posts or marked favorites.
+- Users can report a comment or user who has left inappropriate or offensive comments on their posts.
+- Users can invite friends to join the app through email or social media platforms.
+- Users can view their activity log to see their recent activity on the app, such as posts made, comments left, and likes given.
+- Users can choose to receive email notifications for certain types of activity, such as when someone follows them or comments on their post.
+- Users can view a list of their followers and followings, and unfollow users if desired.
 
 ## Diagrams
 ## Architecture
