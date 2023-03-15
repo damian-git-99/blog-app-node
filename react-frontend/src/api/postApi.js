@@ -29,3 +29,17 @@ export const getPosts = async () => {
     throw err;
   }
 }
+
+export const getMyPosts = async () => {
+  const config = {
+    withCredentials: true
+  };
+  try {
+    const { data } = await axios.get(`${URL}/my-posts`, config);
+    return data;
+  } catch (error) {
+    const message = error?.response?.data?.error || error.message;
+    const err = new Error(message);
+    throw err;
+  }
+}

@@ -45,6 +45,9 @@ export const NavBar = () => {
                     <Link className="nav-link" to={'/create'}>Create new Post</Link>
                   </li>
                   <li className="nav-item">
+                    <Link className="nav-link" to={'/my-posts'}>My posts</Link>
+                  </li>
+                  <li className="nav-item">
                     <Link className="nav-link" to={'/login'}>{userInfo.email}</Link>
                   </li>
                   <li className="nav-item">

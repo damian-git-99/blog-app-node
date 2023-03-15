@@ -11,7 +11,7 @@ export const PostEntry = ({ post }) => {
         </Col>
         <Col md={8} className='p-4 p-md-0'>
           <h2 className='mt-2 mt-md-0'>{post.title}</h2>
-          <p className='text-muted'> <span className='fw-bolder'>Damian</span> 2021-01-07 11:04:13</p>
+          <p className='text-muted'> <span className='fw-bolder'>{post?.user?.email}</span> 2021-01-07 11:04:13</p>
           <p>{post.summary}</p>
           {/* <div dangerouslySetInnerHTML={{ __html: post.content}} /> */}
           <p className='bg-secondary d-inline-block px-3 text-white'>{post.category}</p>
