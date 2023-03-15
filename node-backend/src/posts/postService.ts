@@ -20,3 +20,18 @@ export const getMyPostsById = (userId: string) => {
   return PostModel.find({ user: userId })
     .select('title category isPublish');
 }  
+
+export const deletePostById = async (postId: string, userId: string) => {
+  const post = await PostModel.findById(postId);
+  if (!post) {
+    // todo: throw exception
+  }
+  // todo: check if posts belongs to authenticated user
+  if (post?.user.toString() != userId) {
+    // todo: throw exception 
+  }
+  // todo: delete image
+  if (post?.image != undefined && post?.image != '') {
+  }
+  await PostModel.findByIdAndDelete(postId);
+}

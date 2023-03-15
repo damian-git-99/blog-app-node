@@ -24,3 +24,13 @@ export const getMyPosts = async (req: Request, res: Response) => {
     posts
   });
 }
+
+//@route DELETE posts/:id
+export const deletePostById = async (req: Request, res: Response) => {
+  const userId = req.currentUser?.id!;
+  const postId = req.params.id;
+  const posts = await postService.deletePostById(postId, userId);
+  res.json({
+    posts
+  });
+}
