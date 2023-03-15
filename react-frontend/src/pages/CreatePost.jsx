@@ -38,15 +38,19 @@ export const CreatePost = () => {
     summary: '',
     content: '',
     category: '',
-    timeToRead: ''
+    timeToRead: '',
+    isPublish: false
   }
   const [form, setForm] = useState(initialForm);
   const [files, setFiles] = useState('');
-  const { title, summary, content, category, timeToRead } = form;
+  const { title, summary, content, category, timeToRead, isPublish } = form;
 
   const handleFormChange = (e) => {
-
     const value = e.target.value;
+    if (e.target.name == 'isPublish'){
+      setForm({...form, isPublish: !isPublish})
+      return
+    }
     setForm({ ...form, [e.target.name]: value });
   };
 
@@ -59,7 +63,9 @@ export const CreatePost = () => {
     data.set('content', content);
     data.set('category', category);
     data.set('time_to_read', timeToRead);
+    data.set('isPublish', isPublish);
     data.set('file', files[0])
+    console.log(form)
     createPost(data)
       .then( _ => {
         successMessage('post created successfully')
@@ -114,6 +120,12 @@ export const CreatePost = () => {
               placeholder='time to finish reading the post in minutes...'
               value={timeToRead}
               onChange={handleFormChange} />
+            <div class="form-check mt-1 mb-1">
+              <input class="form-check-input" type="checkbox" name='isPublish' id="flexCheckDefault" onChange={handleFormChange} />
+              <label class="form-check-label" for="flexCheckDefault">
+                Publish Post After Creation.
+              </label>
+            </div>
             <Button type='submit' size='lg' variant='outline-secondary py-3 fs-5 mb-4'>Create Post</Button>
           </Form>
       </Col>

@@ -22,7 +22,7 @@ export const Home = () => {
         <Row>
           { posts && (
             posts.map(post => (
-              <PostEntry post={post} />
+              <PostEntry key={post._id} post={post} />
             ))
           )}
         </Row>
