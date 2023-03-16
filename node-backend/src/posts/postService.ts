@@ -1,4 +1,4 @@
-import { getImageUrl, uploadImage } from '../file/fileService';
+import { getImageUrl, uploadImage } from '../file/cloudinaryService';
 import { Post, PostModel } from './PostModel';
 
 export const cratePost = async (userId: string, post: Post, file: Express.Multer.File | undefined) => {
