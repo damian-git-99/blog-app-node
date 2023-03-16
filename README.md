@@ -4,13 +4,29 @@ A blog application using node js with react
 
 ## Content
 - Objective
+- Modules
+- Architecture
 - User Stories
 - Diagrams
-- Architecture
 - How To tun Application
 
 ## Objective
 The goal of this project is to build a blog application that allows users to post and read articles online.
+
+## Key Modules
+The key Modules of Blog App are:
+- Authentication: Handles the authentication and security process of the application. It includes functions for login, registration, password reset, logout, and session token management. 
+
+- User: Handles user-related actions, including user creation, updating user profile information, email address verification, privacy preferences configuration, and account deletion.
+
+- Post: The "Post" module handles all aspects related to creating, managing, and displaying content posted by users in the application. It includes features such as creating new posts, editing and deleting existing posts, organizing posts by categories or tags, enabling post comments, and displaying post-related information such as likes and views. 
+
+- Social Networking: Manages the social interaction features of the application, allowing users to interact with each other through comments, likes, shares, and private messages. This module includes functions for displaying posts and comments, creating and editing posts, managing comments and likes, and sending and receiving private messages. Additionally, this module may also include features for following or subscribing to other users, as well as reporting or blocking inappropriate content or users.
+
+## Architecture
+The application will be designed using the client-server architecture. The backend will be built on Node.js and will use a MongoDB database to store the data. The frontend will be built in React and will communicate with the backend through a RESTful API.
+
+![App Architecture](https://i.ibb.co/F8SPP9X/Captura-de-pantalla-2023-03-15-180454.png)
 
 ## User stories
 - User registration:
@@ -96,17 +112,23 @@ As a user, I want to be able to choose to receive email notifications for certai
 As a user, I want to be able to view a list of my followers and followings, and unfollow users if desired, so that I can manage my relationships on the app.
 
 ## Diagrams
-## Architecture
-The application will be designed using the client-server architecture. The backend will be built on Node.js and will use a MongoDB database to store the data. The frontend will be built in React and will communicate with the backend through a RESTful API.
-
-![App Architecture](https://i.ibb.co/sbg27tc/Captura-de-pantalla-2023-03-13-161407.png)
 
 ## How To run The Application
 
 To run this project, you will need to add the following environment variables to your backend .env file
 
-`cloudinary_cloud_name`
+- `cloudinary_cloud_name`
+- `cloudinary_api_key`
+- `cloudinary_api_key`
 
-`cloudinary_api_key`
+Clone project `git clone https://github.com/damian-git-99/blog-app-node.git`
 
-`cloudinary_api_key`
+Run backend
+- `cd node-backend`
+- `npm install`
+- `npm run dev`
+
+Run Frontend
+- `cd react-frontend`
+- `npm install`
+- `npm run dev`
