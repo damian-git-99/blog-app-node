@@ -34,3 +34,12 @@ export const deletePostById = async (req: Request, res: Response) => {
     posts
   });
 }
+
+//@route GET posts/:id
+export const getPostById = async (req: Request, res: Response) => {
+  const postId = req.params.id;
+  const post = await postService.getPostById(postId)
+  res.json(
+    post
+  )
+}

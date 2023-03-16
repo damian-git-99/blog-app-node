@@ -43,3 +43,20 @@ export const deletePostById = async (postId: string, userId: string) => {
   }
   await PostModel.findByIdAndDelete(postId);
 }
+
+export const getPostById = async (postId: string) => {
+  // todo check if post is unpublished -> only owner can access
+  const post = await PostModel.findById(postId);
+
+  if (!post){
+    // todo specific throw exception
+    throw new Error('')
+  }
+
+  if (post.image && post.image !== ''){
+    post.image = getImageUrl(post.image)
+    return post;
+  }
+
+  return post;
+}
