@@ -1,6 +1,8 @@
 body {
-  font-family: 'Raleway', sans-serif;
-  line-height: 2;
+  font-family: 'Roboto', sans-serif;
+  line-height: 1.5;
+  /* background: #121212;
+  color: #f2f2f2; */
 }
 
 h2 {
@@ -9,6 +11,12 @@ h2 {
 
 .img {
   height: 17rem;
+  width: 100%;
+  object-fit: cover;
+}
+
+.img-header {
+  height: 28rem;
   width: 100%;
   object-fit: cover;
 }

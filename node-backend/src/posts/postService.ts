@@ -1,4 +1,4 @@
-import { getImageUrl, uploadImage } from '../file/cloudinaryService';
+import { deleteImage, getImageUrl, uploadImage } from '../file/cloudinaryService';
 import { Post, PostModel } from './PostModel';
 
 export const cratePost = async (userId: string, post: Post, file: Express.Multer.File | undefined) => {
@@ -34,12 +34,12 @@ export const deletePostById = async (postId: string, userId: string) => {
   if (!post) {
     // todo: throw exception
   }
-  // todo: check if posts belongs to authenticated user
   if (post?.user.toString() != userId) {
+    // check if post belongs to the authenticated user
     // todo: throw exception 
   }
-  // todo: delete image
-  if (post?.image != undefined && post?.image != '') {
+  if (post?.image && post?.image != '') {
+    await deleteImage(post.image);
   }
   await PostModel.findByIdAndDelete(postId);
 }

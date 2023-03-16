@@ -1,4 +1,4 @@
-import { v2 as cloudinary, UploadApiResponse } from 'cloudinary';
+import { v2 as cloudinary, UploadApiResponse, DeleteApiResponse } from 'cloudinary';
 import mime from 'mime-types';
 import * as dotenv from 'dotenv'
 dotenv.config()
@@ -32,13 +32,14 @@ export const uploadImage = async (file: Express.Multer.File): Promise<UploadApiR
   }
 };
 
-export const deleteImage = (publicId: string) => {
-  return new Promise((resolve, reject) => {
-    cloudinary.api.delete_resources([publicId], function (error, result) {
-      if (error) reject(error);
-      resolve(result);
-    });
-  });
+export const deleteImage = async (publicId: string) => {
+  try {
+    const result = await cloudinary.api.delete_resources([publicId]);
+    return result;
+  } catch (error) {
+    console.error(error)
+    throw error;
+  }
 };
 
 export const getImageUrl = (publicId: string) => {
