@@ -40,3 +40,8 @@ export const deleteImage = (publicId: string) => {
     });
   });
 };
+
+export const getImageUrl = (publicId: string) => {
+  const url = cloudinary.url(publicId)
+  return url;
+}

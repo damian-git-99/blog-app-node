@@ -1,19 +1,27 @@
-import { uploadImage } from '../file/fileService';
+import { getImageUrl, uploadImage } from '../file/fileService';
 import { Post, PostModel } from './PostModel';
 
 export const cratePost = async (userId: string, post: Post, file: Express.Multer.File | undefined) => {
   let imageName = ''
   if (file) {
     const response = await uploadImage(file);
-    imageName = response?.secure_url!;
+    imageName = response?.public_id!;
   }
   await PostModel.create({ ...post, image: imageName, user: userId })
 }
 
-export const getRecentlyPublishedPosts = () => {
-  return PostModel.find({ isPublish: true })
+export const getRecentlyPublishedPosts = async () => {
+  const posts = await PostModel.find({ isPublish: true })
     .select('title category time_to_read summary image')
     .populate('user', 'email');
+  
+  return posts.map(post => {
+    if (post.image && post.image !== ''){
+      post.image = getImageUrl(post.image)
+      return post;
+    }
+    return post;
+  })
 }
 
 export const getMyPostsById = (userId: string) => {
