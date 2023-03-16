@@ -119,7 +119,9 @@ To run this project, you will need to add the following environment variables to
 
 - `cloudinary_cloud_name`
 - `cloudinary_api_key`
-- `cloudinary_api_key`
+- `cloudinary_api_secret`
+- `MONGO_URI`
+- `JWT_SECRET`
 
 Clone project `git clone https://github.com/damian-git-99/blog-app-node.git`
 

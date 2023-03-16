@@ -1,9 +1,11 @@
 import jwt from 'jsonwebtoken'
+import * as dotenv from 'dotenv'
+dotenv.config()
 
-const key = "SUPER_SECRET_KEY";
+const key = process.env.JWT_SECRET;
 
 if (!key) {
-  throw new Error('JWT_KEY must be defined')
+  throw new Error('JWT_KEY must be defined in environment')
 }
 
 interface TokenPayload {
