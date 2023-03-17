@@ -7,8 +7,13 @@ import { errorMessage, successMessage } from '../utils/alerts'
 import { UserContext } from '../context/userContext'
 
 export const Login = () => {
-  const { setUserInfo } = useContext(UserContext);
+  const { userInfo, setUserInfo } = useContext(UserContext);
   const navigate = useNavigate();
+
+  if (userInfo) {
+    navigate('/')
+  }
+
   const initialform = {
     email: '',
     password: '',

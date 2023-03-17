@@ -1,12 +1,19 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Container, Col, Row, Form, Button } from 'react-bootstrap'
 import { useNavigate, Link } from 'react-router-dom'
 import { register } from '../api/authApi'
 import { isThereAnEmptyField } from '../utils/stringValidations'
 import { errorMessage, successMessage } from '../utils/alerts'
+import { UserContext } from '../context/userContext'
 
 export const Register = () => {
+  const { userInfo } = useContext(UserContext);
   const navigate = useNavigate();
+
+  if (userInfo) {
+    navigate('/')
+  }
+
   const initialform = {
     email: '',
     password: '',
