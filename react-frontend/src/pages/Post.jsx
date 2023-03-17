@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Col, Container, Row } from 'react-bootstrap';
+import { Alert, Col, Container, Row } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import { getPostById } from '../api/postApi';
 
@@ -25,6 +25,9 @@ export const Post = () => {
           <Row className='col-9 justify-content-center'>
             <h1 className='text-center mb-5 fw-bold fs-1'>{post.title}</h1>
             <Col md={12}>
+              { post.isPublish == false && (
+                <Alert variant='info text-center'>Post is not published</Alert>
+              )}
               <p className='fw-bold'>Damian - 16/05/2022</p>
               <p className='fw-light'>{post.time_to_read} min read - category: {post.category}</p>
               { post.image != '' && (

@@ -38,6 +38,10 @@ export const MyPosts = () => {
     })
   }
 
+  const viewPost = (postId) => {
+    navigate(`/post/${postId}`)
+  }
+
   return (
     <Container className="mt-5">
       <Row className='justify-content-center align-items-center'>
@@ -49,6 +53,7 @@ export const MyPosts = () => {
                 <th>Category</th>
                 <th>Edit</th>
                 <th>Delete</th>
+                <th>preview</th>
                 <th>Is Published ?</th>
               </tr>
             </thead>
@@ -60,6 +65,7 @@ export const MyPosts = () => {
                     <td>{post.category}</td>
                     <td><i role="button" className="text-primary fa-solid fa-pen"></i></td>
                     <td><i role="button" onClick={() => deletePost(post._id)} className="text-danger fa-solid fa-trash"></i></td>
+                    <td><i role="button" onClick={() => viewPost(post._id)} className="text-primary fa-solid fa-magnifying-glass"></i></td>
                     <td><i 
                       className={ post.isPublish ? 'text-success fa-solid fa-check': 'text-danger fa-solid fa-xmark'}>
                       </i>
