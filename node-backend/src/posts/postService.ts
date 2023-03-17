@@ -1,5 +1,8 @@
 import { deleteImage, getImageUrl, uploadImage } from '../file/cloudinaryService';
 import { Post, PostModel } from './PostModel';
+import { InvalidOperation } from './errors/InvalidOperation';
+import { PostNotFound } from './errors/PostNotFound';
+import { CurrentUser } from '../types/express/index';
 
 export const cratePost = async (userId: string, post: Post, file: Express.Multer.File | undefined) => {
   let imageName = ''
@@ -32,11 +35,11 @@ export const getMyPostsById = (userId: string) => {
 export const deletePostById = async (postId: string, userId: string) => {
   const post = await PostModel.findById(postId);
   if (!post) {
-    // todo: throw exception
+    throw new PostNotFound(postId);
   }
   if (post?.user.toString() != userId) {
     // check if post belongs to the authenticated user
-    // todo: throw exception 
+    throw new InvalidOperation('Invalid action: Unauthorized user');
   }
   if (post?.image && post?.image != '') {
     await deleteImage(post.image);
@@ -44,19 +47,29 @@ export const deletePostById = async (postId: string, userId: string) => {
   await PostModel.findByIdAndDelete(postId);
 }
 
-export const getPostById = async (postId: string) => {
-  // todo check if post is unpublished -> only owner can access
+export const getPostById = async (postId: string, currentUser?: CurrentUser) => {
   const post = await PostModel.findById(postId);
 
   if (!post){
-    // todo specific throw exception
-    throw new Error('')
+    throw new PostNotFound(postId);
   }
 
+  if (!post.isPublish) {
+    await checkPostUnpublishedAccess(post, currentUser);
+  }
+  
   if (post.image && post.image !== ''){
     post.image = getImageUrl(post.image)
     return post;
   }
 
   return post;
+}
+
+const checkPostUnpublishedAccess = async (post: Post, currentUser?: CurrentUser) => {
+  // Check if the current user is the owner of the post
+  if (currentUser?.id === post.user.toString()) {
+    return;
+  }
+  throw new InvalidOperation('Invalid action: Unauthorized user');
 }

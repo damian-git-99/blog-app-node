@@ -38,7 +38,7 @@ export const deletePostById = async (req: Request, res: Response) => {
 //@route GET posts/:id
 export const getPostById = async (req: Request, res: Response) => {
   const postId = req.params.id;
-  const post = await postService.getPostById(postId)
+  const post = await postService.getPostById(postId, req.currentUser)
   res.json(
     post
   )
