@@ -1,4 +1,4 @@
-import { v2 as cloudinary, UploadApiResponse, DeleteApiResponse } from 'cloudinary';
+import { v2 as cloudinary, UploadApiResponse } from 'cloudinary';
 import mime from 'mime-types';
 import * as dotenv from 'dotenv'
 dotenv.config()
