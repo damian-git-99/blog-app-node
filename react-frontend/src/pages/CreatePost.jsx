@@ -6,28 +6,7 @@ import { createPost } from '../api/postApi';
 import { errorMessage, successMessage } from '../utils/alerts';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/userContext';
-
-const modules = {
-  toolbar: [
-    [{ header: [1, 2, 3 ,false] }],
-    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-    [
-      { list: 'ordered' },
-      { list: 'bullet' },
-      { indent: '-1' },
-      { indent: '+1' },
-    ],
-    ['link', 'image'],
-    ['clean'],
-  ],
-}
-
-const formats = [
-  'header',
-  'bold', 'italic', 'underline', 'strike', 'blockquote',
-  'list', 'bullet', 'indent',
-  'link', 'image'
-]
+import { formats, modules } from './reactQuillConfigs';
 
 export const CreatePost = () => {
   const { userInfo } = useContext(UserContext);
@@ -103,7 +82,7 @@ export const CreatePost = () => {
             <ReactQuill 
               value={content} 
               formats={formats} 
-              modules={ modules }  
+              modules={modules}  
               className='mb-3' 
               onChange={(e) => setForm({ ...form, content: e })}  />
             <Form.Control 
