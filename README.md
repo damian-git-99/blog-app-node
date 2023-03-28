@@ -21,7 +21,7 @@ The key Modules of Blog App are:
 
 - Post: The "Post" module handles all aspects related to creating, managing, and displaying content posted by users in the application. It includes features such as creating new posts, editing and deleting existing posts, organizing posts by categories or tags, enabling post comments, and displaying post-related information such as likes and views. 
 
-- Social Networking: Manages the social interaction features of the application, allowing users to interact with each other through comments, likes, shares, and private messages. This module includes functions for displaying posts and comments, creating and editing posts, managing comments and likes, and sending and receiving private messages. Additionally, this module may also include features for following or subscribing to other users, as well as reporting or blocking inappropriate content or users.
+- Social Networking(for later): Manages the social interaction features of the application, allowing users to interact with each other through comments, likes, shares, and private messages. This module includes functions for displaying posts and comments, creating and editing posts, managing comments and likes, and sending and receiving private messages. Additionally, this module may also include features for following or subscribing to other users, as well as reporting or blocking inappropriate content or users.
 
 ## Architecture
 The application will be designed using the client-server architecture. The backend will be built on Node.js and will use a MongoDB database to store the data. The frontend will be built in React and will communicate with the backend through a RESTful API.
@@ -99,15 +99,6 @@ As a user, I want to be able to view a list of my own liked posts or marked favo
 - Report inappropriate comments:
 As a user, I want to be able to report a comment or user who has left inappropriate or offensive comments on my posts.
 
-- Invite friends to join:
-As a user, I want to be able to invite friends to join the app through email or social media platforms so that I can share my experience with them.
-
-- View activity log:
-As a user, I want to be able to view my activity log to see my recent activity on the app, such as posts made, comments left, and likes given.
-
-- Choose email notification preferences:
-As a user, I want to be able to choose to receive email notifications for certain types of activity, such as when someone follows me or comments on my post.
-
 - View followers and followings:
 As a user, I want to be able to view a list of my followers and followings, and unfollow users if desired, so that I can manage my relationships on the app.
 
@@ -120,8 +111,9 @@ To run this project, you will need to add the following environment variables to
 - `cloudinary_cloud_name`
 - `cloudinary_api_key`
 - `cloudinary_api_secret`
-- `MONGO_URI`
+- `MONGO_URI`=mongodb://localhost:27017/blog_app
 - `JWT_SECRET`
+- `PORT`: by default 4000
 
 Clone project `git clone https://github.com/damian-git-99/blog-app-node.git`
 
