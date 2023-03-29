@@ -9,6 +9,7 @@ import { Layout } from './pages/Layout';
 import { CreatePost } from './pages/CreatePost';
 import { MyPosts } from './pages/MyPosts';
 import { Post } from './pages/Post';
+import { EditPost } from './pages/EditPost';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path={'/create'} element={ <CreatePost /> } />
         <Route path={'/my-posts'} element={ <MyPosts /> } />
         <Route path={'/post/:postId'} element={ <Post /> } />
+        <Route path={'/edit/:postId'} element={ <EditPost /> } />
       </Route>
     </Routes>
   );
