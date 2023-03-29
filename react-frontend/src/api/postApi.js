@@ -64,7 +64,22 @@ export const getPostById = async (postId) => {
   };
   try {
     const { data } = await axios.get(`${URL}/${postId}`, config);
-    console.log(data)
+    return data;
+  } catch (error) {
+    console.log(error)
+    const message = error?.response?.data?.error || error.message;
+    const err = new Error(message);
+    throw err;
+  }
+}
+
+export const editPost = async (postId, post) => {
+  console.log(post)
+  const config = {
+    withCredentials: true
+  };
+  try {
+    const { data } = await axios.put(`${URL}/${postId}`, post, config);
     return data;
   } catch (error) {
     console.log(error)

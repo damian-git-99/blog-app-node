@@ -44,7 +44,6 @@ export const CreatePost = () => {
     data.set('time_to_read', timeToRead);
     data.set('isPublish', isPublish);
     data.set('file', files[0])
-    console.log(form)
     createPost(data)
       .then( _ => {
         successMessage('post created successfully')
