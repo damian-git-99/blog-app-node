@@ -42,6 +42,10 @@ export const MyPosts = () => {
     navigate(`/post/${postId}`)
   }
 
+  const editPost = (postId) => {
+    navigate(`/edit/${postId}`)
+  }
+
   return (
     <Container className="mt-5">
       <Row className='justify-content-center align-items-center'>
@@ -60,10 +64,10 @@ export const MyPosts = () => {
             <tbody>
               {posts && (
                 posts.map(post => (
-                  <tr>
+                  <tr key={post._id}>
                     <td>{post.title}</td>
                     <td>{post.category}</td>
-                    <td><i role="button" className="text-primary fa-solid fa-pen"></i></td>
+                    <td><i role="button" onClick={() => editPost(post._id)} className="text-primary fa-solid fa-pen"></i></td>
                     <td><i role="button" onClick={() => deletePost(post._id)} className="text-danger fa-solid fa-trash"></i></td>
                     <td><i role="button" onClick={() => viewPost(post._id)} className="text-primary fa-solid fa-magnifying-glass"></i></td>
                     <td><i 
