@@ -47,14 +47,14 @@ As a user, I want to be able to create and publish posts that include text and i
 - View recent posts feed:
 As a user, I want to be able to view a feed of recently published posts from other users so that I can stay up to date with the latest content.
 
-- View user's posts:
-As a user, I want to be able to view the published posts of a particular user so that I can see their content and follow them if I like their posts.
-
 - View user's personal posts:
 As a user, I want to be able to view a feed of my own posts, including unpublished posts, so that I can manage my content and see what I have created.
 
 - Delete own posts:
 As a user, I want to be able to delete my own posts so that I can remove content that I no longer want to be associated with.
+
+- View user's posts:
+As a user, I want to be able to view the published posts of a particular user so that I can see their content.
 
 - Edit own posts: 
 As a user, I want to be able to edit my own posts so that I can make changes to the content and improve it over time.
