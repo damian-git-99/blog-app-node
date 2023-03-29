@@ -1,12 +1,12 @@
-import Swal from 'sweetalert2';
+import Swal from 'sweetalert2'
 
 export const errorMessage = (message) => {
   Swal.fire({
     icon: 'error',
     title: 'Oops...',
-    text: message,
-  });
-};
+    text: message
+  })
+}
 
 export const successMessage = (message) => {
   Swal.fire({
@@ -15,8 +15,8 @@ export const successMessage = (message) => {
     text: message,
     showConfirmButton: false,
     timer: 1500
-  });
-};
+  })
+}
 
 export const confirmDialog = (callback) => {
   Swal.fire({
@@ -29,7 +29,7 @@ export const confirmDialog = (callback) => {
     confirmButtonText: 'Yes, delete it!'
   }).then((result) => {
     if (result.isConfirmed) {
-      callback();
+      callback()
     }
-  });
-};
+  })
+}

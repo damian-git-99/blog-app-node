@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+/* eslint-disable react/prop-types */
+import React, { useState } from 'react'
 
-export const UserContext = React.createContext({});
+export const UserContext = React.createContext({})
 
 export const UserContextProvider = (props) => {
-  const [userInfo, setUserInfo] = useState(null);
+  const [userInfo, setUserInfo] = useState(null)
   return (
     <UserContext.Provider value={{ userInfo, setUserInfo }}>
-      { props.children }
+      {props.children}
     </UserContext.Provider>
-  );
+  )
 }
