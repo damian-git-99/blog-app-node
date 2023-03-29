@@ -13,6 +13,22 @@ export const cratePost = async (userId: string, post: Post, file: Express.Multer
   await PostModel.create({ ...post, image: imageName, user: userId })
 }
 
+export const editPost = async (postId: string, newPost: Post, currentUser: CurrentUser) => {
+  const post = await PostModel.findById(postId);
+
+  if (!post) {
+    throw new PostNotFound(postId);
+  }
+  
+  if (post.user.toString() !== currentUser.id) {
+    throw new InvalidOperation('Invalid action: Unauthorized user');
+  }
+  
+  // todo: update post with new properties
+  // todo: if new image is sent, delete previous one
+  return PostModel.findByIdAndUpdate(postId, { ...newPost, image: post.image, time_to_read: newPost.time_to_read });
+};
+
 export const getRecentlyPublishedPosts = async () => {
   const posts = await PostModel.find({ isPublish: true })
     .select('title category time_to_read summary image')

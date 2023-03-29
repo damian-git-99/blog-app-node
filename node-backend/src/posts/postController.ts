@@ -43,3 +43,10 @@ export const getPostById = async (req: Request, res: Response) => {
     post
   )
 }
+
+//@route PUT posts/:id
+export const editPost = async (req: Request, res: Response) => {
+  const postId = req.params.id;
+  await postService.editPost(postId, req.body, req.currentUser!);
+  res.send('ok');
+}

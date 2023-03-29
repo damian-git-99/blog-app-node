@@ -14,7 +14,8 @@ router.post('/',
 router.get('/', getRecentlyPublishedPosts );
 router.get('/my-posts', requireAuth, postController.getMyPosts );
 router.delete('/:id', requireAuth, postController.deletePostById );
-router.get('/:id', checkToken, postController. getPostById );
+router.get('/:id', checkToken, postController.getPostById );
+router.put('/:id', checkToken, upload.single('file'), postController.editPost );
 
 export {
   router as postRouter
