@@ -50,3 +50,10 @@ export const editPost = async (req: Request, res: Response) => {
   await postService.editPost(postId, req.body, req.file, req.currentUser!);
   res.send('ok');
 }
+
+//@route PUT posts/publication-status/:id
+export const togglePublicationStatus = async (req: Request, res: Response) => {
+  const postId = req.params.id;
+  await postService.togglePublicationStatus(postId, req.currentUser!);
+  res.send('ok');
+}

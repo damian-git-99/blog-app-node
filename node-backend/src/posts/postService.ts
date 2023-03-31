@@ -87,6 +87,17 @@ export const getPostById = async (postId: string, currentUser?: CurrentUser) => 
   return post;
 }
 
+export const togglePublicationStatus = async (postId: string, currentUser: CurrentUser) => {
+  const post = await PostModel.findById(postId);
+  if (!post) {
+    throw new PostNotFound(postId);
+  }
+  if (post.user.toString() !== currentUser.id) {
+    throw new InvalidOperation('Invalid action: Unauthorized user');
+  }
+  await PostModel.findByIdAndUpdate(postId, { isPublish: !post.isPublish });
+}
+
 const checkPostUnpublishedAccess = async (post: Post, currentUser?: CurrentUser) => {
   // Check if the current user is the owner of the post
   if (currentUser?.id === post.user.toString()) {
