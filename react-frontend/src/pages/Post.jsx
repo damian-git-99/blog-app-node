@@ -11,7 +11,6 @@ export const Post = () => {
     getPostById(postId)
       .then(data => {
         setPost(data);
-        console.log(data);
       })
       .catch(error => {
         console.log(error);
