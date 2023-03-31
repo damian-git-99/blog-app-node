@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import React, { useContext, useState } from 'react'
 import { Container, Col, Row, Form, Button } from 'react-bootstrap'
 import { useNavigate, Link } from 'react-router-dom'
@@ -7,8 +8,8 @@ import { errorMessage, successMessage } from '../utils/alerts'
 import { UserContext } from '../context/userContext'
 
 export const Login = () => {
-  const { userInfo, setUserInfo } = useContext(UserContext);
-  const navigate = useNavigate();
+  const { userInfo, setUserInfo } = useContext(UserContext)
+  const navigate = useNavigate()
 
   if (userInfo) {
     navigate('/')
@@ -16,55 +17,69 @@ export const Login = () => {
 
   const initialform = {
     email: '',
-    password: '',
+    password: ''
   }
-  const [form, setform] = useState(initialform);
-  const { email, password } = form;
+  const [form, setform] = useState(initialform)
+  const { email, password } = form
 
   const handleFormChange = (e) => {
-    const value = e.target.value;
-    setform({ ...form, [e.target.name]: value });
-  };
+    const value = e.target.value
+    setform({ ...form, [e.target.name]: value })
+  }
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    if (isThereAnEmptyField(email, password)){
-      errorMessage("No field must be empty");
-      return;
+    e.preventDefault()
+    if (isThereAnEmptyField(email, password)) {
+      errorMessage('No field must be empty')
+      return
     }
 
     login({ ...form })
-      .then(data => {
-        setform(initialform);
+      .then((data) => {
+        setform(initialform)
         setUserInfo({ ...data })
         successMessage('you have successfully logged in')
-        navigate('/');
+        navigate('/')
       })
-      .catch(e => {
-        errorMessage(e.message);
+      .catch((e) => {
+        errorMessage(e.message)
       })
-  };
+  }
 
   return (
     <Container className="mt-5">
-      <Row className='justify-content-center align-items-center'>
-        <Col md={5} >
-          <h3 className='text-center mb-1'>Login</h3>
+      <Row className="justify-content-center align-items-center">
+        <Col md={5}>
+          <h3 className="text-center mb-1">Login</h3>
           <Form onSubmit={handleSubmit}>
-            <Form.Control 
-              name='email' 
-              className='mb-2 py-3 fs-5 fw-light' 
-              type="email" 
-              onChange={handleFormChange} placeholder='Email...' value={email} />
-            <Form.Control 
-              name='password' 
-              className='mb-3 py-3 fs-5 fw-light' 
-              type="password" 
-              onChange={handleFormChange} placeholder='Password...' value={password} />
-            <Button type='submit' size='lg' variant='outline-secondary py-3 fs-5 mb-4 w-100'>Login</Button>
+            <Form.Control
+              name="email"
+              className="mb-2 py-3 fs-5 fw-light"
+              type="email"
+              onChange={handleFormChange}
+              placeholder="Email..."
+              value={email}
+            />
+            <Form.Control
+              name="password"
+              className="mb-3 py-3 fs-5 fw-light"
+              type="password"
+              onChange={handleFormChange}
+              placeholder="Password..."
+              value={password}
+            />
+            <Button
+              type="submit"
+              size="lg"
+              variant="outline-secondary py-3 fs-5 mb-4 w-100"
+            >
+              Login
+            </Button>
           </Form>
-          <Link className='text-dark' to="/register">Don't have an account</Link>
-      </Col>
+          <Link className="text-dark" to="/register">
+            Don't have an account
+          </Link>
+        </Col>
       </Row>
     </Container>
   )
