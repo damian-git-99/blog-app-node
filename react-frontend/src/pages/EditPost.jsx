@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Button, Col, Container, Form, Row } from 'react-bootstrap'
 import ReactQuill from 'react-quill'
 import { formats, modules } from './reactQuillConfigs'
-import { editPost, getPostById } from '../api/postApi'
+import { editPost, getPostById, togglePublicationStatus } from '../api/postApi'
 import { useNavigate, useParams } from 'react-router-dom'
 import { UserContext } from '../context/userContext'
 
@@ -25,12 +25,13 @@ export const EditPost = () => {
   }
 
   const [form, setForm] = useState(initialForm)
+  const [isPublish, setIsPublish] = useState(false)
   const [files, setFiles] = useState('')
   const { title, summary, content, category, timeToRead } = form
 
   useEffect(() => {
     getPostById(postId).then((data) => {
-      const { title, summary, content, category, time_to_read } = data
+      const { title, summary, content, category, time_to_read, isPublish } = data
       setForm({
         ...form,
         title,
@@ -39,6 +40,7 @@ export const EditPost = () => {
         category,
         timeToRead: time_to_read
       })
+      setIsPublish(isPublish)
     })
   }, [])
 
@@ -64,6 +66,14 @@ export const EditPost = () => {
       .catch((err) => {
         console.log(err)
       })
+  }
+
+  const handlePublish = () => {
+    togglePublicationStatus(postId)
+      .then(data => {
+        setIsPublish(!isPublish)
+      })
+      .catch(error => console.log(error))
   }
 
   return (
@@ -119,9 +129,19 @@ export const EditPost = () => {
             <Button
               type="submit"
               size="lg"
-              variant="outline-secondary py-3 fs-5 mb-4"
+              variant="outline-secondary"
+              className='py-3 fs-5 mb-4 me-1'
             >
               Edit Post
+            </Button>
+            <Button
+              type="button"
+              size="lg"
+              variant="outline-info"
+              className='py-3 fs-5 mb-4'
+              onClick={handlePublish}
+            >
+              {isPublish ? 'Unpublish Post' : 'Publish Post'}
             </Button>
           </Form>
         </Col>
