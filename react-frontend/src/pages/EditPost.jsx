@@ -24,6 +24,7 @@ export const EditPost = () => {
   }
 
   const [form, setForm] = useState(initialForm);
+  const [files, setFiles] = useState('');
   const { title, summary, content, category, timeToRead } = form;
 
   useEffect(() => {
@@ -48,7 +49,7 @@ export const EditPost = () => {
     data.set('content', content);
     data.set('category', category);
     data.set('time_to_read', timeToRead);
-    // data.set('file', files[0])
+    data.set('file', files[0])
     editPost(postId, data)
       .then(data => {
         navigate('/')
