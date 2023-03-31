@@ -5,7 +5,7 @@ import { PostNotFound } from './errors/PostNotFound';
 import { CurrentUser } from '../types/express/index';
 
 export const cratePost = async (userId: string, post: Post, file: Express.Multer.File | undefined) => {
-  let imageName = ''
+  let imageName = '';
   if (file) {
     const response = await uploadImage(file);
     imageName = response?.public_id!;
@@ -13,7 +13,7 @@ export const cratePost = async (userId: string, post: Post, file: Express.Multer
   await PostModel.create({ ...post, image: imageName, user: userId })
 }
 
-export const editPost = async (postId: string, newPost: Post, currentUser: CurrentUser) => {
+export const editPost = async (postId: string, newPost: Post, file: Express.Multer.File | undefined , currentUser: CurrentUser) => {
   const post = await PostModel.findById(postId);
 
   if (!post) {
@@ -24,9 +24,14 @@ export const editPost = async (postId: string, newPost: Post, currentUser: Curre
     throw new InvalidOperation('Invalid action: Unauthorized user');
   }
   
-  // todo: update post with new properties
-  // todo: if new image is sent, delete previous one
-  return PostModel.findByIdAndUpdate(postId, { ...newPost, image: post.image, time_to_read: newPost.time_to_read });
+  let imageName = post.image;
+  if (file) {
+    await deletePreviousImage(file, post);
+    const response = await uploadImage(file);
+    imageName = response?.public_id!;
+  }
+
+  return PostModel.findByIdAndUpdate(postId, { ...newPost, image: imageName, time_to_read: newPost.time_to_read });
 };
 
 export const getRecentlyPublishedPosts = async () => {
@@ -88,4 +93,10 @@ const checkPostUnpublishedAccess = async (post: Post, currentUser?: CurrentUser)
     return;
   }
   throw new InvalidOperation('Invalid action: Unauthorized user');
+}
+
+const deletePreviousImage = async (file: Express.Multer.File, post: Post) => {
+  if (post.image && post.image !== ''){
+    deleteImage(post.image);
+  }
 }
