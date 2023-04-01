@@ -82,6 +82,7 @@ export const CreatePost = () => {
               onChange={(e) => setFiles(e.target.files)}
             />
             <ReactQuill
+              style={{ height: '200px' }}
               value={content}
               formats={formats}
               modules={modules}
@@ -90,7 +91,7 @@ export const CreatePost = () => {
             />
             <Form.Control
               name="category"
-              className="mb-3 fw-light"
+              className="mb-3 fw-light mt-5"
               type="text"
               placeholder="Category..."
               value={category}
