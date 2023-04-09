@@ -42,6 +42,11 @@ export const deleteImage = async (publicId: string) => {
   }
 };
 
+/**
+  Returns the Cloudinary URL for a given public ID.
+  @param publicId - The public ID of the image.
+  @returns The Cloudinary URL for the image.
+*/
 export const getImageUrl = (publicId: string) => {
   const url = cloudinary.url(publicId)
   return url;
