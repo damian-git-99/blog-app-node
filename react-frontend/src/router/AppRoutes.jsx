@@ -10,18 +10,21 @@ import {
   Post,
   Register
 } from '../pages'
+import { ProtectedRoutes } from './ProtectedRoutes'
 
 export const AppRoutes = () => {
   return (
     <Routes>
       <Route element={<Layout />}>
-        <Route index element={<Home />} />
+        <Route path='/' element={<Home />} />
         <Route path={'/login'} element={<Login />} />
         <Route path={'/register'} element={<Register />} />
-        <Route path={'/create'} element={<CreatePost />} />
-        <Route path={'/my-posts'} element={<MyPosts />} />
         <Route path={'/post/:postId'} element={<Post />} />
-        <Route path={'/edit/:postId'} element={<EditPost />} />
+        <Route element={<ProtectedRoutes />} >
+          <Route path={'/create'} element={<CreatePost />} />
+          <Route path={'/edit/:postId'} element={<EditPost />} />
+          <Route path={'/my-posts'} element={<MyPosts />} />
+        </Route>
       </Route>
     </Routes>
   )

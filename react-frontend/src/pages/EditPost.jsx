@@ -1,19 +1,13 @@
 /* eslint-disable camelcase */
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Col, Container, Form, Row } from 'react-bootstrap'
 import ReactQuill from 'react-quill'
 import { formats, modules } from './reactQuillConfigs'
 import { editPost, getPostById, togglePublicationStatus } from '../api/postApi'
 import { useNavigate, useParams } from 'react-router-dom'
-import { UserContext } from '../context/userContext'
 
 export const EditPost = () => {
-  // todo: move this to another component to avoid repeating code
-  const { userInfo } = useContext(UserContext)
   const navigate = useNavigate()
-  if (!userInfo) navigate('/login')
-  // todo ------------------------------
-
   const { postId } = useParams()
 
   const initialForm = {
