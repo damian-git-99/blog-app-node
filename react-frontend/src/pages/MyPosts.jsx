@@ -1,16 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Col, Container, Row, Table } from 'react-bootstrap'
 import { deletePostById, getMyPosts } from '../api/postApi'
 import { confirmDialog, errorMessage, successMessage } from '../utils/alerts'
-import { UserContext } from '../context/userContext'
 import { useNavigate } from 'react-router-dom'
 
 export const MyPosts = () => {
-  // todo: move this to another component to avoid repeating code
-  const { userInfo } = useContext(UserContext)
   const navigate = useNavigate()
-  if (!userInfo) navigate('/login')
-  // todo ------------------------------
 
   const [posts, setPosts] = useState(null)
   const [postDelete, setPostDelete] = useState(false)
