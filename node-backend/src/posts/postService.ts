@@ -45,7 +45,7 @@ export const editPost = async (
 
 export const getRecentlyPublishedPosts = async () => {
   const posts = await PostModel.find({ isPublish: true })
-    .select('title category time_to_read summary image')
+    .select('title category time_to_read summary image createdAt')
     .populate('user', 'email');
   
   return posts.map(post => {
