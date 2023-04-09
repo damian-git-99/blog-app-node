@@ -1,4 +1,5 @@
 import React from 'react'
+import { formatISO9075 } from 'date-fns'
 import PropTypes from 'prop-types'
 import { Col, Row } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
@@ -26,8 +27,8 @@ export const PostEntry = ({ post }) => {
           <h2 className="mt-2 mt-md-0">{post.title}</h2>
           <p className="text-muted">
             {' '}
-            <span className="fw-bolder">{post?.user?.email}</span> 2021-01-07
-            11:04:13
+            <span className="fw-bolder">{post?.user?.email}</span>
+            { post.createdAt ? <time> {formatISO9075(new Date(post.createdAt))}</time> : ' unknown date' }
           </p>
           <p>{post.summary}</p>
           {/* <div dangerouslySetInnerHTML={{ __html: post.content}} /> */}

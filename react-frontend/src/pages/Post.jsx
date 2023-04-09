@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Alert, Col, Container, Row } from 'react-bootstrap'
+import { formatISO9075 } from 'date-fns'
 import { useParams } from 'react-router-dom'
 import { getPostById } from '../api/postApi'
 
@@ -27,7 +28,7 @@ export const Post = () => {
               {post.isPublish === false && (
                 <Alert variant="info text-center">Post is not published</Alert>
               )}
-              <p className="fw-bold">Damian - 16/05/2022</p>
+              <p className="fw-bold">Damian - { post.createdAt ? <time>{formatISO9075(new Date(post.createdAt))}</time> : ' unknown date' } </p>
               <p className="fw-light">
                 {post.time_to_read} min read - category: {post.category}
               </p>
