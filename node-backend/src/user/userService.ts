@@ -11,9 +11,6 @@ export const userProfile = async (id: string) => {
 
 export const getUserByUsername = async (username: string) => {
   const user = await UserModel.findOne({ username });
-  if (!user) {
-    throw new UserNotFound();
-  }
   return user;
 }
 
