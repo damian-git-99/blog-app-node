@@ -16,3 +16,7 @@ export const getUserByUsername = async (username: string) => {
   }
   return user;
 }
+
+export const findUserByEmail = (email: string) => {
+  return UserModel.findOne({ email });
+}

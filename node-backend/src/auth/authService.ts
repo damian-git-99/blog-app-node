@@ -1,4 +1,5 @@
 import { User, UserModel } from '../user/userModel';
+import { findUserByEmail } from '../user/userService';
 import { generateToken } from './JwtUtils';
 import { UserLogin } from './dto/UserLogin';
 import { BadCredential } from './errors/BadCredentials';
@@ -28,8 +29,4 @@ export const login = async (user: UserLogin) => {
     email: userExists.email,
     id: userExists.id
   }
-}
-
-const findUserByEmail = (email: string) => {
-  return UserModel.findOne({ email });
 }
