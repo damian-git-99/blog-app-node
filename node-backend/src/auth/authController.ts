@@ -3,8 +3,8 @@ import * as authService from './authService'
 
 //@route Post /register
 export const register = async (req: Request, res: Response) => {
-  const { email, password } = req.body;
-  await authService.registerUser({ email, password });
+  const { email, password, username } = req.body;
+  await authService.registerUser({ email, password, username });
   res.status(201).json({
     status: 201
   })
