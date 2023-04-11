@@ -8,3 +8,11 @@ export const userProfile = async (id: string) => {
   }
   return user;
 }
+
+export const getUserByUsername = async (username: string) => {
+  const user = await UserModel.findOne({ username });
+  if (!user) {
+    throw new UserNotFound();
+  }
+  return user;
+}
