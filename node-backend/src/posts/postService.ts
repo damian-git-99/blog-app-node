@@ -1,4 +1,5 @@
 import { deleteImage, getImageUrl, uploadImage } from '../file/cloudinaryService';
+import { getUserByUsername } from '../user/userService';
 import { Post, PostModel } from './PostModel';
 import { InvalidOperation } from './errors/InvalidOperation';
 import { PostNotFound } from './errors/PostNotFound';
@@ -60,7 +61,15 @@ export const getRecentlyPublishedPosts = async () => {
 export const getMyPostsById = (userId: string) => {
   return PostModel.find({ user: userId })
     .select('title category isPublish');
-}  
+}
+
+export const getPostsByUsername = async (username: string) => {
+  const user = await getUserByUsername(username);
+  const posts = await PostModel.find({ user: user._id, isPublish: true })
+    .select('title category time_to_read summary image createdAt')
+    .populate('user', 'email');
+  return posts;
+}
 
 export const deletePostById = async (postId: string, userId: string) => {
   const post = await PostModel.findById(postId);
