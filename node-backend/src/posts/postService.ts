@@ -4,6 +4,7 @@ import { Post, PostModel } from './PostModel';
 import { InvalidOperation } from './errors/InvalidOperation';
 import { PostNotFound } from './errors/PostNotFound';
 import { CurrentUser } from '../types/express/index';
+import { UserNotFound } from '../user/errors/UserNotFound';
 
 export const cratePost = async (userId: string, post: Post, file: Express.Multer.File | undefined) => {
   let imageName = '';
@@ -65,8 +66,11 @@ export const getMyPostsById = (userId: string) => {
 
 export const getPostsByUsername = async (username: string) => {
   const user = await getUserByUsername(username);
+  if (!user) {
+    throw new UserNotFound();
+  }
   const posts = await PostModel.find({ user: user._id, isPublish: true })
-    .select('title category time_to_read summary image createdAt')
+    .select('title category time_to_read summary image createdAt isPublish')
     .populate('user', 'email');
   return posts;
 }
