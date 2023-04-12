@@ -63,7 +63,7 @@ export const togglePublicationStatus = async (req: Request, res: Response) => {
 //@route GET posts/by-username/:username
 export const getPostsByUsername = async (req: Request, res: Response) => {
   const username = req.params.username;
-  const posts = await postService.getPostsByUsername(username);
+  const posts = await postService.getPostsByUsername(username, req.currentUser);
   res.json(
     posts
   );
