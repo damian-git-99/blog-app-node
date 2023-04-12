@@ -8,5 +8,6 @@ export const userProfileController = async (req: Request, res: Response) => {
   res.status(200)
     .json({
       email: user.email,
+      username: user.username
     })
 }
