@@ -26,7 +26,7 @@ export const Post = () => {
             <h1 className="text-center mb-5 fw-bold fs-1">{post.title}</h1>
             <Col md={12}>
               {post.isPublish === false && (
-                <Alert variant="info text-center">Post is not published</Alert>
+                <Alert variant="warning text-center">Post is not published</Alert>
               )}
               <p className="fw-bold">{post?.user?.username} - { post.createdAt ? <time>{formatISO9075(new Date(post.createdAt))}</time> : ' unknown date' } </p>
               <p className="fw-light">
