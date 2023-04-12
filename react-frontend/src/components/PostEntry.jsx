@@ -7,6 +7,7 @@ import { UserContext } from '../context/userContext'
 
 export const PostEntry = ({ post }) => {
   const { userInfo } = useContext(UserContext)
+  console.log(post)
   const navigate = useNavigate()
   const image = post.image
     ? post.image
@@ -29,7 +30,7 @@ export const PostEntry = ({ post }) => {
           <h2 className="mt-2 mt-md-0">{post.title}</h2>
           <p className="text-muted">
             {' '}
-            <span className="fw-bolder">{post?.user?.email}</span>
+            <span className="fw-bolder">{post?.user?.username}</span>
             { post.createdAt ? <time> {formatISO9075(new Date(post.createdAt))}</time> : ' unknown date' }
           </p>
           <p>{post.summary}</p>
@@ -44,7 +45,7 @@ export const PostEntry = ({ post }) => {
           </p>
 
         {
-          post.isPublish && post.isPublish === true
+          post.isPublish !== undefined && post.isPublish === false
             ? (
             <Alert variant='warning' className="text-center">
               Post is not published
