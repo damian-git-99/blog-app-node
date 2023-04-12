@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { formatISO9075 } from 'date-fns'
 import PropTypes from 'prop-types'
-import { Col, Row } from 'react-bootstrap'
+import { Alert, Col, Row } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
+import { UserContext } from '../context/userContext'
 
 export const PostEntry = ({ post }) => {
+  const { userInfo } = useContext(UserContext)
   const navigate = useNavigate()
   const image = post.image
     ? post.image
@@ -31,7 +33,6 @@ export const PostEntry = ({ post }) => {
             { post.createdAt ? <time> {formatISO9075(new Date(post.createdAt))}</time> : ' unknown date' }
           </p>
           <p>{post.summary}</p>
-          {/* <div dangerouslySetInnerHTML={{ __html: post.content}} /> */}
           <p className="bg-secondary d-inline-block px-3 text-white">
             {post.category}
           </p>
@@ -41,6 +42,27 @@ export const PostEntry = ({ post }) => {
           >
             {post.time_to_read} min read
           </p>
+
+        {
+          post.isPublish && post.isPublish === true
+            ? (
+            <Alert variant='warning' className="text-center">
+              Post is not published
+            </Alert>
+              )
+            : null
+        }
+        {
+          userInfo && userInfo.username && userInfo.username === post.user.username
+            ? (
+            <Row>
+              <Col xs={'3'} >
+                <Alert variant='info' className='text-center'>OWNER</Alert>
+              </Col>
+            </Row>
+              )
+            : null
+        }
         </Col>
       </Row>
     </Col>
