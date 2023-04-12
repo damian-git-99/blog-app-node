@@ -28,7 +28,7 @@ export const Post = () => {
               {post.isPublish === false && (
                 <Alert variant="info text-center">Post is not published</Alert>
               )}
-              <p className="fw-bold">Damian - { post.createdAt ? <time>{formatISO9075(new Date(post.createdAt))}</time> : ' unknown date' } </p>
+              <p className="fw-bold">{post?.user?.username} - { post.createdAt ? <time>{formatISO9075(new Date(post.createdAt))}</time> : ' unknown date' } </p>
               <p className="fw-light">
                 {post.time_to_read} min read - category: {post.category}
               </p>
