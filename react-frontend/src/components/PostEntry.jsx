@@ -7,7 +7,6 @@ import { UserContext } from '../context/userContext'
 
 export const PostEntry = ({ post }) => {
   const { userInfo } = useContext(UserContext)
-  console.log(post)
   const navigate = useNavigate()
   const image = post.image
     ? post.image
