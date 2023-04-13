@@ -3,8 +3,8 @@ import * as authService from './authService'
 
 //@route Post /register
 export const register = async (req: Request, res: Response) => {
-  const { email, password } = req.body;
-  await authService.registerUser({ email, password });
+  const { email, password, username } = req.body;
+  await authService.registerUser({ email, password, username });
   res.status(201).json({
     status: 201
   })
@@ -13,12 +13,13 @@ export const register = async (req: Request, res: Response) => {
 //@route Post /login
 export const login = async (req: Request, res: Response) => {
   const { email, password } = req.body;
-  const { token, email: userEmail } = await authService.login({ email, password });
+  const { token, email: userEmail, username } = await authService.login({ email, password });
   res.status(200)
     .cookie('token', token, { sameSite: 'none', secure: true, signed: false })
     .json({
       id: 'id',
-      email: userEmail
+      email: userEmail,
+      username
     })
 };
 

@@ -38,6 +38,17 @@ export const getMyPosts = async () => {
   }
 }
 
+export const getPostsByUsername = async (username) => {
+  try {
+    const { data } = await axios.get(`${URL}/by-username/${username}`, config)
+    return data
+  } catch (error) {
+    const message = error?.response?.data?.error || error.message
+    const err = new Error(message)
+    throw err
+  }
+}
+
 export const deletePostById = async (postId) => {
   try {
     const { data } = await axios.delete(`${URL}/${postId}`, config)

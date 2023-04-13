@@ -1,8 +1,11 @@
 import { deleteImage, getImageUrl, uploadImage } from '../file/cloudinaryService';
+import { getUserByUsername } from '../user/userService';
 import { Post, PostModel } from './PostModel';
 import { InvalidOperation } from './errors/InvalidOperation';
 import { PostNotFound } from './errors/PostNotFound';
 import { CurrentUser } from '../types/express/index';
+import { UserNotFound } from '../user/errors/UserNotFound';
+import { Types } from 'mongoose';
 
 export const cratePost = async (userId: string, post: Post, file: Express.Multer.File | undefined) => {
   let imageName = '';
@@ -46,7 +49,7 @@ export const editPost = async (
 export const getRecentlyPublishedPosts = async () => {
   const posts = await PostModel.find({ isPublish: true })
     .select('title category time_to_read summary image createdAt')
-    .populate('user', 'email');
+    .populate('user', 'email username');
   
   return posts.map(post => {
     if (post.image && post.image !== ''){
@@ -60,7 +63,41 @@ export const getRecentlyPublishedPosts = async () => {
 export const getMyPostsById = (userId: string) => {
   return PostModel.find({ user: userId })
     .select('title category isPublish');
-}  
+}
+
+export const getPostsByUsername = async (username: string, currentUser?: CurrentUser) => {
+  const user = await getUserByUsername(username);
+  if (!user) {
+    throw new UserNotFound();
+  }
+  
+  let query: { user: Types.ObjectId, isPublish?: boolean } = {
+    user: user._id,
+    isPublish: true
+  }
+
+  if (currentUser?.id === user.id.toString()) {
+  /*This code checks if the currentUser is the same as the username parameter. 
+    If they are the same, it means that all posts (published and unpublished) will be returned. 
+    If they are not the same, it means that only published posts will be returned. 
+  */
+    query = {
+      user: user._id,
+    }
+  }
+
+  const posts = await PostModel.find(query)
+    .select('title category time_to_read summary image createdAt isPublish')
+    .populate('user', 'email username');
+
+  return posts.map(post => {
+    if (post.image && post.image !== ''){
+      post.image = getImageUrl(post.image)
+      return post;
+    }
+    return post;
+  })
+}
 
 export const deletePostById = async (postId: string, userId: string) => {
   const post = await PostModel.findById(postId);
@@ -78,7 +115,8 @@ export const deletePostById = async (postId: string, userId: string) => {
 }
 
 export const getPostById = async (postId: string, currentUser?: CurrentUser) => {
-  const post = await PostModel.findById(postId);
+  const post = await PostModel.findById(postId)
+    .populate('user', 'username')
 
   if (!post){
     throw new PostNotFound(postId);
@@ -109,7 +147,7 @@ export const togglePublicationStatus = async (postId: string, currentUser: Curre
 
 const checkPostUnpublishedAccess = async (post: Post, currentUser?: CurrentUser) => {
   // Check if the current user is the owner of the post
-  if (currentUser?.id === post.user.toString()) {
+  if (currentUser?.id === post.user._id.toString()) {
     return;
   }
   throw new InvalidOperation('Invalid action: Unauthorized user');

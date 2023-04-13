@@ -50,12 +50,12 @@ export const NavBar = () => {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to={'/my-posts'}>
+                  <Link className="nav-link" to={`/${userInfo.username}`}>
                     My posts
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to={'/login'}>
+                  <Link className="nav-link">
                     {userInfo.email}
                   </Link>
                 </li>

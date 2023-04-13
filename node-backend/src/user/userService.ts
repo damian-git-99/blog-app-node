@@ -8,3 +8,12 @@ export const userProfile = async (id: string) => {
   }
   return user;
 }
+
+export const getUserByUsername = async (username: string) => {
+  const user = await UserModel.findOne({ username });
+  return user;
+}
+
+export const getUserByEmail = (email: string) => {
+  return UserModel.findOne({ email });
+}

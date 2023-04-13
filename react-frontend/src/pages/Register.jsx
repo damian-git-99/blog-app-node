@@ -15,12 +15,13 @@ export const Register = () => {
   }
 
   const initialform = {
+    username: '',
     email: '',
     password: '',
     repeatPassword: ''
   }
   const [form, setform] = useState(initialform)
-  const { email, password, repeatPassword } = form
+  const { username, email, password, repeatPassword } = form
 
   const handleFormChange = (e) => {
     const value = e.target.value
@@ -29,7 +30,7 @@ export const Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    if (isThereAnEmptyField(email, password, repeatPassword)) {
+    if (isThereAnEmptyField(email, password, repeatPassword, username)) {
       errorMessage('No field must be empty')
       return
     }
@@ -62,6 +63,15 @@ export const Register = () => {
               name="email"
               placeholder="Email..."
               value={email}
+              onChange={handleFormChange}
+              autoComplete="off"
+            />
+            <Form.Control
+              className="mb-2 py-3 fs-5 fw-light"
+              type="text"
+              name="username"
+              placeholder="Username..."
+              value={username}
               onChange={handleFormChange}
               autoComplete="off"
             />
