@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Alert, Button, Col, Container, Row } from 'react-bootstrap'
 import { formatISO9075 } from 'date-fns'
-import { useNavigate, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { deletePostById, getPostById } from '../api/postApi'
 import { UserContext } from '../context/userContext'
 import { confirmDialog, errorMessage, successMessage } from '../utils/alerts'
@@ -59,7 +59,7 @@ export const Post = () => {
               {post.isPublish === false && (
                 <Alert variant="warning text-center">Post is not published</Alert>
               )}
-              <p className="fw-bold">{post?.user?.username} - { post.createdAt ? <time>{formatISO9075(new Date(post.createdAt))}</time> : ' unknown date' } </p>
+              <p className="fw-bold"><Link to={`/${post?.user?.username}`}>{post?.user?.username}</Link> - { post.createdAt ? <time>{formatISO9075(new Date(post.createdAt))}</time> : ' unknown date' } </p>
               <p className="fw-light">
                 {post.time_to_read} min read - category: {post.category}
               </p>
