@@ -1,5 +1,5 @@
 import { deleteImage, getImageUrl, uploadImage } from '../file/cloudinaryService';
-import { getUserByEmail, getUserByUsername } from '../user/userService';
+import { getUserByUsername } from '../user/userService';
 import { Post, PostModel } from './PostModel';
 import { InvalidOperation } from './errors/InvalidOperation';
 import { PostNotFound } from './errors/PostNotFound';
