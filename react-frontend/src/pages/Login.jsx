@@ -41,14 +41,14 @@ export const Login = () => {
               className="mb-2 py-3 fs-5 fw-light"
               type="email"
               placeholder="Email..."
-              {...register('email', { required: 'Email is required' })}
+              {...register('email', { required: true })}
             />
             <Form.Control
               name="password"
               className="mb-3 py-3 fs-5 fw-light"
               type="password"
               placeholder="Password..."
-              {...register('password', { required: 'Password is required' })}
+              {...register('password', { required: true })}
             />
             <Button
               type="submit"
