@@ -1,48 +1,30 @@
-import React, { useContext, useState } from 'react'
-import { Container, Col, Row, Form, Button } from 'react-bootstrap'
+import React, { useContext } from 'react'
+import { useForm } from 'react-hook-form'
+import { Container, Col, Row, Form, Button, Alert } from 'react-bootstrap'
 import { useNavigate, Link } from 'react-router-dom'
-import { register } from '../api/authApi'
-import { isThereAnEmptyField } from '../utils/stringValidations'
+import { register as registerUser } from '../api/authApi'
 import { errorMessage, successMessage } from '../utils/alerts'
 import { UserContext } from '../context/userContext'
 
 export const Register = () => {
   const { userInfo } = useContext(UserContext)
+  const { register, handleSubmit, formState: { errors } } = useForm()
   const navigate = useNavigate()
 
   if (userInfo) {
     navigate('/')
   }
 
-  const initialform = {
-    username: '',
-    email: '',
-    password: '',
-    repeatPassword: ''
-  }
-  const [form, setform] = useState(initialform)
-  const { username, email, password, repeatPassword } = form
-
-  const handleFormChange = (e) => {
-    const value = e.target.value
-    setform({ ...form, [e.target.name]: value })
-  }
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    if (isThereAnEmptyField(email, password, repeatPassword, username)) {
-      errorMessage('No field must be empty')
-      return
-    }
-
+  const onSubmit = (data) => {
+    const { password, repeatPassword } = data
+    const validForm = Object.keys(errors).length === 0
+    if (!validForm) return
     if (password !== repeatPassword) {
       errorMessage('Passwords do not match')
       return
     }
-
-    register({ ...form })
+    registerUser({ ...data })
       .then((data) => {
-        setform(initialform)
         successMessage('User registration successful')
         navigate('/login')
       })
@@ -55,43 +37,36 @@ export const Register = () => {
     <Container className="mt-5">
       <Row className="justify-content-center align-items-center">
         <Col md={5}>
-          <h3 className="text-center mb-3">Register</h3>
-          <Form action="" onSubmit={handleSubmit}>
+          <h3 className="text-center mb-4">Register</h3>
+          {Object.keys(errors).length > 0 && <Alert variant='danger'>All Fields are required</Alert>}
+          <Form action="" onSubmit={handleSubmit(onSubmit)}>
             <Form.Control
               className="mb-2 py-3 fs-5 fw-light"
               type="email"
               name="email"
               placeholder="Email..."
-              value={email}
-              onChange={handleFormChange}
-              autoComplete="off"
+              {...register('email', { required: true })}
             />
             <Form.Control
               className="mb-2 py-3 fs-5 fw-light"
               type="text"
               name="username"
               placeholder="Username..."
-              value={username}
-              onChange={handleFormChange}
-              autoComplete="off"
+              {...register('username', { required: true })}
             />
             <Form.Control
               className="mb-3 py-3 fs-5 fw-light"
               type="password"
               name="password"
               placeholder="Password..."
-              value={password}
-              onChange={handleFormChange}
-              autoComplete="on"
+              {...register('password', { required: true })}
             />
             <Form.Control
               className="mb-3 py-3 fs-5 fw-light"
               type="password"
               name="repeatPassword"
               placeholder="Repeat Password..."
-              value={repeatPassword}
-              onChange={handleFormChange}
-              autoComplete="off"
+              {...register('repeatPassword', { required: true })}
             />
             <Button
               type="submit"

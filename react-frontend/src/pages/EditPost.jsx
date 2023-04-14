@@ -1,51 +1,36 @@
 /* eslint-disable camelcase */
 import React, { useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form'
 import { Button, Col, Container, Form, Row } from 'react-bootstrap'
 import ReactQuill from 'react-quill'
 import { formats, modules } from './reactQuillConfigs'
 import { editPost, getPostById, togglePublicationStatus } from '../api/postApi'
 import { useNavigate, useParams } from 'react-router-dom'
+import { successMessage } from '../utils/alerts'
 
 export const EditPost = () => {
+  const { register, handleSubmit, reset } = useForm()
   const navigate = useNavigate()
   const { postId } = useParams()
 
-  const initialForm = {
-    title: '',
-    summary: '',
-    content: '',
-    category: '',
-    timeToRead: ''
-  }
-
-  const [form, setForm] = useState(initialForm)
   const [isPublish, setIsPublish] = useState(false)
+  const [content, setContent] = useState('')
   const [files, setFiles] = useState('')
-  const { title, summary, content, category, timeToRead } = form
 
   useEffect(() => {
     getPostById(postId).then((data) => {
-      const { title, summary, content, category, time_to_read, isPublish } = data
-      setForm({
-        ...form,
-        title,
-        summary,
-        content,
-        category,
+      const { content, time_to_read } = data
+      reset({
+        ...data,
         timeToRead: time_to_read
       })
       setIsPublish(isPublish)
+      setContent(content)
     })
   }, [])
 
-  const handleFormChange = (e) => {
-    const value = e.target.value
-    setForm({ ...form, [e.target.name]: value })
-  }
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    // todo check if fields are not empty
+  const onSubmit = (formData) => {
+    const { title, summary, category, timeToRead } = formData
     const data = new FormData()
     data.set('title', title)
     data.set('summary', summary)
@@ -55,6 +40,7 @@ export const EditPost = () => {
     data.set('file', files[0])
     editPost(postId, data)
       .then((data) => {
+        successMessage('Post edited successfully')
         navigate('/')
       })
       .catch((err) => {
@@ -74,22 +60,20 @@ export const EditPost = () => {
     <Container className="mt-5">
       <Row className="justify-content-center align-items-center">
         <Col md={10}>
-          <Form onSubmit={handleSubmit}>
+          <Form onSubmit={handleSubmit(onSubmit)}>
             <Form.Control
               name="title"
               className="mb-2 py-3 fs-5 fw-light"
               type="text"
               placeholder="Title..."
-              value={title}
-              onChange={handleFormChange}
+              {...register('title', { required: true })}
             />
             <Form.Control
               name="summary"
               className="mb-3 py-3 fs-5 fw-light"
               type="summary"
               placeholder="summary..."
-              value={summary}
-              onChange={handleFormChange}
+              {...register('summary', { required: true })}
             />
             <Form.Control
               name="file"
@@ -98,27 +82,25 @@ export const EditPost = () => {
               onChange={(e) => setFiles(e.target.files)}
             />
             <ReactQuill
-              value={content}
               formats={formats}
               modules={modules}
               className="mb-3"
-              onChange={(e) => setForm({ ...form, content: e })}
+              value={content}
+              onChange={(e) => setContent(e)}
             />
             <Form.Control
               name="category"
               className="mb-3 fw-light"
               type="text"
               placeholder="Category..."
-              value={category}
-              onChange={handleFormChange}
+              {...register('category', { required: true })}
             />
             <Form.Control
               name="timeToRead"
               className="mb-3 fw-light"
               type="number"
               placeholder="time to finish reading the post in minutes..."
-              value={timeToRead}
-              onChange={handleFormChange}
+              {...register('timeToRead', { required: true })}
             />
             <Button
               type="submit"

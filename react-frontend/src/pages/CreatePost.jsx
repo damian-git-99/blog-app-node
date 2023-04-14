@@ -1,38 +1,24 @@
 import React, { useState } from 'react'
+import { useForm } from 'react-hook-form'
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
-import { Col, Container, Row, Button, Form } from 'react-bootstrap'
+import { Col, Container, Row, Button, Form, Alert } from 'react-bootstrap'
 import { createPost } from '../api/postApi'
 import { errorMessage, successMessage } from '../utils/alerts'
 import { useNavigate } from 'react-router-dom'
 import { formats, modules } from './reactQuillConfigs'
 
 export const CreatePost = () => {
+  const { register, handleSubmit, formState: { errors } } = useForm()
   const navigate = useNavigate()
-  const initialForm = {
-    title: '',
-    summary: '',
-    content: '',
-    category: '',
-    timeToRead: '',
-    isPublish: false
-  }
-  const [form, setForm] = useState(initialForm)
   const [files, setFiles] = useState('')
-  const { title, summary, content, category, timeToRead, isPublish } = form
+  const [isPublish, setIsPublish] = useState(false)
+  const [content, setContent] = useState('')
 
-  const handleFormChange = (e) => {
-    const value = e.target.value
-    if (e.target.name === 'isPublish') {
-      setForm({ ...form, isPublish: !isPublish })
-      return
-    }
-    setForm({ ...form, [e.target.name]: value })
-  }
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    // todo check if fields are not empty
+  const onSubmit = (formData) => {
+    const { title, summary, category, timeToRead } = formData
+    const validForm = Object.keys(errors).length === 0
+    if (!validForm || !content || content === '') return
     const data = new FormData()
     data.set('title', title)
     data.set('summary', summary)
@@ -54,23 +40,23 @@ export const CreatePost = () => {
   return (
     <Container className="mt-5">
       <Row className="justify-content-center align-items-center">
+        <h3 className="text-center mb-4">Create Post</h3>
+        {Object.keys(errors).length > 0 && <Alert variant='danger'>All Fields are required</Alert>}
         <Col md={10}>
-          <Form onSubmit={handleSubmit}>
+          <Form onSubmit={handleSubmit(onSubmit)}>
             <Form.Control
               name="title"
               className="mb-2 py-3 fs-5 fw-light"
               type="text"
               placeholder="Title..."
-              value={title}
-              onChange={handleFormChange}
+              {...register('title', { required: true })}
             />
             <Form.Control
               name="summary"
               className="mb-3 py-3 fs-5 fw-light"
               type="summary"
               placeholder="summary..."
-              value={summary}
-              onChange={handleFormChange}
+              {...register('summary', { required: true })}
             />
             <Form.Control
               name="file"
@@ -84,23 +70,21 @@ export const CreatePost = () => {
               formats={formats}
               modules={modules}
               className="mb-3"
-              onChange={(e) => setForm({ ...form, content: e })}
+              onChange={(e) => setContent(e)}
             />
             <Form.Control
               name="category"
               className="mb-3 fw-light mt-5"
               type="text"
               placeholder="Category..."
-              value={category}
-              onChange={handleFormChange}
+              {...register('category', { required: true })}
             />
             <Form.Control
               name="timeToRead"
               className="mb-3 fw-light"
               type="number"
               placeholder="time to finish reading the post in minutes..."
-              value={timeToRead}
-              onChange={handleFormChange}
+              {...register('timeToRead', { required: true })}
             />
             <div className="form-check mt-1 mb-1">
               <input
@@ -108,7 +92,7 @@ export const CreatePost = () => {
                 type="checkbox"
                 name="isPublish"
                 id="flexCheckDefault"
-                onChange={handleFormChange}
+                onChange={() => setIsPublish(!isPublish)}
               />
               <label className="form-check-label" htmlFor="flexCheckDefault">
                 Publish Post After Creation.
