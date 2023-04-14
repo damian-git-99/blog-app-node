@@ -11,6 +11,7 @@ import {
 } from '../pages'
 import { ProtectedRoutes } from './ProtectedRoutes'
 import { PostsByUser } from '../pages/PostsByUser'
+import { EditProfile } from '../pages/EditProfile'
 
 export const AppRoutes = () => {
   return (
@@ -24,6 +25,7 @@ export const AppRoutes = () => {
         <Route element={<ProtectedRoutes />} >
           <Route path={'/create'} element={<CreatePost />} />
           <Route path={'/edit/:postId'} element={<EditPost />} />
+          <Route path={'/edit-profile/:userId'} element={<EditProfile />} />
         </Route>
       </Route>
     </Routes>
