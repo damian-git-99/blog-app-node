@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { userProfile } from '../api/userApi'
 import { logout } from '../api/authApi'
 import { UserContext } from '../context/userContext'
+import { Nav, NavDropdown } from 'react-bootstrap'
 
 export const NavBar = () => {
   const { userInfo, setUserInfo } = useContext(UserContext)
@@ -25,7 +26,7 @@ export const NavBar = () => {
 
   return (
     <header className="">
-      <nav className="navbar navbar-expand-lg bg-light">
+      <Nav className="navbar navbar-expand-lg bg-light">
         <div className="container-fluid">
           <Link className="navbar-brand" to="/">
             Blog
@@ -44,45 +45,45 @@ export const NavBar = () => {
           <div className="collapse navbar-collapse" id="navbarNav">
             {userInfo && (
               <ul className="navbar-nav">
-                <li className="nav-item">
+                <Nav.Item className="nav-item">
                   <Link className="nav-link" to={'/create'}>
                     Create new Post
                   </Link>
-                </li>
-                <li className="nav-item">
+                </Nav.Item>
+                <Nav.Item className="nav-item">
                   <Link className="nav-link" to={`/${userInfo.username}`}>
                     My posts
                   </Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link">
-                    {userInfo.email}
-                  </Link>
-                </li>
-                <li className="nav-item">
+                </Nav.Item>
+                <NavDropdown title={userInfo.email} id="nav-dropdown">
+                  <NavDropdown.Item>
+                    <Link to={`/edit-profile/${userInfo.id}`} className='text-decoration-none'>Edit Profile</Link>
+                  </NavDropdown.Item>
+                </NavDropdown>
+                <Nav.Item className="nav-item">
                   <Link className="nav-link" onClick={handleLogout}>
                     Logout
                   </Link>
-                </li>
+                </Nav.Item>
               </ul>
             )}
             {!userInfo && (
               <ul className="navbar-nav">
-                <li className="nav-item">
+                <Nav.Item className="nav-item">
                   <Link className="nav-link" to={'/login'}>
                     Login
                   </Link>
-                </li>
-                <li className="nav-item">
+                </Nav.Item>
+                <Nav.Item className="nav-item">
                   <Link className="nav-link" to={'/register'}>
                     Register
                   </Link>
-                </li>
+                </Nav.Item>
               </ul>
             )}
           </div>
         </div>
-      </nav>
+      </Nav>
     </header>
   )
 }
