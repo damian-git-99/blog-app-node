@@ -1,4 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect } from 'react'
+import { useForm } from 'react-hook-form'
 import { Button, Col, Container, Form, Row } from 'react-bootstrap'
 import { editProfile, userProfile } from '../api/userApi'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -7,36 +8,24 @@ import { successMessage } from '../utils/alerts'
 
 export const EditProfile = () => {
   const { userInfo, setUserInfo } = useContext(UserContext)
+  const { register, handleSubmit, reset } = useForm()
   const { userId } = useParams()
   const navigate = useNavigate()
-  const initialform = {
-    username: '',
-    email: '',
-    password: ''
-  }
-  const [form, setform] = useState(initialform)
-  const { username, email, password } = form
-
-  const handleFormChange = (e) => {
-    const value = e.target.value
-    setform({ ...form, [e.target.name]: value })
-  }
 
   useEffect(() => {
     userProfile()
       .then((data) => {
-        setform({ ...form, ...data })
+        reset(data)
       })
       .catch((error) => {
         console.log(error)
       })
   }, [])
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    editProfile(userId, form)
+  const onSubmit = (data) => {
+    editProfile(userId, data)
       .then(_ => {
-        setUserInfo({ ...userInfo, ...form })
+        setUserInfo({ ...userInfo, ...data })
         successMessage('Profile updated successfully')
         navigate('/')
       })
@@ -50,33 +39,27 @@ export const EditProfile = () => {
       <Row className="justify-content-center align-items-center">
         <Col md={5}>
           <h3 className="text-center mb-3">Edit Profile</h3>
-          <Form action="" onSubmit={handleSubmit}>
+          <Form action="" onSubmit={handleSubmit(onSubmit)}>
             <Form.Control
               className="mb-2 py-3 fs-5 fw-light"
               type="email"
               name="email"
               placeholder="Email..."
-              value={email}
-              onChange={handleFormChange}
-              autoComplete="off"
+              {...register('email')}
             />
             <Form.Control
               className="mb-2 py-3 fs-5 fw-light"
               type="text"
               name="username"
               placeholder="Username..."
-              value={username}
-              onChange={handleFormChange}
-              autoComplete="off"
+              {...register('username')}
             />
             <Form.Control
               className="mb-3 py-3 fs-5 fw-light"
               type="password"
               name="password"
               placeholder="Password..."
-              value={password}
-              onChange={handleFormChange}
-              autoComplete="on"
+              {...register('password')}
             />
             <Button
               type="submit"
