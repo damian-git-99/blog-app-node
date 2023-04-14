@@ -59,6 +59,9 @@ As a user, I want to be able to view the published posts of a particular user so
 - Edit own posts: 
 As a user, I want to be able to edit my own posts so that I can make changes to the content and improve it over time.
 
+- Change profile information:
+As a user, I want to be able to change my profile information, such as my email, so that my account information stays up to date.
+
 ## User stories for later
 - Search posts using keywords:
 As a user, I want to be able to search for specific posts using keywords so that I can quickly find the content I am interested in.
@@ -83,9 +86,6 @@ As a user, I want to be able to configure my privacy preferences to determine wh
 
 - View profile and statistics:
 As a user, I want to be able to view my profile and statistics, such as the number of followers and posts I have made, so that I can track my progress on the app.
-
-- Change profile information:
-As a user, I want to be able to change my profile information, such as my email, so that my account information stays up to date.
 
 - Reset password:
 As a user, I want to be able to reset my password if I forget it, by receiving a password reset email with a unique link.
