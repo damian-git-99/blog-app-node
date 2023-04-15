@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "clean": "npx rimraf build",
+    "build": "npm run clean && tsc",
     "dev": "ts-node-dev src/index.ts"
   },
   "keywords": [],
