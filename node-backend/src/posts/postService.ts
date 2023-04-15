@@ -6,6 +6,7 @@ import { PostNotFound } from './errors/PostNotFound';
 import { CurrentUser } from '../types/express/index';
 import { UserNotFound } from '../user/errors/UserNotFound';
 import { Types } from 'mongoose';
+import { replaceEmptyFields } from '../utils/utils';
 
 export const cratePost = async (userId: string, post: Post, file: Express.Multer.File | undefined) => {
   let imageName = '';
@@ -39,8 +40,9 @@ export const editPost = async (
     imageName = response?.public_id!
   }
 
+  const newValues = replaceEmptyFields(newPost, post)
   return PostModel.findByIdAndUpdate(postId, {
-    ...newPost,
+    ...newValues,
     image: imageName,
     time_to_read: newPost.time_to_read
   })
