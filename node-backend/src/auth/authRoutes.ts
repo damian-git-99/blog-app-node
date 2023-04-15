@@ -1,18 +1,18 @@
 import express from 'express';
 import { login, logout, register } from './authController';
 import { validateFields } from '../middlewares/expressValidator';
-import { check } from 'express-validator';
+import { body } from 'express-validator';
 const router = express.Router();
 
 router.post('/register', 
   [
-    check('email')
+    body('email')
       .notEmpty().withMessage('E-mail cannot be null')
       .bail()
       .isEmail().withMessage('E-mail is not valid'),
-    check('username')
+    body('username')
       .notEmpty().withMessage('Username cannot be null'),
-    check('password')
+    body('password')
       .notEmpty().withMessage('Password cannot be null'),
     validateFields
   ], 
@@ -21,11 +21,11 @@ router.post('/register',
 
 router.post('/login',
   [
-    check('email')
+    body('email')
       .notEmpty().withMessage('E-mail cannot be null')
       .bail()
       .isEmail().withMessage('E-mail is not valid'),
-    check('password')
+    body('password')
       .notEmpty().withMessage('Password cannot be null'),
     validateFields
   ], 
