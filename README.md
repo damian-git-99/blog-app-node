@@ -106,6 +106,9 @@ As a user, I want to be able to view a list of my followers and followings, and 
 
 ## How To run The Application
 
+- [Install node js](https://nodejs.org/es) 
+- [Install MongoDB](https://www.mongodb.com/)
+
 To run this project, you will need to add the following environment variables to your backend .env file
 
 - `cloudinary_cloud_name`
