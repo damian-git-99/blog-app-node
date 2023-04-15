@@ -1,12 +1,10 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { formatISO9075 } from 'date-fns'
 import PropTypes from 'prop-types'
 import { Alert, Col, Row } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
-import { UserContext } from '../context/userContext'
 
 export const PostEntry = ({ post }) => {
-  const { userInfo } = useContext(UserContext)
   const navigate = useNavigate()
   const image = post.image
     ? post.image
@@ -33,9 +31,8 @@ export const PostEntry = ({ post }) => {
           <img className="img img-fluid" src={image} alt="" />
         </Col>
         <Col md={8} className="p-4 p-md-0">
-          <h2 className="mt-2 mt-md-0">{post.title}</h2>
+          <h2 className="mt-2 mt-md-0 d-inline">{post.title}</h2>
           <p className="text-muted">
-            {' '}
             <span className="fw-bolder"><a className='btn-primary' onClick={(e) => handleUserClick(e, post?.user?.username)}>{post?.user?.username}</a></span>
             { post.createdAt ? <time> {formatISO9075(new Date(post.createdAt))}</time> : ' unknown date' }
           </p>
@@ -56,17 +53,6 @@ export const PostEntry = ({ post }) => {
             <Alert variant='warning' className="text-center">
               Post is not published
             </Alert>
-              )
-            : null
-        }
-        {
-          userInfo && userInfo.username && userInfo.username === post.user.username
-            ? (
-            <Row>
-              <Col xs={'3'} >
-                <Alert variant='info' className='text-center'>OWNER</Alert>
-              </Col>
-            </Row>
               )
             : null
         }
