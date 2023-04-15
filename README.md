@@ -102,9 +102,21 @@ As a user, I want to be able to report a comment or user who has left inappropri
 - View followers and followings:
 As a user, I want to be able to view a list of my followers and followings, and unfollow users if desired, so that I can manage my relationships on the app.
 
-## Diagrams
+## How To run Tha Application with Docker
+- [Install Docker](https://www.docker.com/products/docker-desktop/)
+- Clone project `git clone https://github.com/damian-git-99/blog-app-node.git`
 
-## How To run The Application
+- Config Environment Variables in docker-compose file
+  - `cloudinary_cloud_name`
+  - `cloudinary_api_key`
+  - `cloudinary_api_secret`
+  - `MONGO_URI`=mongodb://localhost:27017/blog_app
+  - `JWT_SECRET`
+  - `PORT`: by default 4000
+- Run `docker compose up`
+- App runs on `http://localhost:5173/`
+
+## How To run The Application Manually
 
 - [Install node js](https://nodejs.org/es) 
 - [Install MongoDB](https://www.mongodb.com/)
@@ -129,3 +141,5 @@ Run Frontend
 - `cd react-frontend`
 - `npm install`
 - `npm run dev`
+
+App runs on `http://localhost:5173/`
