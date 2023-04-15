@@ -1,0 +1,38 @@
+version: '3.7'
+services:
+  backend-node:
+    container_name: backend-node
+    build: 
+      context: ./node-backend
+      dockerfile: ./Dockerfile
+    environment:
+      - PORT=4000
+      - MONGO_URI=mongodb://damian:password@mongo:27017/blog_app?authSource=admin
+      - JWT_SECRET=supersecretpassword
+      - cloudinary_cloud_name=clodinary_cloud_name
+      - cloudinary_api_key=clodinary_api_key
+      - cloudinary_api_secret=clodinary_api_secret
+    ports:
+      - 4000:4000
+  mongo:
+    image: mongo
+    container_name: mongo-container
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo-data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: damian
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: mongo
+  react-frontend:
+    container_name: react-frontend
+    build: 
+      context: ./react-frontend
+      dockerfile: ./Dockerfile
+    ports:
+      - 5173:5173
+    depends_on:
+      - backend-node
+volumes:
+  mongo-data:
