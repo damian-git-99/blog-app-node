@@ -7,13 +7,13 @@ const router = express.Router();
 router.post('/register', 
   [
     body('email')
-      .notEmpty().withMessage('E-mail cannot be null')
+      .notEmpty().withMessage('E-mail is required')
       .bail()
       .isEmail().withMessage('E-mail is not valid'),
     body('username')
-      .notEmpty().withMessage('Username cannot be null'),
+      .notEmpty().withMessage('Username is required'),
     body('password')
-      .notEmpty().withMessage('Password cannot be null'),
+      .notEmpty().withMessage('Password is required'),
     validateFields
   ], 
   register
@@ -22,11 +22,11 @@ router.post('/register',
 router.post('/login',
   [
     body('email')
-      .notEmpty().withMessage('E-mail cannot be null')
+      .notEmpty().withMessage('E-mail is required')
       .bail()
       .isEmail().withMessage('E-mail is not valid'),
     body('password')
-      .notEmpty().withMessage('Password cannot be null'),
+      .notEmpty().withMessage('Password is required'),
     validateFields
   ], 
   login
