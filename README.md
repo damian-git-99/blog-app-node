@@ -8,7 +8,7 @@ A blog application using node js with react
 - User Stories
 - Architecture
 - Modules
-- How To tun Application
+- How To Run the Application
 
 ## Screenshots
 
@@ -103,8 +103,25 @@ The key Modules of Blog App are:
 - Post: The "Post" module handles all aspects related to creating, managing, and displaying content posted by users in the application. It includes features such as creating new posts, editing and deleting existing posts, organizing posts by categories or tags, enabling post comments, and displaying post-related information such as likes and views. 
 
 - Social Networking(for later): Manages the social interaction features of the application, allowing users to interact with each other through comments, likes, shares, and private messages. This module includes functions for displaying posts and comments, creating and editing posts, managing comments and likes, and sending and receiving private messages. Additionally, this module may also include features for following or subscribing to other users, as well as reporting or blocking inappropriate content or users.
+## How To run The Application
 
-## How To run Tha Application with Docker
+## Setting up Cloudinary
+To use Cloudinary in your application, you'll need to create an account and obtain your authentication credentials. Follow these steps to set up Cloudinary:
+- Sign up on the Cloudinary website and create an account.
+- Once you've created your account, log in to the Cloudinary management console.
+- In the "Dashboard" section of the console, click on the "Create a New Cloud" button.
+- You'll be prompted to enter a name for your Cloudinary "cloud". This name is used to uniquely identify your Cloudinary account on the platform. Enter a descriptive name and click "Create".
+- Once you've created your cloud, you'll be redirected to your account settings page. Here you'll find your Cloudinary authentication credentials:
+  - `cloudinary_cloud_name`: This is the name of your Cloudinary "cloud", which is used as a unique identifier for your account on the platform.
+  - `cloudinary_api_key`: This is the API key that allows you to access Cloudinary services.
+  - `cloudinary_api_secret`: This is the API secret key that is used to authenticate your requests to Cloudinary and protect your information.
+- Save your authentication credentials in a secure location. You'll need these credentials to configure the Cloudinary integration in your application
+
+
+
+
+
+## Run Tha Application with Docker
 - [Install Docker](https://www.docker.com/products/docker-desktop/)
 - Clone project `git clone https://github.com/damian-git-99/blog-app-node.git`
 
@@ -118,7 +135,7 @@ The key Modules of Blog App are:
 - Run `docker compose up`
 - App runs on `http://localhost:5173/`
 
-## How To run The Application Manually
+## Run The Application Manually
 
 - [Install node js](https://nodejs.org/es) 
 - [Install MongoDB](https://www.mongodb.com/)
