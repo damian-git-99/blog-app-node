@@ -30,9 +30,9 @@ export const PostsByUser = () => {
       <Row>
         { posts && posts.length === 0
           ? (
-          <div className="alert alert-info text-center fs-2" role="alert">
+          <p className="text-center" role="alert">
             No posts found for this user
-          </div>
+          </p>
             )
           : null }
         {posts &&
