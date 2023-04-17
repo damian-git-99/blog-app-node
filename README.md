@@ -15,6 +15,40 @@ A blog application using node js with react
 ## Objective
 The goal of this project is to build a blog application that allows users to post and read articles online.
 
+## User stories
+- User registration:
+As a new user, I want to be able to sign up for the application by providing my email and password so that I can create a new account and start using the app.
+
+- User login:
+As a registered user, I want to be able to log in to the application using my username and password so that I can access my account and use the app.
+
+- Secure authentication:
+As a user, I want my authentication to be done securely using bcrypt and session tokens, so that my information is protected from unauthorized access.
+
+- Logout functionality:
+As a user, I want to be able to log out of the application so that I can end my session and protect my information.
+
+- Create and publish posts:
+As a user, I want to be able to create and publish posts that include text and images so that I can share my thoughts and experiences with others.
+
+- View recent posts feed:
+As a user, I want to be able to view a feed of recently published posts from other users so that I can stay up to date with the latest content.
+
+- View user's personal posts:
+As a user, I want to be able to view a feed of my own posts, including unpublished posts, so that I can manage my content and see what I have created.
+
+- Delete own posts:
+As a user, I want to be able to delete my own posts so that I can remove content that I no longer want to be associated with.
+
+- View user's posts:
+As a user, I want to be able to view the published posts of a particular user so that I can see their content.
+
+- Edit own posts: 
+As a user, I want to be able to edit my own posts so that I can make changes to the content and improve it over time.
+
+- Change profile information:
+As a user, I want to be able to change my profile information, such as my email, so that my account information stays up to date.
+
 ## User stories for later
 - Search posts using keywords:
 As a user, I want to be able to search for specific posts using keywords so that I can quickly find the content I am interested in.
@@ -69,40 +103,6 @@ The key Modules of Blog App are:
 - Post: The "Post" module handles all aspects related to creating, managing, and displaying content posted by users in the application. It includes features such as creating new posts, editing and deleting existing posts, organizing posts by categories or tags, enabling post comments, and displaying post-related information such as likes and views. 
 
 - Social Networking(for later): Manages the social interaction features of the application, allowing users to interact with each other through comments, likes, shares, and private messages. This module includes functions for displaying posts and comments, creating and editing posts, managing comments and likes, and sending and receiving private messages. Additionally, this module may also include features for following or subscribing to other users, as well as reporting or blocking inappropriate content or users.
-
-## User stories
-- User registration:
-As a new user, I want to be able to sign up for the application by providing my email and password so that I can create a new account and start using the app.
-
-- User login:
-As a registered user, I want to be able to log in to the application using my username and password so that I can access my account and use the app.
-
-- Secure authentication:
-As a user, I want my authentication to be done securely using bcrypt and session tokens, so that my information is protected from unauthorized access.
-
-- Logout functionality:
-As a user, I want to be able to log out of the application so that I can end my session and protect my information.
-
-- Create and publish posts:
-As a user, I want to be able to create and publish posts that include text and images so that I can share my thoughts and experiences with others.
-
-- View recent posts feed:
-As a user, I want to be able to view a feed of recently published posts from other users so that I can stay up to date with the latest content.
-
-- View user's personal posts:
-As a user, I want to be able to view a feed of my own posts, including unpublished posts, so that I can manage my content and see what I have created.
-
-- Delete own posts:
-As a user, I want to be able to delete my own posts so that I can remove content that I no longer want to be associated with.
-
-- View user's posts:
-As a user, I want to be able to view the published posts of a particular user so that I can see their content.
-
-- Edit own posts: 
-As a user, I want to be able to edit my own posts so that I can make changes to the content and improve it over time.
-
-- Change profile information:
-As a user, I want to be able to change my profile information, such as my email, so that my account information stays up to date.
 
 ## How To run Tha Application with Docker
 - [Install Docker](https://www.docker.com/products/docker-desktop/)
