@@ -3,12 +3,14 @@
 A blog application using node js with react
 
 ## Content
+- Screenshots
 - Objective
 - Modules
 - Architecture
 - User Stories
-- Diagrams
 - How To tun Application
+
+## Screenshots
 
 ## Objective
 The goal of this project is to build a blog application that allows users to post and read articles online.
