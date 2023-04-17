@@ -20,8 +20,10 @@ export const Home = () => {
     <main className="mt-5">
       <Container className="mt-5 p-0 p-md-3">
         <Row>
+          {posts && posts.length === 0 ? <p className='text-center'>No user has posted anything</p> : null }
           {posts &&
-            posts.map((post) => <PostEntry key={post._id} post={post} />)}
+            posts.map((post) => <PostEntry key={post._id} post={post} />)
+          }
         </Row>
       </Container>
     </main>
