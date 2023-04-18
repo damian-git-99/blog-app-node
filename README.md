@@ -11,6 +11,9 @@ A blog application using node js with react
 - How To Run the Application
 
 ## Screenshots
+![](https://i.ibb.co/gDwnjJK/Captura-blog-1.png)
+![](https://i.ibb.co/ydRtHFc/Captura-blog-2.png)
+![](https://i.ibb.co/xS6xbNg/Captura-blog-3.png)
 
 ## Objective
 The goal of this project is to build a blog application that allows users to post and read articles online.
