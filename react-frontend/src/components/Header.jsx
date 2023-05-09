@@ -5,7 +5,7 @@ import { logout } from '../api/authApi'
 import { UserContext } from '../context/userContext'
 import { Nav, NavDropdown } from 'react-bootstrap'
 
-export const NavBar = () => {
+export const Header = () => {
   const { userInfo, setUserInfo } = useContext(UserContext)
   useEffect(() => {
     userProfile()
