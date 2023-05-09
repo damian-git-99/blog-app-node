@@ -7,9 +7,10 @@ import { errorMessage, successMessage } from '../utils/alerts'
 import { UserContext } from '../context/userContext'
 
 export const Register = () => {
+  const navigate = useNavigate()
   const { userInfo } = useContext(UserContext)
   const { register, handleSubmit, formState: { errors } } = useForm()
-  const navigate = useNavigate()
+  const isValidForm = Object.keys(errors).length === 0
 
   if (userInfo) {
     navigate('/')
@@ -17,8 +18,7 @@ export const Register = () => {
 
   const onSubmit = (data) => {
     const { password, repeatPassword } = data
-    const validForm = Object.keys(errors).length === 0
-    if (!validForm) return
+    if (!isValidForm) return
     if (password !== repeatPassword) {
       errorMessage('Passwords do not match')
       return
@@ -38,7 +38,7 @@ export const Register = () => {
       <Row className="justify-content-center align-items-center">
         <Col md={5}>
           <h3 className="text-center mb-4">Register</h3>
-          {Object.keys(errors).length > 0 && <Alert variant='danger'>All Fields are required</Alert>}
+          {!isValidForm && <Alert variant='danger'>All Fields are required</Alert>}
           <Form action="" onSubmit={handleSubmit(onSubmit)}>
             <Form.Control
               className="mb-2 py-3 fs-5 fw-light"
