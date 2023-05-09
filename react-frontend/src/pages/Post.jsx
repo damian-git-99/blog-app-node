@@ -10,7 +10,7 @@ export const Post = () => {
   const navigate = useNavigate()
   const { userInfo } = useContext(UserContext)
   const { postId } = useParams()
-  const [post, setPost] = useState(null)
+  const [post, setPost] = useState(undefined)
 
   useEffect(() => {
     getPostById(postId)
