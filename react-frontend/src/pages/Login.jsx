@@ -9,7 +9,7 @@ import { UserContext } from '../context/userContext'
 
 export const Login = () => {
   const { userInfo, setUserInfo } = useContext(UserContext)
-  const { register, handleSubmit, formState: { errors } } = useForm()
+  const { register, handleSubmit, formState: { isValid } } = useForm()
   const navigate = useNavigate()
 
   if (userInfo) {
@@ -17,8 +17,7 @@ export const Login = () => {
   }
 
   const onSubmit = (data) => {
-    const validForm = Object.keys(errors).length === 0
-    if (!validForm) return
+    if (!isValid) return
     login({ ...data })
       .then((data) => {
         setUserInfo({ ...data })
@@ -35,7 +34,7 @@ export const Login = () => {
       <Row className="justify-content-center align-items-center">
         <Col md={5}>
           <h3 className="text-center mb-4">Login</h3>
-          {Object.keys(errors).length > 0 && <Alert variant='danger'>All Fields are required</Alert>}
+          {isValid === false && <Alert variant='danger'>All Fields are required</Alert>}
           <Form onSubmit={handleSubmit(onSubmit)}>
             <Form.Control
               name="email"
