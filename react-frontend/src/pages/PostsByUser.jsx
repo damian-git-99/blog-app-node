@@ -21,7 +21,7 @@ export const PostsByUser = () => {
   }, [username])
 
   return (
-    <Container className="mt-5 p-0 p-md-3">
+    <Container className="mt-5 p-0 p-md-3 animate__animated animate__fadeIn">
       { error && (
         <div className="alert alert-info text-center fs-2" role="alert">
           {error}

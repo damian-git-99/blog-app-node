@@ -6,8 +6,7 @@ import { useNavigate } from 'react-router-dom'
 
 export const MyPosts = () => {
   const navigate = useNavigate()
-
-  const [posts, setPosts] = useState(null)
+  const [posts, setPosts] = useState(undefined)
   const [postDelete, setPostDelete] = useState(false)
 
   useEffect(() => {
@@ -42,7 +41,7 @@ export const MyPosts = () => {
   }
 
   return (
-    <Container className="mt-5">
+    <Container className="mt-5 animate__animated animate__fadeIn">
       <Row className="justify-content-center align-items-center">
         <Col md={12}>
           <Table responsive>
