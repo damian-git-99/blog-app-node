@@ -25,7 +25,7 @@ export const Home = () => {
   }, [])
 
   return (
-    <main className="mt-5">
+    <main className="mt-5 animate__animated animate__fadeIn">
       <Container className="mt-5 p-0 p-md-3">
         <Row>
           {isLoading && <p className='text-center'>Loading...</p>}

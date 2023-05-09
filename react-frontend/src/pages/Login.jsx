@@ -31,7 +31,7 @@ export const Login = () => {
   }
 
   return (
-    <Container className="mt-5">
+    <Container className="mt-5 animate__animated animate__fadeIn">
       <Row className="justify-content-center align-items-center">
         <Col md={5}>
           <h3 className="text-center mb-4">Login</h3>

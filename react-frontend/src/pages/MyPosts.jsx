@@ -41,7 +41,7 @@ export const MyPosts = () => {
   }
 
   return (
-    <Container className="mt-5">
+    <Container className="mt-5 animate__animated animate__fadeIn">
       <Row className="justify-content-center align-items-center">
         <Col md={12}>
           <Table responsive>
