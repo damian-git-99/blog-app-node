@@ -6,8 +6,7 @@ import { useNavigate } from 'react-router-dom'
 
 export const MyPosts = () => {
   const navigate = useNavigate()
-
-  const [posts, setPosts] = useState(null)
+  const [posts, setPosts] = useState(undefined)
   const [postDelete, setPostDelete] = useState(false)
 
   useEffect(() => {
