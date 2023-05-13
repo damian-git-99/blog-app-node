@@ -1,14 +1,14 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { useForm } from 'react-hook-form'
 import { Container, Col, Row, Form, Button, Alert } from 'react-bootstrap'
 import { useNavigate, Link } from 'react-router-dom'
 import { register as registerUser } from '../api/authApi'
 import { errorMessage, successMessage } from '../utils/alerts'
-import { UserContext } from '../context/userContext'
+import { useUserInfo } from '../hooks/useUserInfo'
 
 export const Register = () => {
   const navigate = useNavigate()
-  const { userInfo } = useContext(UserContext)
+  const { userInfo } = useUserInfo()
   const { register, handleSubmit, formState: { errors } } = useForm()
   const isValidForm = Object.keys(errors).length === 0
 

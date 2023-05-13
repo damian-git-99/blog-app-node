@@ -1,9 +1,9 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
-import { UserContext } from '../context/userContext'
+import { useUserInfo } from '../hooks/useUserInfo'
 
 export const ProtectedRoutes = () => {
-  const { userInfo } = useContext(UserContext)
+  const { userInfo } = useUserInfo()
   if (!userInfo) {
     return <Navigate to={'/login'} replace />
   }

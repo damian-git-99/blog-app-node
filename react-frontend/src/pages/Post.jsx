@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Alert, Button, Col, Container, Row } from 'react-bootstrap'
 import { formatISO9075 } from 'date-fns'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { deletePostById, getPostById } from '../api/postApi'
-import { UserContext } from '../context/userContext'
 import { confirmDialog, errorMessage, successMessage } from '../utils/alerts'
+import { useUserInfo } from '../hooks/useUserInfo'
 
 export const Post = () => {
   const { postId } = useParams()
@@ -41,7 +41,7 @@ export const Post = () => {
 
 const PostHeader = ({ post, postId }) => {
   const navigate = useNavigate()
-  const { userInfo } = useContext(UserContext)
+  const { userInfo } = useUserInfo()
 
   const deletePost = () => {
     confirmDialog(() => {

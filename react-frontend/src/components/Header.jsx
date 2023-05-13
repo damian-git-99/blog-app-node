@@ -1,12 +1,12 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { userProfile } from '../api/userApi'
 import { logout } from '../api/authApi'
-import { UserContext } from '../context/userContext'
 import { Nav, NavDropdown } from 'react-bootstrap'
+import { useUserInfo } from '../hooks/useUserInfo'
 
 export const Header = () => {
-  const { userInfo, setUserInfo } = useContext(UserContext)
+  const { userInfo, setUserInfo } = useUserInfo()
   useEffect(() => {
     userProfile()
       .then((data) => {

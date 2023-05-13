@@ -1,13 +1,13 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { Button, Col, Container, Form, Row } from 'react-bootstrap'
 import { editProfile, userProfile } from '../api/userApi'
 import { useNavigate, useParams } from 'react-router-dom'
-import { UserContext } from '../context/userContext'
 import { successMessage } from '../utils/alerts'
+import { useUserInfo } from '../hooks/useUserInfo'
 
 export const EditProfile = () => {
-  const { userInfo, setUserInfo } = useContext(UserContext)
+  const { userInfo, setUserInfo } = useUserInfo()
   const { register, handleSubmit, reset } = useForm()
   const { userId } = useParams()
   const navigate = useNavigate()
