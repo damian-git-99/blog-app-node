@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const URL = 'http://localhost:4000/users'
+const URL = `${import.meta.env.VITE_API_URL}/users`
 
 export const userProfile = async () => {
   const config = {
