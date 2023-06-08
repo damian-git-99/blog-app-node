@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const URL = 'http://localhost:4000'
+const URL = import.meta.env.VITE_API_URL
 
 export const register = async (user) => {
   const config = {
