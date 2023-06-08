@@ -7,6 +7,6 @@ console.log(cors_domain)
 
 export const corsOptions = {
   origin: cors_domain,
-  credentials: false,
+  credentials: true,
   methods: ['POST', 'PUT', 'GET', 'DELETE']
 }
