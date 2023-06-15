@@ -18,7 +18,7 @@ export const register = async (user) => {
   }
 }
 
-export const login = async (user) => {
+export const loginRequest = async (user) => {
   const config = {
     withCredentials: true,
     headers: {
@@ -29,13 +29,12 @@ export const login = async (user) => {
     const { data } = await axios.post(`${URL}/login`, user, config)
     return data
   } catch (error) {
-    console.log(error)
     const message = getErrorMessage(error)
     throw new Error(message)
   }
 }
 
-export const logout = async (user) => {
+export const logoutRequest = async (user) => {
   const config = {
     withCredentials: true,
     headers: {
@@ -44,6 +43,22 @@ export const logout = async (user) => {
   }
   try {
     const { data } = await axios.post(`${URL}/logout`, user, config)
+    return data
+  } catch (error) {
+    const message = getErrorMessage(error)
+    throw new Error(message)
+  }
+}
+
+export const verifyTokenRequest = async () => {
+  const config = {
+    withCredentials: true,
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }
+  try {
+    const { data } = await axios.get(`${URL}/verify-token`, config)
     return data
   } catch (error) {
     const message = getErrorMessage(error)

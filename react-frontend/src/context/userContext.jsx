@@ -1,12 +1,74 @@
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react'
+import React, { useReducer } from 'react'
+import { loginRequest, logoutRequest, verifyTokenRequest } from '../api/authApi'
+import { CheckTokenTypes, LoginTypes, LogoutTypes, userReducer } from './UserReducers'
 
 export const UserContext = React.createContext({})
 
+const initialState = {
+  userInfo: null,
+  login: {
+    loading: false,
+    error: null
+  },
+  logout: {
+    loading: false,
+    error: null
+  },
+  checkToken: {
+    loading: false,
+    error: null
+  }
+}
+
 export const UserContextProvider = (props) => {
-  const [userInfo, setUserInfo] = useState(null)
+  const [state, dispatch] = useReducer(userReducer, initialState)
+
+  const login = async (email, password) => {
+    try {
+      dispatch({
+        type: LoginTypes.loading
+      })
+      const data = await loginRequest({ email, password })
+      dispatch({
+        type: LoginTypes.success,
+        payload: data
+      })
+    } catch (error) {
+      dispatch({
+        type: LoginTypes.error,
+        payload: error.message
+      })
+    }
+  }
+
+  const logout = async () => {
+    await logoutRequest()
+    dispatch({
+      type: LogoutTypes.logout
+    })
+  }
+
+  const verifyToken = async () => {
+    try {
+      dispatch({
+        type: CheckTokenTypes.loading
+      })
+      const data = await verifyTokenRequest()
+      dispatch({
+        type: CheckTokenTypes.success,
+        payload: data
+      })
+    } catch (error) {
+      dispatch({
+        type: CheckTokenTypes.error,
+        payload: error.message
+      })
+    }
+  }
+
   return (
-    <UserContext.Provider value={{ userInfo, setUserInfo }}>
+    <UserContext.Provider value={{ state, login, logout, verifyToken }}>
       {props.children}
     </UserContext.Provider>
   )
