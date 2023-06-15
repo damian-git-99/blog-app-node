@@ -2,6 +2,7 @@ import axios from 'axios'
 import { getErrorMessage } from '../utils/handleErrors'
 
 const URL = `${import.meta.env.VITE_API_URL}/posts`
+
 const config = {
   withCredentials: true
 }

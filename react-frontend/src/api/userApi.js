@@ -3,13 +3,14 @@ import { getErrorMessage } from '../utils/handleErrors'
 
 const URL = `${import.meta.env.VITE_API_URL}/users`
 
+const config = {
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  withCredentials: true
+}
+
 export const userProfile = async () => {
-  const config = {
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    withCredentials: true
-  }
   try {
     const { data } = await axios.get(`${URL}/profile`, config)
     return data
@@ -20,12 +21,6 @@ export const userProfile = async () => {
 }
 
 export const editProfile = async (userId, user) => {
-  const config = {
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    withCredentials: true
-  }
   try {
     const { data } = await axios.put(`${URL}/profile/${userId}`, user, config)
     return data

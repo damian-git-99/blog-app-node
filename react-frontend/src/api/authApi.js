@@ -18,7 +18,7 @@ export const register = async (user) => {
   }
 }
 
-export const login = async (user) => {
+export const loginRequest = async (user) => {
   const config = {
     withCredentials: true,
     headers: {
@@ -35,7 +35,7 @@ export const login = async (user) => {
   }
 }
 
-export const logout = async (user) => {
+export const logoutRequest = async (user) => {
   const config = {
     withCredentials: true,
     headers: {
