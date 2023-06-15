@@ -1,8 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useReducer } from 'react'
-import { loginRequest, logoutRequest } from '../api/authApi'
+import { loginRequest, logoutRequest, verifyTokenRequest } from '../api/authApi'
 import { CheckTokenTypes, LoginTypes, LogoutTypes, userReducer } from './UserReducers'
-import { userProfile } from '../api/userApi'
 
 export const UserContext = React.createContext({})
 
@@ -55,7 +54,7 @@ export const UserContextProvider = (props) => {
       dispatch({
         type: CheckTokenTypes.loading
       })
-      const data = await userProfile()
+      const data = await verifyTokenRequest()
       dispatch({
         type: CheckTokenTypes.success,
         payload: data

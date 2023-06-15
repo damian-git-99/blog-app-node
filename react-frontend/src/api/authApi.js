@@ -49,3 +49,19 @@ export const logoutRequest = async (user) => {
     throw new Error(message)
   }
 }
+
+export const verifyTokenRequest = async () => {
+  const config = {
+    withCredentials: true,
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }
+  try {
+    const { data } = await axios.get(`${URL}/verify-token`, config)
+    return data
+  } catch (error) {
+    const message = getErrorMessage(error)
+    throw new Error(message)
+  }
+}
