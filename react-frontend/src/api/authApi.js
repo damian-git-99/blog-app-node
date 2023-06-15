@@ -29,7 +29,6 @@ export const loginRequest = async (user) => {
     const { data } = await axios.post(`${URL}/login`, user, config)
     return data
   } catch (error) {
-    console.log(error)
     const message = getErrorMessage(error)
     throw new Error(message)
   }
