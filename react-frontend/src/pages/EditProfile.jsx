@@ -4,10 +4,8 @@ import { Button, Col, Container, Form, Row } from 'react-bootstrap'
 import { editProfile, userProfile } from '../api/userApi'
 import { useNavigate, useParams } from 'react-router-dom'
 import { successMessage } from '../utils/alerts'
-import { useUserInfo } from '../hooks/useUserInfo'
 
 export const EditProfile = () => {
-  const { userInfo, setUserInfo } = useUserInfo()
   const { register, handleSubmit, reset } = useForm()
   const { userId } = useParams()
   const navigate = useNavigate()
@@ -25,7 +23,6 @@ export const EditProfile = () => {
   const onSubmit = (data) => {
     editProfile(userId, data)
       .then(_ => {
-        setUserInfo({ ...userInfo, ...data })
         successMessage('Profile updated successfully')
         navigate('/')
       })

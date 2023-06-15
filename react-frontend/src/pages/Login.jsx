@@ -1,33 +1,31 @@
 /* eslint-disable react/no-unescaped-entities */
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { Container, Col, Row, Form, Button, Alert } from 'react-bootstrap'
 import { useNavigate, Link } from 'react-router-dom'
-import { login } from '../api/authApi'
-import { errorMessage, successMessage } from '../utils/alerts'
+import { errorMessage } from '../utils/alerts'
 import { useUserInfo } from '../hooks/useUserInfo'
 
 export const Login = () => {
   const navigate = useNavigate()
-  const { userInfo, setUserInfo } = useUserInfo()
+  const { state, login } = useUserInfo()
+  const { userInfo, login: { error, loading } } = state
   const { register, handleSubmit, formState: { errors } } = useForm()
   const isValidForm = Object.keys(errors).length === 0
 
-  if (userInfo) {
-    navigate('/')
-  }
+  useEffect(() => {
+    if (userInfo) {
+      navigate('/')
+    }
 
-  const onSubmit = (data) => {
+    if (error) {
+      errorMessage(error)
+    }
+  }, [userInfo, error])
+
+  const onSubmit = ({ email, password }) => {
     if (!isValidForm) return
-    login({ ...data })
-      .then((data) => {
-        setUserInfo({ ...data })
-        successMessage('you have successfully logged in')
-        navigate('/')
-      })
-      .catch((e) => {
-        errorMessage(e.message)
-      })
+    login(email, password)
   }
 
   return (
@@ -36,6 +34,7 @@ export const Login = () => {
         <Col md={5}>
           <h3 className="text-center mb-4">Login</h3>
           {!isValidForm && <Alert variant='danger'>All Fields are required</Alert>}
+          {loading && <Alert variant='info'>Loading...</Alert>}
           <Form onSubmit={handleSubmit(onSubmit)}>
             <Form.Control
               name="email"
