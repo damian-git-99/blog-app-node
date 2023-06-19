@@ -1,3 +1,4 @@
+import { Schema } from 'mongoose'
 import { EmailAlreadyExists } from '../auth/errors/EmailAlreadyExists'
 import { UsernameAlreadyExists } from '../auth/errors/UsernameAlreadyExists'
 import { encryptPassword } from '../auth/passwordUtils'
@@ -34,7 +35,7 @@ export const editProfile = async (
   const email = newUser.email
   const username = newUser.username
 
-  // check if email and username are available
+  // check if new email is available
   if (email && email !== user.email) {
     const emailExists = await getUserByEmail(email)
     if (emailExists) throw new EmailAlreadyExists('Email already exists')
@@ -67,4 +68,16 @@ export const getUserByEmail = (email: string) => {
 
 export const getUserById = (id: string) => {
   return UserModel.findById(id)
+}
+
+export const addFavoritePost = async (userId: string, postId: string) => {
+  const user = await getUserById(userId)
+  const objectId = new Schema.Types.ObjectId(postId)
+  await user?.updateOne({ $push: { favorites: objectId } })
+}
+
+export const deleteFavoritePost = async (userId: string, postId: string) => {
+  const user = await getUserById(userId)
+  const objectId = new Schema.Types.ObjectId(postId)
+  await user?.updateOne({ $pull: { favorites: objectId } })
 }
