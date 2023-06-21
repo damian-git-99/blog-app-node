@@ -26,11 +26,11 @@ export const PostEntry = ({ post }) => {
       onClick={handleClick}
       style={{ cursor: 'pointer' }}
     >
-      <Row>
-        <Col md={4}>
+      <Row className='justify-content-center'>
+        <Col md={3}>
           <img className="img img-fluid" src={image} alt="" />
         </Col>
-        <Col md={8} className="p-4 p-md-0">
+        <Col md={8} className="p-4 p-md-2">
           <h2 className="mt-2 mt-md-0 d-inline">{post.title}</h2>
           <p className="text-muted">
             <span className="fw-bolder"><a className='btn-primary' onClick={(e) => handleUserClick(e, post?.user?.username)}>{post?.user?.username}</a></span>
