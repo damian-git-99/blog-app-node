@@ -8,7 +8,7 @@ import { confirmDialog, errorMessage, successMessage } from '../utils/alerts'
 import { useUserInfo } from '../hooks/useUserInfo'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Tooltip from 'react-bootstrap/Tooltip'
-import { addFavoritePost, deleteFavoritePost } from '../api/userApi'
+import { addFavoritePost, deleteFavoritePost, isPostMarkedAsFavorite } from '../api/userApi'
 
 export const Post = () => {
   const { postId } = useParams()
@@ -48,8 +48,15 @@ const PostHeader = ({ post, postId }) => {
   const { state } = useUserInfo()
   const { userInfo } = state
 
-  // todo: si hay un usuario autenticado checar si ya tiene marcado el post como favorito
-  // todo: haciendo una peticion al servidor para ver si el usuario tiene el post marcado como favorito
+  useEffect(() => {
+    if (userInfo && userInfo.email) {
+      isPostMarkedAsFavorite(postId)
+        .then(data => {
+          const { isMarkedAsFavorite } = data
+          setIsFavorite(isMarkedAsFavorite)
+        })
+    }
+  }, [postId])
 
   const renderTooltip = (props) => (
     <Tooltip id="button-tooltip" {...props}>
