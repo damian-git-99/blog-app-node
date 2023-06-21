@@ -1,4 +1,4 @@
-import { Schema, Types } from 'mongoose'
+import Mongoose, { Schema } from 'mongoose'
 import { EmailAlreadyExists } from '../auth/errors/EmailAlreadyExists'
 import { UsernameAlreadyExists } from '../auth/errors/UsernameAlreadyExists'
 import { encryptPassword } from '../auth/passwordUtils'
@@ -72,13 +72,22 @@ export const getUserById = (id: string) => {
 
 export const addFavoritePost = async (userId: string, postId: string) => {
   const user = await getUserById(userId)
-  const objectId = new Types.ObjectId(postId)
+  const objectId = new Mongoose.Types.ObjectId(postId)
   // addToSet -> This operator is used to add an element to the end of the array only if the element does not already exist in the array.
   await user?.updateOne({ $addToSet: { favorites: objectId } })
 }
 
 export const deleteFavoritePost = async (userId: string, postId: string) => {
   const user = await getUserById(userId)
-  const objectId = new Types.ObjectId(postId)
+  const objectId = new Mongoose.Types.ObjectId(postId)
   await user?.updateOne({ $pull: { favorites: objectId } })
+}
+
+export const isPostMarkedAsFavorite = async (
+  userId: string,
+  postId: string
+) => {
+  const user = await getUserById(userId)
+  const objectId = new Mongoose.Types.ObjectId(postId)
+  return user?.favorites?.includes(objectId)
 }
