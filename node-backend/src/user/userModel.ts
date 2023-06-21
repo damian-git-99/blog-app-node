@@ -1,10 +1,10 @@
-import mongoose from 'mongoose'
+import mongoose, { Types, Schema } from 'mongoose'
 
 export interface User {
   username: string
   email: string
   password: string
-  favorites?: mongoose.Schema.Types.ObjectId[]
+  favorites?: Types.ObjectId[]
 }
 
 const userSchema = new mongoose.Schema<User>({
@@ -23,7 +23,7 @@ const userSchema = new mongoose.Schema<User>({
     required: true
   },
   favorites: {
-    type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }],
+    type: [{ type: Schema.Types.ObjectId, ref: 'Post' }],
     default: []
   }
 })
