@@ -38,3 +38,14 @@ export const deleteFavoritePost = async (req: Request, res: Response) => {
   await userService.deleteFavoritePost(userId, req.params.postId)
   res.status(200).json('ok')
 }
+
+//@route GET users/is-favorite-post/:postId
+//desc: check if post is marked as favorite by authenticated user
+export const isPostMarkedAsFavorite = async (req: Request, res: Response) => {
+  const userId = req.currentUser!.id
+  const postId = req.params.postId
+  const isMarked = await userService.isPostMarkedAsFavorite(userId, postId)
+  res.status(200).json({
+    isMarked
+  })
+}
