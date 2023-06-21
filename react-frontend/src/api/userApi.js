@@ -49,3 +49,16 @@ export const deleteFavoritePost = async (postId) => {
     throw new Error(message)
   }
 }
+
+export const isPostMarkedAsFavorite = async (postId) => {
+  try {
+    const { data } = await axios.get(`${URL}/is-favorite-post/${postId}`, config)
+    const { isMarked } = data
+    return {
+      isMarkedAsFavorite: isMarked
+    }
+  } catch (error) {
+    const message = getErrorMessage(error)
+    throw new Error(message)
+  }
+}
