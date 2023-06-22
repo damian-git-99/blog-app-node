@@ -29,3 +29,46 @@ export const editProfile = async (userId, user) => {
     throw new Error(message)
   }
 }
+
+export const addFavoritePost = async (postId) => {
+  try {
+    const { data } = await axios.post(`${URL}/add-favorite-post/${postId}`, undefined, config)
+    return data
+  } catch (error) {
+    const message = getErrorMessage(error)
+    throw new Error(message)
+  }
+}
+
+export const deleteFavoritePost = async (postId) => {
+  try {
+    const { data } = await axios.delete(`${URL}/delete-favorite-post/${postId}`, config)
+    return data
+  } catch (error) {
+    const message = getErrorMessage(error)
+    throw new Error(message)
+  }
+}
+
+export const isPostMarkedAsFavorite = async (postId) => {
+  try {
+    const { data } = await axios.get(`${URL}/is-favorite-post/${postId}`, config)
+    const { isMarked } = data
+    return {
+      isMarkedAsFavorite: isMarked
+    }
+  } catch (error) {
+    const message = getErrorMessage(error)
+    throw new Error(message)
+  }
+}
+
+export const getFavoritePosts = async () => {
+  try {
+    const { data } = await axios.get(`${URL}/favorite-posts`, config)
+    return data
+  } catch (error) {
+    const message = getErrorMessage(error)
+    throw new Error(message)
+  }
+}

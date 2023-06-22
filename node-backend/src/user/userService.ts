@@ -1,3 +1,4 @@
+import Mongoose, { Schema } from 'mongoose'
 import { EmailAlreadyExists } from '../auth/errors/EmailAlreadyExists'
 import { UsernameAlreadyExists } from '../auth/errors/UsernameAlreadyExists'
 import { encryptPassword } from '../auth/passwordUtils'
@@ -7,6 +8,8 @@ import { replaceEmptyFields } from '../utils/utils'
 import { EditUser } from './dto/EditUser'
 import { UserNotFound } from './errors/UserNotFound'
 import { UserModel } from './userModel'
+import { getImageUrl } from '../file/cloudinaryService'
+import { Post } from '../posts/PostModel'
 
 export const userProfile = async (id: string) => {
   const user = await UserModel.findById(id)
@@ -34,7 +37,7 @@ export const editProfile = async (
   const email = newUser.email
   const username = newUser.username
 
-  // check if email and username are available
+  // check if new email is available
   if (email && email !== user.email) {
     const emailExists = await getUserByEmail(email)
     if (emailExists) throw new EmailAlreadyExists('Email already exists')
@@ -67,4 +70,38 @@ export const getUserByEmail = (email: string) => {
 
 export const getUserById = (id: string) => {
   return UserModel.findById(id)
+}
+
+export const addFavoritePost = async (userId: string, postId: string) => {
+  const user = await getUserById(userId)
+  const objectId = new Mongoose.Types.ObjectId(postId)
+  // addToSet -> This operator is used to add an element to the end of the array only if the element does not already exist in the array.
+  await user?.updateOne({ $addToSet: { favorites: objectId } })
+}
+
+export const deleteFavoritePost = async (userId: string, postId: string) => {
+  const user = await getUserById(userId)
+  const objectId = new Mongoose.Types.ObjectId(postId)
+  await user?.updateOne({ $pull: { favorites: objectId } })
+}
+
+export const isPostMarkedAsFavorite = async (
+  userId: string,
+  postId: string
+) => {
+  const user = await getUserById(userId)
+  const objectId = new Mongoose.Types.ObjectId(postId)
+  return user?.favorites?.includes(objectId)
+}
+
+export const getFavoritePostsByUser = async (userId: string) => {
+  const user = await UserModel.findById(userId).populate('favorites')
+  return user?.favorites?.map((post: any) => {
+    // todo: change any to Post
+    if (post.image && post.image !== '') {
+      post.image = getImageUrl(post.image)
+      return post
+    }
+    return post
+  })
 }

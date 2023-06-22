@@ -10,13 +10,14 @@ h2 {
 }
 
 .img {
-  height: 17rem;
+  height: 12rem;
   width: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .img-header {
-  height: 28rem;
+  height: 26rem;
   width: 100%;
   object-fit: cover;
+  object-position: 0% 50%;
 }

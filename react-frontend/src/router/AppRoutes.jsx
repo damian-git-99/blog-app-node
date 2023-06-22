@@ -12,6 +12,7 @@ import {
 import { ProtectedRoutes } from './ProtectedRoutes'
 import { PostsByUser } from '../pages/PostsByUser'
 import { EditProfile } from '../pages/EditProfile'
+import { FavoritePosts } from '../pages/FavoritePosts'
 
 export const AppRoutes = () => {
   return (
@@ -26,6 +27,7 @@ export const AppRoutes = () => {
           <Route path={'/create'} element={<CreatePost />} />
           <Route path={'/edit/:postId'} element={<EditPost />} />
           <Route path={'/edit-profile/:userId'} element={<EditProfile />} />
+          <Route path={'/favorite-posts'} element={<FavoritePosts />} />
         </Route>
       </Route>
     </Routes>

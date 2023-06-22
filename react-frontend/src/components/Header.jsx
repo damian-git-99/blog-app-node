@@ -51,6 +51,9 @@ export const Header = () => {
                   <NavDropdown.Item>
                     <Link to={`/edit-profile/${userInfo.id}`} className='text-decoration-none'>Edit Profile</Link>
                   </NavDropdown.Item>
+                  <NavDropdown.Item>
+                    <Link to={'/favorite-posts'} className='text-decoration-none'>Favorite Posts</Link>
+                  </NavDropdown.Item>
                 </NavDropdown>
                 <Nav.Item className="nav-item">
                   <Link className="nav-link" onClick={handleLogout}>

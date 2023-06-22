@@ -1,17 +1,16 @@
-import { Request, Response, NextFunction } from 'express';
-import { verifyToken } from '../auth/JwtUtils';
+import { Request, Response, NextFunction } from 'express'
+import { verifyToken } from '../auth/JwtUtils'
 
 export const requireAuth = (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  const { token } = req.cookies;
+  const { token } = req.cookies
   if (!token) {
-    res.status(401)
-      .json({
-        error: 'Invalid token'
-      });
+    res.status(401).json({
+      error: 'Invalid token'
+    })
     return
   }
   try {
@@ -19,9 +18,8 @@ export const requireAuth = (
     req.currentUser = payload
     next()
   } catch (err) {
-    res.status(401)
-      .json({
-        error: 'Invalid token'
-      });
+    res.status(401).json({
+      error: 'Invalid token'
+    })
   }
 }
