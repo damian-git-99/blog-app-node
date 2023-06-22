@@ -8,6 +8,8 @@ import { replaceEmptyFields } from '../utils/utils'
 import { EditUser } from './dto/EditUser'
 import { UserNotFound } from './errors/UserNotFound'
 import { UserModel } from './userModel'
+import { getImageUrl } from '../file/cloudinaryService'
+import { Post } from '../posts/PostModel'
 
 export const userProfile = async (id: string) => {
   const user = await UserModel.findById(id)
@@ -90,4 +92,16 @@ export const isPostMarkedAsFavorite = async (
   const user = await getUserById(userId)
   const objectId = new Mongoose.Types.ObjectId(postId)
   return user?.favorites?.includes(objectId)
+}
+
+export const getFavoritePostsByUser = async (userId: string) => {
+  const user = await UserModel.findById(userId).populate('favorites')
+  return user?.favorites?.map((post: any) => {
+    // todo: change any to Post
+    if (post.image && post.image !== '') {
+      post.image = getImageUrl(post.image)
+      return post
+    }
+    return post
+  })
 }

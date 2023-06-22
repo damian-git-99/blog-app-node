@@ -4,7 +4,8 @@ import {
   userProfileController,
   addFavoritePost,
   deleteFavoritePost,
-  isPostMarkedAsFavorite
+  isPostMarkedAsFavorite,
+  getFavoritePostsByUser
 } from './userController'
 import { requireAuth } from '../middlewares/requireAuth'
 import { validateFields } from '../middlewares/expressValidator'
@@ -25,5 +26,6 @@ router.put(
 router.post('/add-favorite-post/:postId', requireAuth, addFavoritePost)
 router.delete('/delete-favorite-post/:postId', requireAuth, deleteFavoritePost)
 router.get('/is-favorite-post/:postId', requireAuth, isPostMarkedAsFavorite)
+router.get('/favorite-posts', requireAuth, getFavoritePostsByUser)
 
 export { router as userRouter }

@@ -49,3 +49,10 @@ export const isPostMarkedAsFavorite = async (req: Request, res: Response) => {
     isMarked
   })
 }
+
+//@route GET users/favorite-posts
+export const getFavoritePostsByUser = async (req: Request, res: Response) => {
+  const userId = req.currentUser!.id
+  const posts = await userService.getFavoritePostsByUser(userId)
+  res.status(200).json(posts)
+}
