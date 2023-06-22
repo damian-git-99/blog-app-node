@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+import './config/globalErrorsHandle'
 import { BrowserRouter } from 'react-router-dom'
 import { UserContextProvider } from './context/userContext'
 import { AppRoutes } from './router/AppRoutes'

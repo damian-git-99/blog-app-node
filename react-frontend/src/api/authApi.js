@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { getErrorMessage } from '../utils/handleErrors'
 
 const URL = import.meta.env.VITE_API_URL
 
@@ -9,13 +8,8 @@ export const register = async (user) => {
       'Content-Type': 'application/json'
     }
   }
-  try {
-    const { data } = await axios.post(`${URL}/register`, user, config)
-    return data
-  } catch (error) {
-    const message = getErrorMessage(error)
-    throw new Error(message)
-  }
+  const { data } = await axios.post(`${URL}/register`, user, config)
+  return data
 }
 
 export const loginRequest = async (user) => {
@@ -25,13 +19,8 @@ export const loginRequest = async (user) => {
       'Content-Type': 'application/json'
     }
   }
-  try {
-    const { data } = await axios.post(`${URL}/login`, user, config)
-    return data
-  } catch (error) {
-    const message = getErrorMessage(error)
-    throw new Error(message)
-  }
+  const { data } = await axios.post(`${URL}/login`, user, config)
+  return data
 }
 
 export const logoutRequest = async (user) => {
@@ -41,13 +30,8 @@ export const logoutRequest = async (user) => {
       'Content-Type': 'application/json'
     }
   }
-  try {
-    const { data } = await axios.post(`${URL}/logout`, user, config)
-    return data
-  } catch (error) {
-    const message = getErrorMessage(error)
-    throw new Error(message)
-  }
+  const { data } = await axios.post(`${URL}/logout`, user, config)
+  return data
 }
 
 export const verifyTokenRequest = async () => {
@@ -57,11 +41,6 @@ export const verifyTokenRequest = async () => {
       'Content-Type': 'application/json'
     }
   }
-  try {
-    const { data } = await axios.get(`${URL}/verify-token`, config)
-    return data
-  } catch (error) {
-    const message = getErrorMessage(error)
-    throw new Error(message)
-  }
+  const { data } = await axios.get(`${URL}/verify-token`, config)
+  return data
 }
