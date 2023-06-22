@@ -62,3 +62,13 @@ export const isPostMarkedAsFavorite = async (postId) => {
     throw new Error(message)
   }
 }
+
+export const getFavoritePosts = async () => {
+  try {
+    const { data } = await axios.get(`${URL}/favorite-posts`, config)
+    return data
+  } catch (error) {
+    const message = getErrorMessage(error)
+    throw new Error(message)
+  }
+}
