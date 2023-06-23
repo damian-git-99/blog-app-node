@@ -2,8 +2,9 @@ import axios from 'axios'
 
 const URL = import.meta.env.VITE_API_URL
 
-export const register = async (user) => {
+export const registerRequest = async (user) => {
   const config = {
+    withCredentials: true,
     headers: {
       'Content-Type': 'application/json'
     }
