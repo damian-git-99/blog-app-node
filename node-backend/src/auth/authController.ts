@@ -7,28 +7,31 @@ import { UserNotFound } from '../user/errors/UserNotFound'
 //@route Post /register
 export const register = async (req: Request, res: Response) => {
   const { email, password, username } = req.body
-  await authService.registerUser({ email, password, username })
-  res.status(201).json({
-    status: 201
-  })
+  const user = await authService.registerUser({ email, password, username })
+  const token = generateToken({ id: user.id, email: user.email })
+  res
+    .status(201)
+    .cookie('token', token, { sameSite: 'none', secure: true, signed: false })
+    .json({
+      status: 201,
+      email: user.email,
+      username: user.username,
+      id: user._id
+    })
 }
 
 //@route Post /login
 export const login = async (req: Request, res: Response) => {
   const { email, password } = req.body
-  const {
-    token,
-    email: userEmail,
-    username,
-    id
-  } = await authService.login({ email, password })
+  const user = await authService.login({ email, password })
+  const token = generateToken({ id: user.id, email: user.email })
   res
     .status(200)
     .cookie('token', token, { sameSite: 'none', secure: true, signed: false })
     .json({
-      email: userEmail,
-      username,
-      id
+      email: user.email,
+      username: user.username,
+      id: user.id
     })
 }
 
