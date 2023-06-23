@@ -1,14 +1,13 @@
-export const UserTypes = {
-  loading: '[login] loading',
-  success: '[login] success',
-  error: '[login] error',
-  logout: '[logout] logout'
-}
-
 export const LoginTypes = {
   loading: '[login] loading',
   success: '[login] success',
   error: '[login] error'
+}
+
+export const RegisterTypes = {
+  loading: '[register] loading',
+  success: '[register] success',
+  error: '[register] error'
 }
 
 export const LogoutTypes = {
@@ -23,6 +22,10 @@ export const CheckTokenTypes = {
 
 const initialState = {
   userInfo: undefined,
+  register: {
+    loading: false,
+    error: undefined
+  },
   login: {
     loading: false,
     error: undefined
@@ -39,6 +42,33 @@ const initialState = {
 
 export const userReducer = (state, action) => {
   switch (action.type) {
+    // ** Register
+    case RegisterTypes.loading:
+      return {
+        ...state,
+        register: {
+          loading: true,
+          error: undefined
+        }
+      }
+    case RegisterTypes.success:
+      return {
+        ...state,
+        userInfo: action.payload,
+        register: {
+          loading: false,
+          error: undefined
+        }
+      }
+    case RegisterTypes.error:
+      return {
+        ...state,
+        userInfo: undefined,
+        register: {
+          loading: false,
+          error: action.payload
+        }
+      }
     // ** Login
     case LoginTypes.loading:
       return {
