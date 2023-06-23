@@ -1,28 +1,51 @@
 /* eslint-disable react/prop-types */
 import React, { useReducer } from 'react'
-import { loginRequest, logoutRequest, verifyTokenRequest } from '../api/authApi'
-import { CheckTokenTypes, LoginTypes, LogoutTypes, userReducer } from './UserReducers'
+import { loginRequest, logoutRequest, registerRequest, verifyTokenRequest } from '../api/authApi'
+import { CheckTokenTypes, LoginTypes, LogoutTypes, RegisterTypes, userReducer } from './UserReducers'
 
 export const UserContext = React.createContext({})
 
 const initialState = {
-  userInfo: null,
+  userInfo: undefined,
+  register: {
+    loading: false,
+    error: undefined
+  },
   login: {
     loading: false,
-    error: null
+    error: undefined
   },
   logout: {
     loading: false,
-    error: null
+    error: undefined
   },
   checkToken: {
     loading: false,
-    error: null
+    error: undefined
   }
 }
 
 export const UserContextProvider = (props) => {
   const [state, dispatch] = useReducer(userReducer, initialState)
+
+  const register = async (user) => {
+    try {
+      dispatch({
+        type: RegisterTypes.loading
+      })
+      const data = await registerRequest(user)
+      dispatch({
+        type: RegisterTypes.success,
+        payload: data
+      })
+    } catch (error) {
+      console.log(error)
+      dispatch({
+        type: RegisterTypes.error,
+        payload: error.message
+      })
+    }
+  }
 
   const login = async (email, password) => {
     try {
@@ -68,7 +91,7 @@ export const UserContextProvider = (props) => {
   }
 
   return (
-    <UserContext.Provider value={{ state, login, logout, verifyToken }}>
+    <UserContext.Provider value={{ state, login, logout, verifyToken, register }}>
       {props.children}
     </UserContext.Provider>
   )
