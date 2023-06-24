@@ -3,45 +3,21 @@ import axios from 'axios'
 const URL = import.meta.env.VITE_API_URL
 
 export const registerRequest = async (user) => {
-  const config = {
-    withCredentials: true,
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  }
-  const { data } = await axios.post(`${URL}/register`, user, config)
+  const { data } = await axios.post(`${URL}/register`, user)
   return data
 }
 
 export const loginRequest = async (user) => {
-  const config = {
-    withCredentials: true,
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  }
-  const { data } = await axios.post(`${URL}/login`, user, config)
+  const { data } = await axios.post(`${URL}/login`, user)
   return data
 }
 
 export const logoutRequest = async (user) => {
-  const config = {
-    withCredentials: true,
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  }
-  const { data } = await axios.post(`${URL}/logout`, user, config)
+  const { data } = await axios.post(`${URL}/logout`, user)
   return data
 }
 
 export const verifyTokenRequest = async () => {
-  const config = {
-    withCredentials: true,
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  }
-  const { data } = await axios.get(`${URL}/verify-token`, config)
+  const { data } = await axios.get(`${URL}/verify-token`)
   return data
 }
