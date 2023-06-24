@@ -11,7 +11,7 @@ export const register = async (req: Request, res: Response) => {
   const token = generateToken({ id: user.id, email: user.email })
   res
     .status(201)
-    .cookie('token', token, { sameSite: 'none', secure: true, signed: false })
+    .cookie('token', token, { sameSite: 'none', secure: true })
     .json({
       status: 201,
       email: user.email,
@@ -27,7 +27,7 @@ export const login = async (req: Request, res: Response) => {
   const token = generateToken({ id: user.id, email: user.email })
   res
     .status(200)
-    .cookie('token', token, { sameSite: 'none', secure: true, signed: false })
+    .cookie('token', token, { sameSite: 'none', secure: true })
     .json({
       email: user.email,
       username: user.username,
