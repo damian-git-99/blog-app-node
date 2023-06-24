@@ -107,7 +107,16 @@ The application will be designed using the client-server architecture. The backe
 
 The key Modules of Blog App are:
 
-- Authentication: Handles the authentication and security process of the application. It includes functions for login, registration, password reset, logout, and session token management.
+- Authentication:
+  Handles the authentication and security process of the application. It includes functions for login, registration, password reset, logout, and session token management. When a user logs in, a JSON Web Token (JWT) is issued by the server and sent back to the client in the form of a cookie. This JWT contains the user's identity and session information, and is used to authenticate the user on subsequent requests to the server. The cookie is stored on the client-side and sent with each subsequent request to the server to maintain the user's session.
+
+  It's important to note that when using SameSite=None in cookies config, setting Secure is a requirement to ensure the security and integrity of the cookies. This is because SameSite=None allows cookies to be sent over cross-site requests, which could potentially expose them to attacks such as eavesdropping or interception. By setting Secure, the cookie can only be sent over HTTPS connections, which ensures that the data transmitted between the client and server is encrypted and protected from unauthorized access. It's also worth noting that some browsers, such as Chrome, have improved filtering and highlighting of cookie-related issues in their devtools. This can be particularly helpful when debugging issues related to SameSite and Secure attributes.
+
+  The authentication module also uses CORS (Cross-Origin Resource Sharing) to specify which domains are allowed to access its resources. This helps to prevent unauthorized access and cross-site scripting attacks. In addition, the module manages the secure storage and transmission of sensitive user data, such as passwords and personal information, and enforces access control policies to ensure that only authorized users can access protected resources.
+
+  It's important to note that in order for the cookie to be sent with cross-site requests, the client-side code must set the "withCredentials" flag to "true" in the HTTP request. This flag allows the cookie to be sent along with the request, even if it originates from a different domain. Failure to set this flag may result in the cookie being blocked by the browser, which can cause authentication failures and other issues.
+
+  Therefore, when making API calls from the frontend, the "withCredentials" flag must be set to "true" to ensure that the JWT cookie is sent along with the request. This helps to maintain the user's session and ensure that the user remains authenticated on subsequent requests to the server.
 
 - User: Handles user-related actions, including user creation, updating user profile information, email address verification, privacy preferences configuration, and account deletion.
 
