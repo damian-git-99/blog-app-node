@@ -3,35 +3,34 @@ import axios from 'axios'
 const URL = `${import.meta.env.VITE_API_URL}/users`
 
 export const userProfile = async () => {
-  const config = {
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    withCredentials: true
-  }
-  try {
-    const { data } = await axios.get(`${URL}/profile`, config)
-    return data
-  } catch (error) {
-    const message = error?.response?.data?.error || error.message
-    const err = new Error(message)
-    throw err
-  }
+  const { data } = await axios.get(`${URL}/profile`)
+  return data
 }
 
 export const editProfile = async (userId, user) => {
-  const config = {
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    withCredentials: true
+  const { data } = await axios.put(`${URL}/profile/${userId}`, user)
+  return data
+}
+
+export const addFavoritePost = async (postId) => {
+  const { data } = await axios.post(`${URL}/add-favorite-post/${postId}`, undefined)
+  return data
+}
+
+export const deleteFavoritePost = async (postId) => {
+  const { data } = await axios.delete(`${URL}/delete-favorite-post/${postId}`)
+  return data
+}
+
+export const isPostMarkedAsFavorite = async (postId) => {
+  const { data } = await axios.get(`${URL}/is-favorite-post/${postId}`)
+  const { isMarked } = data
+  return {
+    isMarkedAsFavorite: isMarked
   }
-  try {
-    const { data } = await axios.put(`${URL}/profile/${userId}`, user, config)
-    return data
-  } catch (error) {
-    const message = error?.response?.data?.error || error.message
-    const err = new Error(message)
-    throw err
-  }
+}
+
+export const getFavoritePosts = async () => {
+  const { data } = await axios.get(`${URL}/favorite-posts`)
+  return data
 }

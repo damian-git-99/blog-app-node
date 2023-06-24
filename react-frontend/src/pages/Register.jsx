@@ -1,20 +1,25 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { Container, Col, Row, Form, Button, Alert } from 'react-bootstrap'
 import { useNavigate, Link } from 'react-router-dom'
-import { register as registerUser } from '../api/authApi'
-import { errorMessage, successMessage } from '../utils/alerts'
+import { errorMessage } from '../utils/alerts'
 import { useUserInfo } from '../hooks/useUserInfo'
 
 export const Register = () => {
   const navigate = useNavigate()
-  const { userInfo } = useUserInfo()
+  const { state, register: registerUser } = useUserInfo()
+  const { userInfo, register: { error, loading } } = state
   const { register, handleSubmit, formState: { errors } } = useForm()
   const isValidForm = Object.keys(errors).length === 0
 
-  if (userInfo) {
-    navigate('/')
-  }
+  useEffect(() => {
+    if (userInfo) {
+      navigate('/')
+    }
+    if (error) {
+      errorMessage(error)
+    }
+  }, [userInfo, error])
 
   const onSubmit = (data) => {
     const { password, repeatPassword } = data
@@ -24,13 +29,6 @@ export const Register = () => {
       return
     }
     registerUser({ ...data })
-      .then((data) => {
-        successMessage('User registration successful')
-        navigate('/login')
-      })
-      .catch((e) => {
-        errorMessage(e.message)
-      })
   }
 
   return (
@@ -39,6 +37,7 @@ export const Register = () => {
         <Col md={5}>
           <h3 className="text-center mb-4">Register</h3>
           {!isValidForm && <Alert variant='danger'>All Fields are required</Alert>}
+          {loading && <Alert variant='info'>Loading...</Alert>}
           <Form action="" onSubmit={handleSubmit(onSubmit)}>
             <Form.Control
               className="mb-2 py-3 fs-5 fw-light"

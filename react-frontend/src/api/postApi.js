@@ -1,97 +1,43 @@
 import axios from 'axios'
 
 const URL = `${import.meta.env.VITE_API_URL}/posts`
-const config = {
-  withCredentials: true
-}
 
 export const createPost = async (post) => {
-  try {
-    const { data } = await axios.post(`${URL}`, post, config)
-    return data
-  } catch (error) {
-    const message = error?.response?.data?.error || error.message
-    const err = new Error(message)
-    throw err
-  }
+  const { data } = await axios.post(`${URL}`, post)
+  return data
 }
 
 export const getPosts = async () => {
-  try {
-    const { data } = await axios.get(`${URL}`, config)
-    return data
-  } catch (error) {
-    const message = error?.response?.data?.error || error.message
-    const err = new Error(message)
-    throw err
-  }
+  const { data } = await axios.get(`${URL}`)
+  return data
 }
 
 export const getMyPosts = async () => {
-  try {
-    const { data } = await axios.get(`${URL}/my-posts`, config)
-    return data
-  } catch (error) {
-    const message = error?.response?.data?.error || error.message
-    const err = new Error(message)
-    throw err
-  }
+  const { data } = await axios.get(`${URL}/my-posts`)
+  return data
 }
 
 export const getPostsByUsername = async (username) => {
-  try {
-    const { data } = await axios.get(`${URL}/by-username/${username}`, config)
-    return data
-  } catch (error) {
-    const message = error?.response?.data?.error || error.message
-    const err = new Error(message)
-    throw err
-  }
+  const { data } = await axios.get(`${URL}/by-username/${username}`)
+  return data
 }
 
 export const deletePostById = async (postId) => {
-  try {
-    const { data } = await axios.delete(`${URL}/${postId}`, config)
-    return data
-  } catch (error) {
-    const message = error?.response?.data?.error || error.message
-    const err = new Error(message)
-    throw err
-  }
+  const { data } = await axios.delete(`${URL}/${postId}`)
+  return data
 }
 
 export const getPostById = async (postId) => {
-  try {
-    const { data } = await axios.get(`${URL}/${postId}`, config)
-    return data
-  } catch (error) {
-    console.log(error)
-    const message = error?.response?.data?.error || error.message
-    const err = new Error(message)
-    throw err
-  }
+  const { data } = await axios.get(`${URL}/${postId}`)
+  return data
 }
 
 export const editPost = async (postId, post) => {
-  try {
-    const { data } = await axios.put(`${URL}/${postId}`, post, config)
-    return data
-  } catch (error) {
-    console.log(error)
-    const message = error?.response?.data?.error || error.message
-    const err = new Error(message)
-    throw err
-  }
+  const { data } = await axios.put(`${URL}/${postId}`, post)
+  return data
 }
 
 export const togglePublicationStatus = async (postId) => {
-  try {
-    const { data } = await axios.put(`${URL}/toggle-status/${postId}`, '', config)
-    return data
-  } catch (error) {
-    console.log(error)
-    const message = error?.response?.data?.error || error.message
-    const err = new Error(message)
-    throw err
-  }
+  const { data } = await axios.put(`${URL}/toggle-status/${postId}`, '')
+  return data
 }

@@ -1,27 +1,19 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { userProfile } from '../api/userApi'
-import { logout } from '../api/authApi'
 import { Nav, NavDropdown } from 'react-bootstrap'
 import { useUserInfo } from '../hooks/useUserInfo'
 
 export const Header = () => {
-  const { userInfo, setUserInfo } = useUserInfo()
+  const { state, verifyToken, logout } = useUserInfo()
+  const { userInfo } = state
+
   useEffect(() => {
-    userProfile()
-      .then((data) => {
-        setUserInfo(data)
-      })
-      .catch((error) => {
-        setUserInfo(undefined)
-        console.log(error)
-      })
+    verifyToken()
   }, [])
 
   const handleLogout = (e) => {
     e.preventDefault()
     logout()
-    setUserInfo(null)
   }
 
   return (
@@ -58,6 +50,9 @@ export const Header = () => {
                 <NavDropdown title={userInfo.email} id="nav-dropdown">
                   <NavDropdown.Item>
                     <Link to={`/edit-profile/${userInfo.id}`} className='text-decoration-none'>Edit Profile</Link>
+                  </NavDropdown.Item>
+                  <NavDropdown.Item>
+                    <Link to={'/favorite-posts'} className='text-decoration-none'>Favorite Posts</Link>
                   </NavDropdown.Item>
                 </NavDropdown>
                 <Nav.Item className="nav-item">
