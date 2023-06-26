@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken'
 import * as dotenv from 'dotenv'
 dotenv.config()
 
-const key = process.env.JWT_SECRET;
+const key = process.env.JWT_SECRET
 
 if (!key) {
   throw new Error('JWT_KEY must be defined in environment')
@@ -13,8 +13,11 @@ interface TokenPayload {
   email: string
 }
 
-export const generateToken = (payload: TokenPayload): string => {
-  return jwt.sign(payload, key, { expiresIn: '1h' })
+export const generateToken = (
+  payload: TokenPayload,
+  expiresIn: string | number = '1h'
+): string => {
+  return jwt.sign(payload, key, { expiresIn })
 }
 
 export const verifyToken = (token: string): TokenPayload => {
