@@ -35,6 +35,9 @@ The goal of this project is to build a blog application that allows users to pos
 - Logout functionality:
   As a user, I want to be able to log out of the application so that I can end my session and protect my information.
 
+- Forgot password functionality:
+  As a user, I want to be able to recover my password by providing my email address so that I can regain access to my account.
+
 - Create and publish posts:
   As a user, I want to be able to create and publish posts that include text and images so that I can share my thoughts and experiences with others.
 
