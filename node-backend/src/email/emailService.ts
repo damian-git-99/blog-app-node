@@ -16,7 +16,6 @@ export const sendPasswordReset = async (email: string, url: string) => {
       </div>
       `
     })
-    console.log(info)
   } catch (error) {
     throw new Error('Server Error: Failed to send email')
   }
