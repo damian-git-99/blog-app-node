@@ -125,6 +125,8 @@ The key Modules of Blog App are:
 
 - Post: The "Post" module handles all aspects related to creating, managing, and displaying content posted by users in the application. It includes features such as creating new posts, editing and deleting existing posts, organizing posts by categories or tags, enabling post comments, and displaying post-related information such as likes and views.
 
+- Email: The "Email" module handles sending emails to users for various purposes, password reset, notifications.
+
 - Social Networking(for later): Manages the social interaction features of the application, allowing users to interact with each other through comments, likes, shares, and private messages. This module includes functions for displaying posts and comments, creating and editing posts, managing comments and likes, and sending and receiving private messages. Additionally, this module may also include features for following or subscribing to other users, as well as reporting or blocking inappropriate content or users.
 
 ## How To run The Application
@@ -162,6 +164,7 @@ To use Cloudinary in your application, you'll need to create an account and obta
 
 - [Install node js](https://nodejs.org/es)
 - [Install MongoDB](https://www.mongodb.com/)
+- Clone project `git clone https://github.com/damian-git-99/blog-app-node.git`
 
 To run this project, you will need to add the following environment variables to your backend .env file
 
@@ -172,7 +175,15 @@ To run this project, you will need to add the following environment variables to
 - `JWT_SECRET`
 - `PORT`: by default 4000
 
-Clone project `git clone https://github.com/damian-git-99/blog-app-node.git`
+### Email module config:
+
+you will need to specify your email provider such as Gmail or other third-party email services like Mailchimp or SendGrid. Alternatively, you can use services like Ethereal.email for testing purposes, which provides a fake SMTP server that allows you to send and receive test emails without actually sending them to real email addresses.
+
+- environment variables for email
+  - `email_host`
+  - `email_port`
+  - `email_user`
+  - `email_pass`
 
 Run backend
 
