@@ -21,3 +21,8 @@ export const verifyTokenRequest = async () => {
   const { data } = await axios.get(`${URL}/verify-token`)
   return data
 }
+
+export const recoverPassword = async (email) => {
+  const { data } = await axios.post(`${URL}/recover-password`, { email })
+  return data
+}
