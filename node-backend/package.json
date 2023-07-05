@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "clean": "npx rimraf build",
-    "build": "npm run clean && tsc",
+    "copy:views": "npx ncp src/views build/views",
+    "build": "npm run clean && tsc && npm run copy:views",
     "dev": "ts-node-dev src/index.ts"
   },
   "keywords": [],
