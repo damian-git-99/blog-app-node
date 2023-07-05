@@ -58,9 +58,14 @@ export const Login = () => {
               Login
             </Button>
           </Form>
-          <Link className="text-dark" to="/register">
-            Don't have an account
-          </Link>
+          <div className='d-flex justify-content-between'>
+            <Link className="text-dark" to="/register">
+              Don't have an account
+            </Link>
+            <Link className="text-dark" to="/forgot-password">
+              Forgot Password
+            </Link>
+          </div>
         </Col>
       </Row>
     </Container>

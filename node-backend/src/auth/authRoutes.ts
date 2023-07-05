@@ -1,5 +1,13 @@
 import express from 'express'
-import { login, logout, register, verifyToken } from './authController'
+import {
+  login,
+  logout,
+  register,
+  verifyToken,
+  recoverPassword,
+  resetPassword,
+  resetPasswordCheck
+} from './authController'
 import { validateFields } from '../middlewares/expressValidator'
 import { body } from 'express-validator'
 import { requireAuth } from '../middlewares/requireAuth'
@@ -39,5 +47,19 @@ router.post(
 router.post('/logout', logout)
 
 router.get('/verify-token', requireAuth, verifyToken)
+router.post(
+  '/recover-password',
+  [body('email').notEmpty().withMessage('Email is required'), validateFields],
+  recoverPassword
+)
+router.get('/reset-password/:token', resetPasswordCheck)
+router.post(
+  '/reset-password/:token',
+  [
+    body('password').notEmpty().withMessage('Password is required'),
+    validateFields
+  ],
+  resetPassword
+)
 
 export { router as authRouter }

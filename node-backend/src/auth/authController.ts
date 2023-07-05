@@ -57,3 +57,28 @@ export const verifyToken = async (req: Request, res: Response) => {
       id: user.id
     })
 }
+
+//@route POST /recover-password
+export const recoverPassword = async (req: Request, res: Response) => {
+  const { email } = req.body
+  await authService.recoverPassword(email)
+  res.status(200).json('ok')
+}
+
+//@route GET /reset-password/:token
+export const resetPasswordCheck = async (req: Request, res: Response) => {
+  const { token } = req.params
+  await authService.resetPasswordCheck(token)
+  res.render('reset-password', { token })
+}
+
+//@route POST /reset-password/:token
+export const resetPassword = async (req: Request, res: Response) => {
+  const { password } = req.body
+  const { token } = req.params
+  await authService.resetPassword(token, password)
+  const frontend_url = `${
+    process.env.frontend_domain || 'http://localhost:5173'
+  }/login`
+  res.render('reset-password-success', { frontend_url })
+}
