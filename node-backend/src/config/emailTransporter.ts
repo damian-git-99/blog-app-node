@@ -1,4 +1,6 @@
 import nodemailer from 'nodemailer'
+import * as dotenv from 'dotenv'
+dotenv.config()
 
 const options = {
   host: process.env.email_host,
