@@ -26,3 +26,13 @@ export const recoverPassword = async (email) => {
   const { data } = await axios.post(`${URL}/recover-password`, { email })
   return data
 }
+
+export const resetPasswordCheck = async (token) => {
+  const { data } = await axios.get(`${URL}/reset-password/${token}`)
+  return data
+}
+
+export const resetPassword = async (token, password) => {
+  const { data } = await axios.post(`${URL}/reset-password/${token}`, { password })
+  return data
+}
