@@ -6,7 +6,7 @@ export class InvalidLink extends CustomError {
 
   constructor() {
     super()
-    this.message = `Invalid Link`
+    this.message = `The link is invalid or has expired`
     this.statusCode = 400
   }
 }
