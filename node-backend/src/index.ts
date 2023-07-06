@@ -1,6 +1,4 @@
 import express from 'express'
-import { engine } from 'express-handlebars'
-import path from 'path'
 import cors from 'cors'
 import 'express-async-errors'
 import cookieParser from 'cookie-parser'
@@ -15,19 +13,6 @@ connectDB()
 const app = express()
 
 const port = process.env.PORT || 4000
-
-// view config
-app.set('views', path.join(__dirname, 'views'))
-app.engine(
-  'hbs',
-  engine({
-    extname: 'hbs'
-  })
-)
-app.set('view engine', 'hbs')
-app.use(express.urlencoded({ extended: false }))
-// view config
-
 app.use(cors(corsOptions))
 app.use(express.json())
 app.use(cookieParser())

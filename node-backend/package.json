@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "clean": "npx rimraf build",
-    "copy:views": "npx ncp src/views build/views",
-    "build": "npm run clean && tsc && npm run copy:views",
+    "build": "npm run clean && tsc",
     "dev": "ts-node-dev src/index.ts"
   },
   "keywords": [],
@@ -32,7 +31,6 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-async-errors": "^3.1.1",
-    "express-handlebars": "^7.0.7",
     "express-validator": "^6.15.0",
     "jsonwebtoken": "^9.0.0",
     "mime-types": "^2.1.35",
