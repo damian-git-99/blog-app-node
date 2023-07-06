@@ -14,6 +14,7 @@ import { PostsByUser } from '../pages/PostsByUser'
 import { EditProfile } from '../pages/EditProfile'
 import { FavoritePosts } from '../pages/FavoritePosts'
 import { ForgotPassword } from '../pages/ForgotPassword'
+import { ResetPassword } from '../pages/ResetPassword'
 
 export const AppRoutes = () => {
   return (
@@ -24,6 +25,7 @@ export const AppRoutes = () => {
         <Route path={'/login'} element={<Login />} />
         <Route path={'/register'} element={<Register />} />
         <Route path={'/forgot-password'} element={<ForgotPassword />} />
+        <Route path={'/reset-password'} element={<ResetPassword />} />
         <Route path={'/post/:postId'} element={<Post />} />
         <Route element={<ProtectedRoutes />} >
           <Route path={'/create'} element={<CreatePost />} />
