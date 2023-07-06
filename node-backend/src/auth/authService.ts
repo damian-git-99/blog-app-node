@@ -49,9 +49,8 @@ export const recoverPassword = async (email: string) => {
     FIVE_MINUTES_DURATION
   )
   const link = `${
-    process.env.backend_domain || 'http://localhost:4000'
-  }/reset-password/${token}`
-  console.log(link)
+    process.env.frontend_domain || 'http://localhost:4000'
+  }/reset-password?token=${token}`
   await sendPasswordReset(user.email, link)
 }
 
