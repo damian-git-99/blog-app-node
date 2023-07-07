@@ -23,6 +23,7 @@ export const registerUser = async (user: User) => {
   }
 
   const hashedPassword = encryptPassword(user.password)
+  logger.info(`User Registered successfully: ${user.email}`)
   return await UserModel.create({ ...user, password: hashedPassword })
 }
 
@@ -38,6 +39,7 @@ export const login = async (user: UserLogin) => {
     throw new BadCredential()
   }
 
+  logger.info(`Login successful: ${user.email}`)
   return userExists
 }
 
@@ -55,11 +57,15 @@ export const recoverPassword = async (email: string) => {
     process.env.frontend_domain || 'http://localhost:4000'
   }/reset-password?token=${token}`
   await sendPasswordReset(user.email, link)
+  logger.info(`Password reset link sent to ${user.email} successfully`)
 }
 
 export const resetPasswordCheck = (token: string) => {
   try {
     verifyToken(token)
+    logger.info(
+      `Password reset check request: token verified successfully: ${token}`
+    )
   } catch (error) {
     throw new InvalidLink()
   }
@@ -74,6 +80,7 @@ export const resetPassword = async (token: string, password: string) => {
     }
     const hashedPassword = encryptPassword(password)
     await UserModel.updateOne({ _id: user.id }, { password: hashedPassword })
+    logger.info(`Password reset successfully: ${email} password`)
   } catch (error) {
     throw new InvalidLink()
   }
