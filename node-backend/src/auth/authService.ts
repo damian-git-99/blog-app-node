@@ -1,3 +1,4 @@
+import { logger } from '../config/logger'
 import { sendPasswordReset } from '../email/emailService'
 import { UserNotFound } from '../user/errors/UserNotFound'
 import { User, UserModel } from '../user/userModel'
@@ -28,10 +29,12 @@ export const registerUser = async (user: User) => {
 export const login = async (user: UserLogin) => {
   const userExists = await getUserByEmail(user.email)
   if (!userExists) {
+    logger.warn(`Invalid login attempt for user: ${user.email}`)
     throw new BadCredential()
   }
 
   if (!comparePasswords(user.password, userExists.password)) {
+    logger.warn(`Invalid login attempt for user: ${user.email}`)
     throw new BadCredential()
   }
 
