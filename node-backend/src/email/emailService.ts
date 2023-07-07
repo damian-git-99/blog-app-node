@@ -1,5 +1,7 @@
 import nodemailer from 'nodemailer'
 import { transporter } from '../config/emailTransporter'
+import { logger } from '../config/logger'
+import { log } from 'winston'
 
 export const sendPasswordReset = async (email: string, url: string) => {
   try {
@@ -16,8 +18,9 @@ export const sendPasswordReset = async (email: string, url: string) => {
       </div>
       `
     })
+    logger.info(`Email sent successfully PasswordReset: ${email}`)
   } catch (error) {
-    console.log(error)
+    logger.error(error)
     throw new Error('Server Error: Failed to send email')
   }
 }
