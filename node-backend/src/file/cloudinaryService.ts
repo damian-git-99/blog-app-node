@@ -10,6 +10,12 @@ cloudinary.config({
   api_secret: process.env.cloudinary_api_secret
 })
 
+/**
+ * The function checks if the file is a supported image type (JPEG or PNG).
+ * @param file - The `file` parameter is of type `Express.Multer.File`. It represents a file object
+ * that is uploaded using the Multer middleware in an Express application.
+ * @returns a boolean value indicating whether the file is a supported image type (JPEG or PNG).
+ */
 export const isSupportedImageType = async (file: Express.Multer.File) => {
   const mimeType = mime.lookup(file.mimetype)
   return mimeType === 'image/jpeg' || mimeType === 'image/png'
@@ -54,6 +60,8 @@ export const deleteImage = async (publicId: string) => {
   @returns The Cloudinary URL for the image.
 */
 export const getImageUrl = (publicId: string) => {
+  logger.info('Getting image url: ' + publicId + ' from Cloudinary')
   const url = cloudinary.url(publicId)
+  logger.info('Got image url: ' + url + ' from Cloudinary')
   return url
 }

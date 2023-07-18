@@ -12,6 +12,7 @@ import { UserNotFound } from '../user/errors/UserNotFound'
 import { Types } from 'mongoose'
 import { replaceEmptyFields } from '../utils/utils'
 import { logger } from '../config/logger'
+import { log } from 'winston'
 
 export const cratePost = async (
   userId: string,
@@ -85,6 +86,7 @@ export const getPostsByUsername = async (
 ) => {
   logger.info(`Searching for posts by username ${username}`)
   const user = await getUserByUsername(username)
+
   if (!user) {
     throw new UserNotFound()
   }
@@ -95,10 +97,13 @@ export const getPostsByUsername = async (
   }
 
   if (currentUser?.id === user.id.toString()) {
-    /*This code checks if the currentUser is the same as the username parameter. 
-    If they are the same, it means that all posts (published and unpublished) will be returned. 
-    If they are not the same, it means that only published posts will be returned. 
-  */
+    /*This code checks if the currentUser (authenticated user) is the same as the username parameter. 
+      If they are the same, it means that all posts (published and unpublished) will be returned. 
+      If they are not the same, it means that only published posts will be returned. 
+    */
+    logger.info(
+      'Searching for all posts, given that authenticated user is the same as the username'
+    )
     query = {
       user: user._id
     }
@@ -128,6 +133,7 @@ export const deletePostById = async (postId: string, userId: string) => {
     throw new InvalidOperation('Invalid action: Unauthorized user')
   }
   if (post?.image && post?.image != '') {
+    logger.info('Deleting image for post being deleted successfully')
     await deleteImage(post.image)
   }
   await PostModel.findByIdAndDelete(postId)
@@ -182,7 +188,10 @@ const checkPostUnpublishedAccess = async (
   // Check if the current user is the owner of the post
   logger.info(`Checking access to unpublished post`)
   if (currentUser?.id === post.user._id.toString()) {
-    return
+    logger.info(
+      `Current user ${currentUser.email} is the owner of the post ${post.title} and has access to it`
+    )
+    return true
   }
   throw new InvalidOperation('Invalid action: Unauthorized user')
 }
