@@ -12,7 +12,6 @@ import { UserNotFound } from '../user/errors/UserNotFound'
 import { Types } from 'mongoose'
 import { replaceEmptyFields } from '../utils/utils'
 import { logger } from '../config/logger'
-import { log } from 'winston'
 
 export const cratePost = async (
   userId: string,
