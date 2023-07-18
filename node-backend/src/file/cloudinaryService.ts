@@ -60,8 +60,12 @@ export const deleteImage = async (publicId: string) => {
   @returns The Cloudinary URL for the image.
 */
 export const getImageUrl = (publicId: string) => {
-  logger.info('Getting image url: ' + publicId + ' from Cloudinary')
-  const url = cloudinary.url(publicId)
-  logger.info('Got image url: ' + url + ' from Cloudinary')
-  return url
+  try {
+    // logger.info('Getting image url: ' + publicId + ' from Cloudinary')
+    const url = cloudinary.url(publicId)
+    // logger.info('Got image url: ' + url + ' from Cloudinary')
+    return url
+  } catch (error) {
+    logger.error(`Error getting image url: ${publicId} from Cloudinary`)
+  }
 }
