@@ -1,5 +1,6 @@
 import nodemailer from 'nodemailer'
 import * as dotenv from 'dotenv'
+import { logger } from './logger'
 dotenv.config()
 
 const options = {
@@ -12,3 +13,4 @@ const options = {
 }
 
 export const transporter = nodemailer.createTransport(options)
+logger.info('Nodemailer transporter instance created')

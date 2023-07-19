@@ -8,6 +8,8 @@ import { errorHandler } from './middlewares/errorHandler'
 import { userRouter } from './user/userRoutes'
 import { postRouter } from './posts/postRoutes'
 import { corsOptions } from './config/corsConfig'
+import './config/logger'
+import { logger } from './config/logger'
 
 connectDB()
 const app = express()
@@ -21,4 +23,4 @@ app.use('/users', userRouter)
 app.use('/posts', postRouter)
 app.use(errorHandler)
 
-app.listen(port, () => console.log(`listening on port ${port}!`))
+app.listen(port, () => logger.info(`listening on port ${port}!`))
