@@ -1,6 +1,10 @@
 # Blog App
 
-A blog application using node js with react
+A blog application using node js with react. The core of the application is built upon Node.js and Express, providing an efficient environment for server creation. The application closely integrates with MongoDB, a highly scalable and flexible NoSQL database system, through the use of the Mongoose library for data modeling and database interaction.
+
+To ensure user security and authentication, the application employs JWT (JSON Web Tokens) for session management. Users can securely register, log in, and access blog features, ensuring the protection of their personal data and contributions.
+
+A standout feature of the application is its implementation of TypeDI, a dependency injection library that streamlines code organization and management by providing a structured approach to component building. This results in more modular, easily maintainable code that can be scaled as the application grows.
 
 ## Content
 

@@ -1,8 +1,3 @@
-import {
-  deleteImage,
-  getImageUrl,
-  uploadImage
-} from '../file/cloudinaryService'
 import { getUserByUsername } from '../user/userService'
 import { Post, PostModel } from './PostModel'
 import { InvalidOperation } from './errors/InvalidOperation'
@@ -12,6 +7,10 @@ import { UserNotFound } from '../user/errors/UserNotFound'
 import { Types } from 'mongoose'
 import { replaceEmptyFields } from '../utils/utils'
 import { logger } from '../config/logger'
+import Container from 'typedi'
+import { ImageService } from '../image/ImageService'
+
+const imageService = Container.get<ImageService>('imageService')
 
 export const cratePost = async (
   userId: string,
@@ -20,8 +19,8 @@ export const cratePost = async (
 ) => {
   let imageName = ''
   if (file) {
-    const response = await uploadImage(file)
-    imageName = response?.public_id!
+    const response = await imageService.uploadImage(file)
+    imageName = response?.imageId!
   }
   logger.info(`Post created successfully for user: ${userId}`)
   await PostModel.create({ ...post, image: imageName, user: userId })
@@ -46,8 +45,8 @@ export const editPost = async (
   let imageName = post.image
   if (file) {
     await deletePreviousImage(post)
-    const response = await uploadImage(file)
-    imageName = response?.public_id!
+    const response = await imageService.uploadImage(file)
+    imageName = response?.imageId
   }
 
   const newValues = replaceEmptyFields(newPost, post)
@@ -67,7 +66,7 @@ export const getRecentlyPublishedPosts = async () => {
     .populate('user', 'email username')
   return posts.map((post) => {
     if (post.image && post.image !== '') {
-      post.image = getImageUrl(post.image)
+      post.image = imageService.getImageURL(post.image)
       return post
     }
     return post
@@ -114,7 +113,7 @@ export const getPostsByUsername = async (
 
   return posts.map((post) => {
     if (post.image && post.image !== '') {
-      post.image = getImageUrl(post.image)
+      post.image = imageService.getImageURL(post.image)
       return post
     }
     return post
@@ -133,7 +132,7 @@ export const deletePostById = async (postId: string, userId: string) => {
   }
   if (post?.image && post?.image != '') {
     logger.info('Deleting image for post being deleted successfully')
-    await deleteImage(post.image)
+    await imageService.deleteImage(post.image)
   }
   await PostModel.findByIdAndDelete(postId)
   logger.info(`Post with id ${postId} has been deleted successfully`)
@@ -155,7 +154,7 @@ export const getPostById = async (
   }
 
   if (post.image && post.image !== '') {
-    post.image = getImageUrl(post.image)
+    post.image = imageService.getImageURL(post.image)
     return post
   }
 
@@ -200,6 +199,6 @@ const deletePreviousImage = async (post: Post) => {
     logger.info(
       `Deleting previous image for post and image filename ${post.image}`
     )
-    deleteImage(post.image)
+    imageService.deleteImage(post.image)
   }
 }

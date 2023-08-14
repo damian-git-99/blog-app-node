@@ -1,15 +1,19 @@
 import Mongoose from 'mongoose'
 import { EmailAlreadyExists } from '../auth/errors/EmailAlreadyExists'
 import { UsernameAlreadyExists } from '../auth/errors/UsernameAlreadyExists'
-import { encryptPassword } from '../auth/passwordUtils'
 import { InvalidOperation } from '../posts/errors/InvalidOperation'
 import { CurrentUser } from '../types/express'
 import { replaceEmptyFields } from '../utils/utils'
 import { EditUser } from './dto/EditUser'
 import { UserNotFound } from './errors/UserNotFound'
 import { UserModel } from './userModel'
-import { getImageUrl } from '../file/cloudinaryService'
 import { logger } from '../config/logger'
+import { PasswordEncoder } from '../auth/passwordEncoder/PasswordEncoder'
+import Container from 'typedi'
+import { ImageService } from '../image/ImageService'
+
+const passwordEncoder = Container.get<PasswordEncoder>('passwordEncoder')
+const imageService = Container.get<ImageService>('imageService')
 
 export const userProfile = async (id: string) => {
   logger.info(`searching user profile with id: ${id}`)
@@ -52,7 +56,7 @@ export const editProfile = async (
   }
 
   const password = newUser.password
-    ? encryptPassword(newUser.password)
+    ? passwordEncoder.encode(newUser.password)
     : user.password
   const newValues = replaceEmptyFields(newUser, user)
   return UserModel.findByIdAndUpdate(id, {
@@ -116,7 +120,7 @@ export const getFavoritePostsByUser = async (userId: string) => {
   return user?.favorites?.map((post: any) => {
     // todo: change any to Post
     if (post.image && post.image !== '') {
-      post.image = getImageUrl(post.image)
+      post.image = imageService.getImageURL(post.image)
       return post
     }
     return post

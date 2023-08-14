@@ -1,16 +1,19 @@
 import { Request, Response } from 'express'
 import * as authService from './authService'
 import { getUserById } from '../user/userService'
-import { generateToken } from './JwtUtils'
 import { UserNotFound } from '../user/errors/UserNotFound'
 import { logger } from '../config/logger'
+import Container from 'typedi'
+import { JWTService } from './jwt/JWTService'
+
+const jwtService = Container.get<JWTService>('jwtService')
 
 //@route Post /register
 export const register = async (req: Request, res: Response) => {
   const { email, password, username } = req.body
   logger.info(`User registered request`)
   const user = await authService.registerUser({ email, password, username })
-  const token = generateToken({ id: user.id, email: user.email })
+  const token = jwtService.generateToken({ id: user.id, email: user.email })
   res
     .status(201)
     .cookie('token', token, { sameSite: 'none', secure: true })
@@ -27,7 +30,7 @@ export const login = async (req: Request, res: Response) => {
   const { email, password } = req.body
   logger.info(`User logged in request: ${email}`)
   const user = await authService.login({ email, password })
-  const token = generateToken({ id: user.id, email: user.email })
+  const token = jwtService.generateToken({ id: user.id, email: user.email })
   res
     .status(200)
     .cookie('token', token, { sameSite: 'none', secure: true })
@@ -53,7 +56,7 @@ export const verifyToken = async (req: Request, res: Response) => {
   const user = await getUserById(userId)
   if (!user) throw new UserNotFound()
   logger.info(`User verified request: ${user.email}`)
-  const token = generateToken({ id: user.id, email: user.email })
+  const token = jwtService.generateToken({ id: user.id, email: user.email })
   res
     .status(200)
     .cookie('token', token, { sameSite: 'none', secure: true, signed: false })

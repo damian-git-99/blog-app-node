@@ -1,3 +1,5 @@
+import 'reflect-metadata'
+import './config/TypediContainer'
 import express from 'express'
 import cors from 'cors'
 import 'express-async-errors'
