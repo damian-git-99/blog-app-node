@@ -1,6 +1,5 @@
 import Container from 'typedi'
 import { logger } from '../config/logger'
-import { sendPasswordReset } from '../email/emailService'
 import { UserNotFound } from '../user/errors/UserNotFound'
 import { User, UserModel } from '../user/userModel'
 import { getUserByEmail, getUserByUsername } from '../user/userService'
@@ -11,9 +10,11 @@ import { InvalidLink } from './errors/InvalidLink'
 import { UsernameAlreadyExists } from './errors/UsernameAlreadyExists'
 import { JWTService } from './jwt/JWTService'
 import { PasswordEncoder } from './passwordEncoder/PasswordEncoder'
+import { EmailService } from '../email/EmailService'
 
 const jwtService = Container.get<JWTService>('jwtService')
 const passwordEncoder = Container.get<PasswordEncoder>('passwordEncoder')
+const emailService = Container.get<EmailService>('emailService')
 
 export const registerUser = async (user: User) => {
   const userExistsByEmail = await getUserByEmail(user.email)
@@ -60,7 +61,15 @@ export const recoverPassword = async (email: string) => {
   const link = `${
     process.env.frontend_domain || 'http://localhost:4000'
   }/reset-password?token=${token}`
-  await sendPasswordReset(user.email, link)
+  const html = `
+    <div>
+      <b>Please click below link to reset your password</b>
+    </div>
+    <div>
+      <a href="${link}">Reset</a>
+    </div>
+  `
+  await emailService.sendEmail(user.email, 'Password Reset', html)
   logger.info(`Password reset link sent to ${user.email} successfully`)
 }
 

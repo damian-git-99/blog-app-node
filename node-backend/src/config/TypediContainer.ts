@@ -6,3 +6,4 @@
 // Import the classes and services to be registered in the container
 import '../auth/jwt/JWTServiceImpl'
 import '../auth/passwordEncoder/PasswordEncoderBcrypt'
+import '../email/EmailServiceNodeMailer'
