@@ -9,10 +9,11 @@ import { BadCredential } from './errors/BadCredentials'
 import { EmailAlreadyExists } from './errors/EmailAlreadyExists'
 import { InvalidLink } from './errors/InvalidLink'
 import { UsernameAlreadyExists } from './errors/UsernameAlreadyExists'
-import { encryptPassword, comparePasswords } from './passwordUtils'
 import { JWTService } from './jwt/JWTService'
+import { PasswordEncoder } from './passwordEncoder/PasswordEncoder'
 
 const jwtService = Container.get<JWTService>('jwtService')
+const passwordEncoder = Container.get<PasswordEncoder>('passwordEncoder')
 
 export const registerUser = async (user: User) => {
   const userExistsByEmail = await getUserByEmail(user.email)
@@ -25,7 +26,7 @@ export const registerUser = async (user: User) => {
     throw new UsernameAlreadyExists(user.username)
   }
 
-  const hashedPassword = encryptPassword(user.password)
+  const hashedPassword = passwordEncoder.encode(user.password)
   logger.info(`User Registered successfully: ${user.email}`)
   return await UserModel.create({ ...user, password: hashedPassword })
 }
@@ -37,7 +38,7 @@ export const login = async (user: UserLogin) => {
     throw new BadCredential()
   }
 
-  if (!comparePasswords(user.password, userExists.password)) {
+  if (!passwordEncoder.matches(user.password, userExists.password)) {
     logger.warn(`Invalid login attempt for user: ${user.email}`)
     throw new BadCredential()
   }
@@ -81,7 +82,7 @@ export const resetPassword = async (token: string, password: string) => {
     if (!user) {
       throw new UserNotFound()
     }
-    const hashedPassword = encryptPassword(password)
+    const hashedPassword = passwordEncoder.encode(password)
     await UserModel.updateOne({ _id: user.id }, { password: hashedPassword })
     logger.info(`Password reset successfully: ${email} password`)
   } catch (error) {
