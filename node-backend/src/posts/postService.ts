@@ -8,7 +8,7 @@ import { Types } from 'mongoose'
 import { replaceEmptyFields } from '../utils/utils'
 import { logger } from '../config/logger'
 import Container from 'typedi'
-import { ImageService } from '../file/ImageService'
+import { ImageService } from '../image/ImageService'
 
 const imageService = Container.get<ImageService>('imageService')
 

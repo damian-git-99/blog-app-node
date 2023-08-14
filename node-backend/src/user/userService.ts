@@ -10,7 +10,7 @@ import { UserModel } from './userModel'
 import { logger } from '../config/logger'
 import { PasswordEncoder } from '../auth/passwordEncoder/PasswordEncoder'
 import Container from 'typedi'
-import { ImageService } from '../file/ImageService'
+import { ImageService } from '../image/ImageService'
 
 const passwordEncoder = Container.get<PasswordEncoder>('passwordEncoder')
 const imageService = Container.get<ImageService>('imageService')

@@ -7,4 +7,4 @@
 import '../auth/jwt/JWTServiceImpl'
 import '../auth/passwordEncoder/PasswordEncoderBcrypt'
 import '../email/EmailServiceNodeMailer'
-import '../file/ImageCloudinaryService'
+import '../image/ImageCloudinaryService'
