@@ -7,12 +7,13 @@ import { replaceEmptyFields } from '../utils/utils'
 import { EditUser } from './dto/EditUser'
 import { UserNotFound } from './errors/UserNotFound'
 import { UserModel } from './userModel'
-import { getImageUrl } from '../file/cloudinaryService'
 import { logger } from '../config/logger'
 import { PasswordEncoder } from '../auth/passwordEncoder/PasswordEncoder'
 import Container from 'typedi'
+import { ImageService } from '../file/ImageService'
 
 const passwordEncoder = Container.get<PasswordEncoder>('passwordEncoder')
+const imageService = Container.get<ImageService>('imageService')
 
 export const userProfile = async (id: string) => {
   logger.info(`searching user profile with id: ${id}`)
@@ -119,7 +120,7 @@ export const getFavoritePostsByUser = async (userId: string) => {
   return user?.favorites?.map((post: any) => {
     // todo: change any to Post
     if (post.image && post.image !== '') {
-      post.image = getImageUrl(post.image)
+      post.image = imageService.getImageURL(post.image)
       return post
     }
     return post
