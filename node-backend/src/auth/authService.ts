@@ -1,15 +1,18 @@
+import Container from 'typedi'
 import { logger } from '../config/logger'
 import { sendPasswordReset } from '../email/emailService'
 import { UserNotFound } from '../user/errors/UserNotFound'
 import { User, UserModel } from '../user/userModel'
 import { getUserByEmail, getUserByUsername } from '../user/userService'
-import { generateToken, verifyToken } from './JwtUtils'
 import { UserLogin } from './dto/UserLogin'
 import { BadCredential } from './errors/BadCredentials'
 import { EmailAlreadyExists } from './errors/EmailAlreadyExists'
 import { InvalidLink } from './errors/InvalidLink'
 import { UsernameAlreadyExists } from './errors/UsernameAlreadyExists'
 import { encryptPassword, comparePasswords } from './passwordUtils'
+import { JWTService } from './jwt/JWTService'
+
+const jwtService = Container.get<JWTService>('jwtService')
 
 export const registerUser = async (user: User) => {
   const userExistsByEmail = await getUserByEmail(user.email)
@@ -49,7 +52,7 @@ export const recoverPassword = async (email: string) => {
     throw new UserNotFound()
   }
   const FIVE_MINUTES_DURATION = 60 * 5
-  const token = generateToken(
+  const token = jwtService.generateToken(
     { id: user.id, email: user.email },
     FIVE_MINUTES_DURATION
   )
@@ -62,7 +65,7 @@ export const recoverPassword = async (email: string) => {
 
 export const resetPasswordCheck = (token: string) => {
   try {
-    verifyToken(token)
+    jwtService.verifyToken(token)
     logger.info(
       `Password reset check request: token verified successfully: ${token}`
     )
@@ -73,7 +76,7 @@ export const resetPasswordCheck = (token: string) => {
 
 export const resetPassword = async (token: string, password: string) => {
   try {
-    const { email } = verifyToken(token)
+    const { email } = jwtService.verifyToken(token)
     const user = await getUserByEmail(email)
     if (!user) {
       throw new UserNotFound()

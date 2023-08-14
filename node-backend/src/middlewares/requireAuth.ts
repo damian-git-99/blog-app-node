@@ -1,5 +1,8 @@
 import { Request, Response, NextFunction } from 'express'
-import { verifyToken } from '../auth/JwtUtils'
+import Container from 'typedi'
+import { JWTService } from '../auth/jwt/JWTService'
+
+const jwtService = Container.get<JWTService>('jwtService')
 
 export const requireAuth = (
   req: Request,
@@ -14,7 +17,7 @@ export const requireAuth = (
     return
   }
   try {
-    const payload = verifyToken(token)
+    const payload = jwtService.verifyToken(token)
     req.currentUser = payload
     next()
   } catch (err) {
