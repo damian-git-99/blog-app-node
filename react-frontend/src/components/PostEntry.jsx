@@ -1,8 +1,8 @@
 import React from 'react'
-import { formatISO9075 } from 'date-fns'
 import PropTypes from 'prop-types'
 import { Alert, Col, Row } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
+import { formatDateOrDaysAgo } from '../utils/date'
 
 export const PostEntry = ({ post }) => {
   const navigate = useNavigate()
@@ -35,7 +35,7 @@ export const PostEntry = ({ post }) => {
           <h2 className="mt-2 mt-md-0 d-inline">{post.title}</h2>
           <p className="text-muted">
             <span className="fw-bolder"><a className='btn-primary' onClick={(e) => handleUserClick(e, post?.user?.username)}>{post?.user?.username}</a></span>
-            { post.createdAt ? <time> {formatISO9075(new Date(post.createdAt))}</time> : ' unknown date' }
+            { post.createdAt ? <time> {formatDateOrDaysAgo(post.createdAt)}</time> : ' unknown date' }
           </p>
           <p>{post.summary}</p>
           <p className="bg-secondary d-inline-block px-3 text-white">

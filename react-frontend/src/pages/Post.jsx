@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react'
 import { Alert, Button, Col, Container, Row } from 'react-bootstrap'
-import { formatISO9075 } from 'date-fns'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { deletePostById, getPostById } from '../api/postApi'
 import { confirmDialog, errorMessage, successMessage } from '../utils/alerts'
@@ -9,6 +8,7 @@ import { useUserInfo } from '../hooks/useUserInfo'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Tooltip from 'react-bootstrap/Tooltip'
 import { addFavoritePost, deleteFavoritePost, isPostMarkedAsFavorite } from '../api/userApi'
+import { formatDateOrDaysAgo } from '../utils/date'
 
 export const Post = () => {
   const { postId } = useParams()
@@ -104,7 +104,7 @@ const PostHeader = ({ post, postId }) => {
           {post.isPublish === false && (
             <Alert variant="warning text-center">Post is not published</Alert>
           )}
-          <p className="fw-bold"><Link to={`/${post?.user?.username}`}>{post?.user?.username}</Link> - { post.createdAt ? <time>{formatISO9075(new Date(post.createdAt))}</time> : ' unknown date' } </p>
+          <p className="fw-bold"><Link to={`/${post?.user?.username}`}>{post?.user?.username}</Link> - { post.createdAt ? <time>{formatDateOrDaysAgo(post.createdAt, 'yyyy MMMM dd hh:mm')}</time> : ' unknown date' } </p>
           <p className="fw-light">
             {post.time_to_read} min read - category: {post.category}
           </p>
