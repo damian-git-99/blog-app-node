@@ -6,7 +6,7 @@ import { Col, Container, Row, Button, Form, Alert } from 'react-bootstrap'
 import { createPost } from '../api/postApi'
 import { errorMessage, successMessage } from '../utils/alerts'
 import { useNavigate } from 'react-router-dom'
-import { formats, modules } from './reactQuillConfigs'
+import { formats, modules } from '../config/reactQuillConfigs'
 
 export const CreatePost = () => {
   const { register, handleSubmit, formState: { errors } } = useForm()

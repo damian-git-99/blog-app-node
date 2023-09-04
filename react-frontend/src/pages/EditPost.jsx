@@ -3,10 +3,10 @@ import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Button, Col, Container, Form, Row } from 'react-bootstrap'
 import ReactQuill from 'react-quill'
-import { formats, modules } from './reactQuillConfigs'
 import { editPost, getPostById, togglePublicationStatus } from '../api/postApi'
 import { useNavigate, useParams } from 'react-router-dom'
 import { successMessage } from '../utils/alerts'
+import { formats, modules } from '../config/reactQuillConfigs'
 
 export const EditPost = () => {
   const { register, handleSubmit, reset } = useForm()
