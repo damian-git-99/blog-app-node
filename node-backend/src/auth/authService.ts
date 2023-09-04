@@ -10,7 +10,7 @@ import { InvalidLink } from './errors/InvalidLink'
 import { UsernameAlreadyExists } from './errors/UsernameAlreadyExists'
 import { JWTService } from './jwt/JWTService'
 import { PasswordEncoder } from './passwordEncoder/PasswordEncoder'
-import { EmailService } from '../email/EmailService'
+import { EmailService } from '../shared/email/EmailService'
 
 const jwtService = Container.get<JWTService>('jwtService')
 const passwordEncoder = Container.get<PasswordEncoder>('passwordEncoder')

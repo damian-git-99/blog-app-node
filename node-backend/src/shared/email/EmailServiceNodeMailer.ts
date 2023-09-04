@@ -1,6 +1,6 @@
 import { EmailService } from './EmailService'
-import { transporter } from '../config/emailTransporter'
-import { logger } from '../config/logger'
+import { transporter } from '../../config/emailTransporter'
+import { logger } from '../../config/logger'
 import { Service } from 'typedi'
 
 @Service('emailService')
