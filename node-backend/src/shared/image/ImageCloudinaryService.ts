@@ -1,7 +1,7 @@
 import { v2 as cloudinary, UploadApiResponse } from 'cloudinary'
 import { ImageService, UploadImageResponse } from './ImageService'
 import * as dotenv from 'dotenv'
-import { logger } from '../config/logger'
+import { logger } from '../../config/logger'
 import { Service } from 'typedi'
 import { isSupportedImageType } from './supportedImage'
 dotenv.config()
