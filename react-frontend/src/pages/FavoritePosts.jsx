@@ -17,8 +17,6 @@ export const FavoritePosts = () => {
       <Container className="mt-5 p-0 p-md-3">
         <h1 className='text-center'>Favorite Posts</h1>
         <Row>
-          {/* {isLoading && <p className='text-center'>Loading...</p>}
-          {error && <Alert variant="danger" className='text-center'>{error}</Alert>} */}
           {posts && posts.length === 0 && <p className='text-center'>you have no favorite posts.</p> }
           {posts &&
             posts.map((post) => <PostEntry key={post._id} post={post} />)
