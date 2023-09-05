@@ -32,7 +32,7 @@ export const Home = () => {
           {error && <Alert variant="danger" className='text-center'>{error}</Alert>}
           {posts && posts.length === 0 ? <p className='text-center'>No user has posted anything</p> : null }
           {posts &&
-            posts.map((post) => <PostEntry key={post._id} post={post} />)
+            posts.map((post) => <PostEntry key={post.id} post={post} />)
           }
         </Row>
       </Container>

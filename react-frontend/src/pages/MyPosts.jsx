@@ -58,27 +58,27 @@ export const MyPosts = () => {
             <tbody>
               {posts &&
                 posts.map((post) => (
-                  <tr key={post._id}>
+                  <tr key={post.id}>
                     <td>{post.title}</td>
                     <td>{post.category}</td>
                     <td>
                       <i
                         role="button"
-                        onClick={() => editPost(post._id)}
+                        onClick={() => editPost(post.id)}
                         className="text-primary fa-solid fa-pen"
                       ></i>
                     </td>
                     <td>
                       <i
                         role="button"
-                        onClick={() => deletePost(post._id)}
+                        onClick={() => deletePost(post.id)}
                         className="text-danger fa-solid fa-trash"
                       ></i>
                     </td>
                     <td>
                       <i
                         role="button"
-                        onClick={() => viewPost(post._id)}
+                        onClick={() => viewPost(post.id)}
                         className="text-primary fa-solid fa-magnifying-glass"
                       ></i>
                     </td>

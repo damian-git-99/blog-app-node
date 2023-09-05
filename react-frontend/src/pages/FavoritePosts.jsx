@@ -19,7 +19,7 @@ export const FavoritePosts = () => {
         <Row>
           {posts && posts.length === 0 && <p className='text-center'>you have no favorite posts.</p> }
           {posts &&
-            posts.map((post) => <PostEntry key={post._id} post={post} />)
+            posts.map((post) => <PostEntry key={post.id} post={post} />)
           }
         </Row>
       </Container>

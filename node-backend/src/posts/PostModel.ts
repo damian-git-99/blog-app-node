@@ -1,49 +1,63 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose'
 
 export interface Post {
-  user: mongoose.Types.ObjectId;
-  title: string;
-  summary: string;
-  content: string;
-  image: string | undefined;
-  category: string;
-  time_to_read: number;
-  isPublish: boolean;
+  user: mongoose.Types.ObjectId
+  title: string
+  summary: string
+  content: string
+  image: string | undefined
+  category: string
+  time_to_read: number
+  isPublish: boolean
 }
 
-const postSchema = new mongoose.Schema<Post>({
-  user: {
-    type: mongoose.Schema.Types.ObjectId, 
-    ref: 'User', 
-    required: true
+const postSchema = new mongoose.Schema<Post>(
+  {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true
+    },
+    title: {
+      type: String,
+      required: true
+    },
+    summary: {
+      type: String,
+      required: true
+    },
+    content: {
+      type: String,
+      required: true
+    },
+    image: {
+      type: String
+    },
+    category: {
+      type: String,
+      required: true
+    },
+    time_to_read: {
+      type: Number,
+      required: true
+    },
+    isPublish: {
+      type: Boolean,
+      default: false
+    }
   },
-  title: {
-    type: String,
-    required: true
-  },
-  summary: {
-    type: String,
-    required: true
-  },
-  content: {
-    type: String,
-    required: true
-  },
-  image: {
-    type: String
-  },
-  category: {
-    type: String,
-    required: true
-  },
-  time_to_read: {
-    type: Number,
-    required: true
-  },
-  isPublish: {
-    type: Boolean,
-    default: false
-  }
-}, { timestamps: true } );
+  { timestamps: true }
+)
 
-export const PostModel = mongoose.model<Post>('Post', postSchema);
+// Ensure virtual fields are serialised.
+postSchema.set('toJSON', {
+  virtuals: true,
+  versionKey: false,
+  transform: function (doc, ret) {
+    delete ret._id
+  }
+})
+
+postSchema.set('toObject', { virtuals: true })
+
+export const PostModel = mongoose.model<Post>('Post', postSchema)

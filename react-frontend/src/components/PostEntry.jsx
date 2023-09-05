@@ -12,7 +12,7 @@ export const PostEntry = ({ post }) => {
 
   const handleClick = (e) => {
     e.stopPropagation()
-    navigate('/post/' + post._id)
+    navigate('/post/' + post.id)
   }
 
   const handleUserClick = (e, username) => {

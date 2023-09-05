@@ -36,7 +36,7 @@ export const PostsByUser = () => {
             )
           : null }
         {posts &&
-          posts.map((post) => <PostEntry key={post._id} post={post} />)}
+          posts.map((post) => <PostEntry key={post.id} post={post} />)}
       </Row>
     </Container>
   )
