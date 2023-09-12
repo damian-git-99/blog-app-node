@@ -19,7 +19,7 @@ export const EditPost = () => {
 
   useEffect(() => {
     getPostById(postId).then((data) => {
-      const { content, time_to_read } = data
+      const { content, time_to_read, isPublish } = data
       reset({
         ...data,
         timeToRead: time_to_read

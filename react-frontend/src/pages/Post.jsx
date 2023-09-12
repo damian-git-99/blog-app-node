@@ -125,7 +125,7 @@ const PostHeader = ({ post, postId }) => {
         </Col>
       </Row>
 
-      {post.image !== '' && (
+      {post.image && (
         <img className="img-header img-fluid" src={post.image} alt="" />
       )}
     </div>
