@@ -66,44 +66,6 @@ The goal of this project is to build a blog application that allows users to pos
 - Mark posts as favorites:
   As a user, I want to be able to mark posts as "favorites" so that I can save them and access them later.
 
-## User stories for later
-
-- Search posts using keywords:
-  As a user, I want to be able to search for specific posts using keywords so that I can quickly find the content I am interested in.
-
-- Follow other users:
-  As a user, I want to be able to follow other users so that I can receive updates on their posts and stay up to date with their content.
-
-- Comment on other users' posts:
-  As a user, I want to be able to comment on other users' posts so that I can share my thoughts and feedback on their content.
-
-- Receive real-time notifications:
-  As a user, I want to be able to receive real-time notifications when someone comments on my posts or follows me so that I can stay informed and engaged with the app.
-
-- Report inappropriate posts or users:
-  As a user, I want to be able to report inappropriate posts or users who violate the application's policies so that I can help maintain a safe and respectful community.
-
-- Configure privacy preferences:
-  As a user, I want to be able to configure my privacy preferences to determine who can see my posts and profile so that I can control my online presence and protect my information.
-
-- View profile and statistics:
-  As a user, I want to be able to view my profile and statistics, such as the number of followers and posts I have made, so that I can track my progress on the app.
-
-- Reset password:
-  As a user, I want to be able to reset my password if I forget it, by receiving a password reset email with a unique link.
-
-- Filter feed by categories or tags:
-  As a user, I want to be able to filter the feed of published posts by specific categories or tags so that I can find the content I am interested in.
-
-- View list of liked or marked favorite posts:
-  As a user, I want to be able to view a list of my own liked posts or marked favorites so that I can easily access my favorite content.
-
-- Report inappropriate comments:
-  As a user, I want to be able to report a comment or user who has left inappropriate or offensive comments on my posts.
-
-- View followers and followings:
-  As a user, I want to be able to view a list of my followers and followings, and unfollow users if desired, so that I can manage my relationships on the app.
-
 ## Architecture
 
 The application will be designed using the client-server architecture. The backend will be built on Node.js and will use a MongoDB database to store the data. The frontend will be built in React and will communicate with the backend through a RESTful API. Additionally, to store the images of the products, we will be using Cloudinary, a cloud-based media management solution that offers a scalable and reliable platform for image and video storage, optimization, and delivery. Cloudinary will allow us to easily manage and manipulate the images, as well as optimize their size and format for fast loading on the frontend.
