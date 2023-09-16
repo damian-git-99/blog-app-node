@@ -13,16 +13,11 @@ import Comments from '../components/Comments'
 import CommentForm from '../components/CommentForm'
 
 export const Post = () => {
+  const { state } = useUserInfo()
+  const { userInfo } = state
   const { postId } = useParams()
   const [post, setPost] = useState(undefined)
-
-  const comments = [
-    { id: 1, author: 'XXXX', content: 'Hello World!', date: '01/01/2021' },
-    { id: 1, author: 'XXXX', content: 'Hello World!', date: '01/01/2021' },
-    { id: 1, author: 'XXXX', content: 'dasdsassadds', date: '01/01/2021' },
-    { id: 1, author: 'XXXX', content: 'Hello World!', date: '01/01/2021' },
-    { id: 1, author: 'XXXX', content: 'Hello World!', date: '01/01/2021' }
-  ]
+  const [commentCreated, setCommentCreated] = useState('')
 
   useEffect(() => {
     getPostById(postId)
@@ -32,7 +27,7 @@ export const Post = () => {
       .catch((error) => {
         console.log(error)
       })
-  }, [])
+  }, [commentCreated])
 
   return (
     <Container className="mt-5 animate__animated animate__fadeIn">
@@ -45,11 +40,13 @@ export const Post = () => {
             <Col md={10} className="mt-5">
               <PostContent post={post} />
             </Col>
-            <Col md={10} className="mt-5">
-              <CommentForm />
-            </Col>
+            { userInfo && (
+              <Col md={10} className="mt-5">
+                <CommentForm postId={postId} setCommentCreated={setCommentCreated} />
+              </Col>
+            ) }
             <Col md={10} className="mt-5 mb-5">
-              <Comments comments={comments} />
+              <Comments comments={post?.comments} />
             </Col>
           </>
         )}
