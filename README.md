@@ -66,6 +66,8 @@ The goal of this project is to build a blog application that allows users to pos
 - Mark posts as favorites:
   As a user, I want to be able to mark posts as "favorites" so that I can save them and access them later.
 
+- Comment on other users' posts: As a user, I want to be able to comment on other users' posts so that I can share my thoughts and feedback on their content.
+
 ## Architecture
 
 The application will be designed using the client-server architecture. The backend will be built on Node.js and will use a MongoDB database to store the data. The frontend will be built in React and will communicate with the backend through a RESTful API. Additionally, to store the images of the products, we will be using Cloudinary, a cloud-based media management solution that offers a scalable and reliable platform for image and video storage, optimization, and delivery. Cloudinary will allow us to easily manage and manipulate the images, as well as optimize their size and format for fast loading on the frontend.
