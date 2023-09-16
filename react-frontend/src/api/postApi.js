@@ -41,3 +41,8 @@ export const togglePublicationStatus = async (postId) => {
   const { data } = await axios.put(`${URL}/toggle-status/${postId}`, '')
   return data
 }
+
+export const createComment = async (postId, comment) => {
+  const { data } = await axios.post(`${URL}/${postId}/comments`, comment)
+  return data
+}
