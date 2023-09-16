@@ -143,7 +143,10 @@ export const getPostById = async (
   currentUser?: CurrentUser
 ) => {
   logger.info(`Searching for post by ID ${postId}`)
-  const post = await PostModel.findById(postId).populate('user', 'username')
+  const post = await PostModel.findById(postId)
+    .populate('user', 'username')
+    .populate('comments.user', 'username')
+    .populate('comments', 'message createdAt')
 
   if (!post) {
     throw new PostNotFound(postId)
@@ -177,6 +180,22 @@ export const togglePublicationStatus = async (
   logger.info(
     `Publication status for post with id ${postId} has been toggled successfully`
   )
+}
+
+export const createComment = async (
+  currentUser: CurrentUser,
+  postId: string,
+  message: string
+) => {
+  const post = await PostModel.findById(postId)
+  if (!post) throw new PostNotFound(postId)
+  const newComment = {
+    user: currentUser.id,
+    message
+  }
+  console.log(newComment)
+  await post.updateOne({ $addToSet: { comments: newComment } })
+  logger.info(`Comment added successfully for post with id ${postId}`)
 }
 
 const checkPostUnpublishedAccess = async (
