@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { Form, Button } from 'react-bootstrap'
+import { createComment } from '../api/postApi'
 
-const CommentForm = () => {
+const CommentForm = ({ postId, setCommentCreated }) => {
   const [content, setContent] = useState('')
 
   const handleSubmit = (e) => {
@@ -10,10 +11,14 @@ const CommentForm = () => {
       return
     }
     const newComment = {
-      content,
-      date: new Date().toLocaleString()
+      message: content
     }
-    // call api
+    createComment(postId, newComment)
+      .then((_) => {
+        // update posts array in parent component
+        setCommentCreated(content)
+      })
+      .catch((err) => console.log(err))
     setContent('')
   }
 
