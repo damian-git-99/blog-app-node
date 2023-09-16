@@ -1,5 +1,6 @@
 import React from 'react'
 import { ListGroup, ListGroupItem } from 'react-bootstrap'
+import { formatDateOrDaysAgo } from '../utils/date'
 
 const Comment = ({ author, content, date }) => {
   return (
@@ -7,13 +8,17 @@ const Comment = ({ author, content, date }) => {
       <div className="comment">
         <h5 className="comment-author">{author}</h5>
         <p className="comment-content">{content}</p>
-        <p className="comment-date">{date}</p>
+        <p className="comment-date">{formatDateOrDaysAgo(date, 'yyyy MMMM dd hh:mm:ss')}</p>
       </div>
     </ListGroupItem>
   )
 }
 
 const Comments = ({ comments = [] }) => {
+  comments.sort((a, b) => {
+    return new Date(b.createdAt) - new Date(a.createdAt)
+  })
+
   return (
     <div className="comments">
       <h2>Comments</h2>
@@ -25,10 +30,10 @@ const Comments = ({ comments = [] }) => {
         <ListGroup>
           {comments.map((comment) => (
             <Comment
-              key={comment.id}
-              author={comment.author}
-              content={comment.content}
-              date={comment.date}
+              key={comment._id}
+              author={comment.user.username}
+              content={comment.message}
+              date={comment.createdAt}
             />
           ))}
         </ListGroup>
