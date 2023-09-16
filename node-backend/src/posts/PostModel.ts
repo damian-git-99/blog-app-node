@@ -9,7 +9,23 @@ export interface Post {
   category: string
   time_to_read: number
   isPublish: boolean
+  comments: mongoose.Types.ObjectId[]
 }
+
+interface Comment {
+  message: string
+  createdAt: Date
+  user: mongoose.Types.ObjectId
+}
+
+export const commentSchema = new mongoose.Schema<Comment>({
+  message: String,
+  createdAt: { type: Date, default: Date.now },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }
+})
 
 const postSchema = new mongoose.Schema<Post>(
   {
@@ -44,7 +60,8 @@ const postSchema = new mongoose.Schema<Post>(
     isPublish: {
       type: Boolean,
       default: false
-    }
+    },
+    comments: [commentSchema]
   },
   { timestamps: true }
 )

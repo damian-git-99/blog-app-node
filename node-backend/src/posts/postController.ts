@@ -76,3 +76,12 @@ export const getPostsByUsername = async (req: Request, res: Response) => {
   const posts = await postService.getPostsByUsername(username, req.currentUser)
   res.json(posts)
 }
+
+//@route POST posts/:id/comments
+export const createComment = async (req: Request, res: Response) => {
+  const postId = req.params.id
+  const message = req.body.message
+  logger.info(`Creating comment request for post ${postId}`)
+  await postService.createComment(req.currentUser!, postId, message)
+  res.send('ok')
+}

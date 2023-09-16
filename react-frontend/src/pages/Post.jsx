@@ -9,10 +9,15 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Tooltip from 'react-bootstrap/Tooltip'
 import { addFavoritePost, deleteFavoritePost, isPostMarkedAsFavorite } from '../api/userApi'
 import { formatDateOrDaysAgo } from '../utils/date'
+import Comments from '../components/Comments'
+import CommentForm from '../components/CommentForm'
 
 export const Post = () => {
+  const { state } = useUserInfo()
+  const { userInfo } = state
   const { postId } = useParams()
   const [post, setPost] = useState(undefined)
+  const [commentCreated, setCommentCreated] = useState('')
 
   useEffect(() => {
     getPostById(postId)
@@ -22,20 +27,28 @@ export const Post = () => {
       .catch((error) => {
         console.log(error)
       })
-  }, [])
+  }, [commentCreated])
 
   return (
     <Container className="mt-5 animate__animated animate__fadeIn">
       <Row className="justify-content-center">
         {post && (
-          <div>
-            <Col md={12}>
+          <>
+            <Col md={10}>
               <PostHeader post={post} postId={postId} />
             </Col>
-            <Col md={12} className="mt-5">
+            <Col md={10} className="mt-5">
               <PostContent post={post} />
             </Col>
-          </div>
+            { userInfo && (
+              <Col md={10} className="mt-5">
+                <CommentForm postId={postId} setCommentCreated={setCommentCreated} />
+              </Col>
+            ) }
+            <Col md={10} className="mt-5 mb-5">
+              <Comments comments={post?.comments} />
+            </Col>
+          </>
         )}
       </Row>
     </Container>
