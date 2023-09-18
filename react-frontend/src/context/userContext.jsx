@@ -65,6 +65,23 @@ export const UserContextProvider = (props) => {
     }
   }
 
+  const loginWithData = async (userData) => {
+    try {
+      dispatch({
+        type: LoginTypes.loading
+      })
+      dispatch({
+        type: LoginTypes.success,
+        payload: userData
+      })
+    } catch (error) {
+      dispatch({
+        type: LoginTypes.error,
+        payload: error.message
+      })
+    }
+  }
+
   const logout = async () => {
     await logoutRequest()
     dispatch({
@@ -91,7 +108,7 @@ export const UserContextProvider = (props) => {
   }
 
   return (
-    <UserContext.Provider value={{ state, login, logout, verifyToken, register }}>
+    <UserContext.Provider value={{ state, login, logout, verifyToken, register, loginWithData }}>
       {props.children}
     </UserContext.Provider>
   )

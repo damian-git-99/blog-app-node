@@ -1,14 +1,16 @@
 /* eslint-disable react/no-unescaped-entities */
+import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google'
 import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { Container, Col, Row, Form, Button, Alert } from 'react-bootstrap'
 import { useNavigate, Link } from 'react-router-dom'
 import { errorMessage } from '../utils/alerts'
 import { useUserInfo } from '../hooks/useUserInfo'
+import { googleSignInRequest } from '../api/authApi'
 
 export const Login = () => {
   const navigate = useNavigate()
-  const { state, login } = useUserInfo()
+  const { state, login, loginWithData } = useUserInfo()
   const { userInfo, login: { error, loading } } = state
   const { register, handleSubmit, formState: { errors } } = useForm()
   const isValidForm = Object.keys(errors).length === 0
@@ -26,6 +28,11 @@ export const Login = () => {
   const onSubmit = ({ email, password }) => {
     if (!isValidForm) return
     login(email, password)
+  }
+
+  const onGoogleSignin = async (credentialResponse) => {
+    const userData = await googleSignInRequest(credentialResponse.credential)
+    loginWithData(userData)
   }
 
   return (
@@ -65,6 +72,16 @@ export const Login = () => {
             <Link className="text-dark" to="/forgot-password">
               Forgot Password
             </Link>
+          </div>
+          <div className='mt-3'>
+          <GoogleOAuthProvider clientId={import.meta.env.VITE_google_client_id}>
+              <GoogleLogin
+                onSuccess={onGoogleSignin}
+                onError={() => {
+                  console.log('Login Failed')
+                }}
+              />
+            </GoogleOAuthProvider>
           </div>
         </Col>
       </Row>

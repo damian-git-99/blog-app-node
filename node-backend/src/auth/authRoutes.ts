@@ -6,7 +6,8 @@ import {
   verifyToken,
   recoverPassword,
   resetPassword,
-  resetPasswordCheck
+  resetPasswordCheck,
+  googleSignIn
 } from './authController'
 import { validateFields } from '../middlewares/expressValidator'
 import { body } from 'express-validator'
@@ -42,6 +43,15 @@ router.post(
     validateFields
   ],
   login
+)
+
+router.post(
+  '/google',
+  [
+    body('clientId', 'El id_token is necessary').not().isEmpty(),
+    validateFields
+  ],
+  googleSignIn
 )
 
 router.post('/logout', logout)

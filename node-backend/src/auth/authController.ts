@@ -41,6 +41,21 @@ export const login = async (req: Request, res: Response) => {
     })
 }
 
+//@route Post /google
+export const googleSignIn = async (req: Request, res: Response) => {
+  const { clientId } = req.body
+  const user = await authService.googleSignin(clientId)
+  const token = jwtService.generateToken({ id: user.id, email: user.email })
+  res
+    .status(200)
+    .cookie('token', token, { sameSite: 'none', secure: true })
+    .json({
+      email: user.email,
+      username: user.username,
+      id: user.id
+    })
+}
+
 //@route Post /logout
 export const logout = async (req: Request, res: Response) => {
   const token = req.cookies['token']

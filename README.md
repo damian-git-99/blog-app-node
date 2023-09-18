@@ -33,6 +33,9 @@ The goal of this project is to build a blog application that allows users to pos
 - User login:
   As a registered user, I want to be able to log in to the application using my username and password so that I can access my account and use the app.
 
+- Login with Google:
+  As a user, I want the option to log in to the application using my Google account so that I can access my account conveniently and securely.
+
 - Secure authentication:
   As a user, I want my authentication to be done securely using bcrypt and session tokens, so that my information is protected from unauthorized access.
 

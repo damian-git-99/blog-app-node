@@ -11,6 +11,8 @@ import { UsernameAlreadyExists } from './errors/UsernameAlreadyExists'
 import { JWTService } from './jwt/JWTService'
 import { PasswordEncoder } from './passwordEncoder/PasswordEncoder'
 import { EmailService } from '../shared/email/EmailService'
+import { googleVerify } from './helpers/googleVerify'
+import crypto from 'crypto'
 
 const jwtService = Container.get<JWTService>('jwtService')
 const passwordEncoder = Container.get<PasswordEncoder>('passwordEncoder')
@@ -45,6 +47,25 @@ export const login = async (user: UserLogin) => {
   }
 
   logger.info(`Login successful: ${user.email}`)
+  return userExists
+}
+
+export const googleSignin = async (idToken: string) => {
+  const { name, email } = await googleVerify(idToken)
+
+  const userExists = await getUserByEmail(email!)
+
+  if (!userExists) {
+    // todo: handle username already exist
+    const newUser: User = {
+      username: name!,
+      email: email!,
+      password: crypto.randomBytes(8).toString('hex')
+    }
+
+    return await registerUser(newUser)
+  }
+
   return userExists
 }
 
