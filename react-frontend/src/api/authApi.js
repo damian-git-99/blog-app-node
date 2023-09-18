@@ -12,6 +12,11 @@ export const loginRequest = async (user) => {
   return data
 }
 
+export const googleSignInRequest = async (clientId) => {
+  const { data } = await axios.post(`${URL}/google`, { clientId })
+  return data
+}
+
 export const logoutRequest = async (user) => {
   const { data } = await axios.post(`${URL}/logout`, user)
   return data

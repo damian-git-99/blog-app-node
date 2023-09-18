@@ -1,17 +1,18 @@
 import React, { useEffect } from 'react'
+import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google'
 import { useForm } from 'react-hook-form'
 import { Container, Col, Row, Form, Button, Alert } from 'react-bootstrap'
 import { useNavigate, Link } from 'react-router-dom'
 import { errorMessage } from '../utils/alerts'
 import { useUserInfo } from '../hooks/useUserInfo'
+import { googleSignInRequest } from '../api/authApi'
 
 export const Register = () => {
   const navigate = useNavigate()
-  const { state, register: registerUser } = useUserInfo()
+  const { state, register: registerUser, loginWithData } = useUserInfo()
   const { userInfo, register: { error, loading } } = state
   const { register, handleSubmit, formState: { errors } } = useForm()
   const isValidForm = Object.keys(errors).length === 0
-
   useEffect(() => {
     if (userInfo) {
       navigate('/')
@@ -29,6 +30,11 @@ export const Register = () => {
       return
     }
     registerUser({ ...data })
+  }
+
+  const onGoogleSignin = async (credentialResponse) => {
+    const userData = await googleSignInRequest(credentialResponse.credential)
+    loginWithData(userData)
   }
 
   return (
@@ -75,9 +81,20 @@ export const Register = () => {
               Register
             </Button>
           </Form>
-          <Link className="text-dark" to="/login">
-            I have an account
-          </Link>
+          <div className='d-flex justify-content-between mb-5'>
+            <Link className="text-dark" to="/login">
+              I have an account
+            </Link>
+            <GoogleOAuthProvider clientId={import.meta.env.VITE_google_client_id}>
+                <GoogleLogin
+                  onSuccess={onGoogleSignin}
+                  onError={() => {
+                    console.log('Login Failed')
+                  }}
+                />
+            </GoogleOAuthProvider>
+          </div>
+
         </Col>
       </Row>
     </Container>
