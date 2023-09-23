@@ -72,4 +72,4 @@ router.post(
   resetPassword
 )
 
-export { router as authRouter }
+export default router

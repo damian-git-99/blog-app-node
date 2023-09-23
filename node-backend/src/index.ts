@@ -7,14 +7,12 @@ import cookieParser from 'cookie-parser'
 import helmet from 'helmet'
 import mongooseSanitize from 'express-mongo-sanitize'
 const { xss } = require('express-xss-sanitizer')
-import { authRouter } from './auth/authRoutes'
 import { connectDB } from './config/dbConfig'
 import { errorHandler } from './middlewares/errorHandler'
-import { userRouter } from './user/userRoutes'
-import { postRouter } from './posts/postRoutes'
 import { corsOptions } from './config/corsConfig'
 import './config/logger'
 import { logger } from './config/logger'
+import loadRoutes from './config/loadRoutesConfig'
 
 const app = express()
 
@@ -32,12 +30,11 @@ app.use(helmet())
 app.use(cors(corsOptions))
 app.use(express.json())
 app.use(cookieParser())
-app.use(authRouter)
-app.use('/users', userRouter)
-app.use('/posts', postRouter)
+
 app.use(errorHandler)
 
-app.listen(port, () => {
+app.listen(port, async () => {
   logger.info(`listening on port ${port}!`)
-  connectDB()
+  await connectDB()
+  await loadRoutes(app, __dirname)
 })

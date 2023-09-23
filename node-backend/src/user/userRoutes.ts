@@ -12,9 +12,9 @@ import { validateFields } from '../middlewares/expressValidator'
 import { body } from 'express-validator'
 const router = express.Router()
 
-router.get('/profile', requireAuth, userProfileController)
+router.get(`/users/profile`, requireAuth, userProfileController)
 router.put(
-  '/profile/:id',
+  '/users/profile/:id',
   [
     body('email').optional().isEmail().withMessage('E-mail is not valid'),
     validateFields
@@ -23,9 +23,17 @@ router.put(
   editProfile
 )
 
-router.post('/add-favorite-post/:postId', requireAuth, addFavoritePost)
-router.delete('/delete-favorite-post/:postId', requireAuth, deleteFavoritePost)
-router.get('/is-favorite-post/:postId', requireAuth, isPostMarkedAsFavorite)
-router.get('/favorite-posts', requireAuth, getFavoritePostsByUser)
+router.post(`/users/add-favorite-post/:postId`, requireAuth, addFavoritePost)
+router.delete(
+  `/users/delete-favorite-post/:postId`,
+  requireAuth,
+  deleteFavoritePost
+)
+router.get(
+  `/users/is-favorite-post/:postId`,
+  requireAuth,
+  isPostMarkedAsFavorite
+)
+router.get(`/users/favorite-posts`, requireAuth, getFavoritePostsByUser)
 
-export { router as userRouter }
+export default router

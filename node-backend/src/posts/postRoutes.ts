@@ -10,7 +10,7 @@ const router = express.Router()
 const upload = multer()
 
 router.post(
-  '/',
+  '/posts',
   [requireAuth, upload.single('file')],
   [
     body('title', 'Title is required').not().isEmpty(),
@@ -23,22 +23,27 @@ router.post(
   postController.createPost
 )
 
-router.get('/', postController.getRecentlyPublishedPosts)
-router.get('/my-posts', requireAuth, postController.getMyPosts)
-router.delete('/:id', requireAuth, postController.deletePostById)
-router.get('/:id', checkToken, postController.getPostById)
-router.put('/:id', requireAuth, upload.single('file'), postController.editPost)
+router.get('/posts', postController.getRecentlyPublishedPosts)
+router.get('/posts/my-posts', requireAuth, postController.getMyPosts)
+router.delete('/posts/:id', requireAuth, postController.deletePostById)
+router.get('/posts/:id', checkToken, postController.getPostById)
 router.put(
-  '/toggle-status/:id',
+  '/posts/:id',
+  requireAuth,
+  upload.single('file'),
+  postController.editPost
+)
+router.put(
+  '/posts/toggle-status/:id',
   requireAuth,
   postController.togglePublicationStatus
 )
 router.get(
-  '/by-username/:username',
+  '/posts/by-username/:username',
   checkToken,
   postController.getPostsByUsername
 )
 
-router.post('/:id/comments', requireAuth, postController.createComment)
+router.post('/posts/:id/comments', requireAuth, postController.createComment)
 
-export { router as postRouter }
+export default router
