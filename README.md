@@ -129,7 +129,7 @@ To use Cloudinary in your application, you'll need to create an account and obta
   - `JWT_SECRET`
   - `PORT`: by default 4000
 - Run `docker compose up`
-- App runs on `http://localhost:5173/`
+- App runs on `http://localhost:3000/`
 
 ## Run The Application Manually
 

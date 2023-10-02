@@ -6,7 +6,6 @@ export interface Post {
   summary: string
   content: string
   image: string | undefined
-  category: string
   time_to_read: number
   isPublish: boolean
   comments: mongoose.Types.ObjectId[]
@@ -49,10 +48,6 @@ const postSchema = new mongoose.Schema<Post>(
     },
     image: {
       type: String
-    },
-    category: {
-      type: String,
-      required: true
     },
     time_to_read: {
       type: Number,

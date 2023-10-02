@@ -12,13 +12,14 @@ services:
       - cloudinary_cloud_name=clodinary_cloud_name
       - cloudinary_api_key=clodinary_api_key
       - cloudinary_api_secret=clodinary_api_secret
-      - cors_domain=http://localhost:5173
-      - frontend_domain=http://localhost:5173
+      - cors_domain=http://localhost:3000
+      - frontend_domain=http://localhost:3000
       - backend_domain=http://localhost:4000
       - email_host=
       - email_port=
       - email_user=
       - email_pass=
+      - google_client_id=
     ports:
       - 4000:4000
   mongo:
@@ -38,7 +39,7 @@ services:
       context: ./react-frontend
       dockerfile: ./Dockerfile
     ports:
-      - 5173:5173
+      - 3000:80
     depends_on:
       - backend-node
 volumes:

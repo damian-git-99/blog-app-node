@@ -10,4 +10,4 @@ export const corsOptions = {
   methods: ['POST', 'PUT', 'GET', 'DELETE']
 }
 
-logger.info('CORS configuration loaded')
+logger.info('CORS configuration loaded: ' + cors_domain)
