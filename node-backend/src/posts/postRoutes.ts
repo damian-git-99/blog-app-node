@@ -16,7 +16,6 @@ router.post(
     body('title', 'Title is required').not().isEmpty(),
     body('summary', 'Summary is required').not().isEmpty(),
     body('content', 'Content is required').not().isEmpty(),
-    body('category', 'Category is required').not().isEmpty(),
     body('time_to_read', 'Time to read is required').not().isEmpty(),
     validateFields
   ],

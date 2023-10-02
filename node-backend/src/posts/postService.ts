@@ -62,7 +62,7 @@ export const editPost = async (
 export const getRecentlyPublishedPosts = async () => {
   logger.info('searching recently published posts')
   const posts = await PostModel.find({ isPublish: true })
-    .select('title category time_to_read summary image createdAt')
+    .select('title time_to_read summary image createdAt categories')
     .populate('user', 'email username')
   return posts.map((post) => {
     if (post.image && post.image !== '') {
@@ -75,7 +75,7 @@ export const getRecentlyPublishedPosts = async () => {
 
 export const getMyPostsById = (userId: string) => {
   logger.info(`Searching posts for user with id ${userId}`)
-  return PostModel.find({ user: userId }).select('title category isPublish')
+  return PostModel.find({ user: userId }).select('title categories isPublish')
 }
 
 export const getPostsByUsername = async (
@@ -108,7 +108,7 @@ export const getPostsByUsername = async (
   }
 
   const posts = await PostModel.find(query)
-    .select('title category time_to_read summary image createdAt isPublish')
+    .select('title categories time_to_read summary image createdAt isPublish')
     .populate('user', 'email username')
 
   return posts.map((post) => {

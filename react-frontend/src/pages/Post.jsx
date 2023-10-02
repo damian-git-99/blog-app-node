@@ -40,6 +40,9 @@ export const Post = () => {
             <Col md={10} className="mt-5">
               <PostContent post={post} />
             </Col>
+            <Col md={10} className="mt-5">
+              <PostCategories post={post} />
+            </Col>
             { userInfo && (
               <Col md={10} className="mt-5">
                 <CommentForm postId={postId} setCommentCreated={setCommentCreated} />
@@ -117,9 +120,11 @@ const PostHeader = ({ post, postId }) => {
           {post.isPublish === false && (
             <Alert variant="warning text-center">Post is not published</Alert>
           )}
-          <p className="fw-bold"><Link to={`/${post?.user?.username}`}>{post?.user?.username}</Link> - { post.createdAt ? <time>{formatDateOrDaysAgo(post.createdAt, 'yyyy MMMM dd hh:mm')}</time> : ' unknown date' } </p>
+          <p className="fw-bold">
+            <Link to={`/${post?.user?.username}`}>{post?.user?.username}</Link> - { post.createdAt ? <time>{formatDateOrDaysAgo(post.createdAt, 'yyyy MMMM dd hh:mm')}</time> : ' unknown date' }
+          </p>
           <p className="fw-light">
-            {post.time_to_read} min read - category: {post.category}
+            {post.time_to_read} min read
           </p>
         </Col>
 
@@ -142,6 +147,16 @@ const PostHeader = ({ post, postId }) => {
         <img className="img-header img-fluid" src={post.image} alt="" />
       )}
     </div>
+  )
+}
+
+export const PostCategories = ({ post }) => {
+  if (!post.categories) return null
+  const categories = post.categories
+  return (
+    categories.map((category, index) => (
+      <span key={index} className="badge bg-secondary fs-6 me-2 mb-2">{category}</span>
+    ))
   )
 }
 

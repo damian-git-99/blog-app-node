@@ -16,6 +16,7 @@ export const EditPost = () => {
   const [isPublish, setIsPublish] = useState(false)
   const [content, setContent] = useState('')
   const [files, setFiles] = useState('')
+  const [categories, setCategories] = useState([])
 
   useEffect(() => {
     getPostById(postId).then((data) => {
@@ -26,18 +27,35 @@ export const EditPost = () => {
       })
       setIsPublish(isPublish)
       setContent(content)
+      setCategories(data.categories)
     })
   }, [])
 
+  const handleAddCategory = () => {
+    setCategories([...categories, ''])
+  }
+
+  const handleCategoryChange = (index, value) => {
+    const updatedCategories = [...categories]
+    updatedCategories[index] = value
+    setCategories(updatedCategories)
+  }
+
+  const handleRemoveCategory = (index) => {
+    const updatedCategories = [...categories]
+    updatedCategories.splice(index, 1)
+    setCategories(updatedCategories)
+  }
+
   const onSubmit = (formData) => {
-    const { title, summary, category, timeToRead } = formData
+    const { title, summary, timeToRead } = formData
     const data = new FormData()
     data.set('title', title)
     data.set('summary', summary)
     data.set('content', content)
-    data.set('category', category)
     data.set('time_to_read', timeToRead)
     data.set('file', files[0])
+    data.set('categories', JSON.stringify(categories))
     editPost(postId, data)
       .then((data) => {
         successMessage('Post edited successfully')
@@ -88,13 +106,47 @@ export const EditPost = () => {
               value={content}
               onChange={(e) => setContent(e)}
             />
-            <Form.Control
+            {/* <Form.Control
               name="category"
               className="mb-3 fw-light"
               type="text"
               placeholder="Category..."
               {...register('category', { required: true })}
-            />
+            /> */}
+            <div className='mt-5 d-flex'>
+              <Button
+                  className='align-self-start me-5'
+                  type="button"
+                  size="sm"
+                  variant="outline-secondary py-2 fs-5 mb-2"
+                  onClick={handleAddCategory}
+                >
+                Add Category
+              </Button>
+              <div className='flex-grow-1'>
+                {categories.map((category, index) => (
+                   <div key={index} className="d-flex align-items-center">
+                   <Form.Control
+                     name={`category-${index}`}
+                     className="mb-3 fw-light mt-2 flex-grow-1"
+                     type="text"
+                     placeholder="Category..."
+                     value={category}
+                     onChange={(e) => handleCategoryChange(index, e.target.value)}
+                   />
+                   <Button
+                     type="button"
+                     size="sm"
+                     variant="outline-danger"
+                     className="ms-3 mb-2"
+                     onClick={() => handleRemoveCategory(index)}
+                   >
+                     X
+                   </Button>
+                 </div>
+                ))}
+              </div>
+            </div>
             <Form.Control
               name="timeToRead"
               className="mb-3 fw-light"

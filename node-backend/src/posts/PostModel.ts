@@ -10,6 +10,7 @@ export interface Post {
   time_to_read: number
   isPublish: boolean
   comments: mongoose.Types.ObjectId[]
+  categories: string[]
 }
 
 interface Comment {
@@ -61,7 +62,8 @@ const postSchema = new mongoose.Schema<Post>(
       type: Boolean,
       default: false
     },
-    comments: [commentSchema]
+    comments: [commentSchema],
+    categories: [{ type: String, maxlength: 20 }]
   },
   { timestamps: true }
 )

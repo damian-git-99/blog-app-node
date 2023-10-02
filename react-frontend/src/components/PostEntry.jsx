@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Alert, Col, Row } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import { formatDateOrDaysAgo } from '../utils/date'
+import { PostCategories } from '../pages'
 
 export const PostEntry = ({ post }) => {
   const navigate = useNavigate()
@@ -49,12 +50,9 @@ export const PostEntry = ({ post }) => {
                 )}
           </p>
           <p>{post.summary}</p>
-          <p className="bg-secondary d-inline-block px-3 text-white">
-            {post.category}
-          </p>
+          <PostCategories post={post} />
           <p
-            style={{ marginLeft: '20px' }}
-            className="ml-3 bg-secondary d-inline-block px-3 text-white"
+            className="bg-secondary d-inline-block px-3 text-white"
           >
             {post.time_to_read} min read
           </p>

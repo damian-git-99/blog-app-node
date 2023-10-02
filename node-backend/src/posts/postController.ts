@@ -6,6 +6,8 @@ import { logger } from '../config/logger'
 export const createPost = async (req: Request, res: Response) => {
   const userId = req.currentUser?.id!
   logger.info(`Creating new post request from user ${userId}`)
+  const categories = JSON.parse(req.body.categories)
+  req.body.categories = categories
   await postService.cratePost(userId, { ...req.body }, req.file)
   res.send('ok')
 }
@@ -56,6 +58,8 @@ export const getPostById = async (req: Request, res: Response) => {
 export const editPost = async (req: Request, res: Response) => {
   const postId = req.params.id
   logger.info(`Editing post request: ${postId}`)
+  const categories = JSON.parse(req.body.categories)
+  req.body.categories = categories
   await postService.editPost(postId, req.body, req.file, req.currentUser!)
   res.send('ok')
 }
