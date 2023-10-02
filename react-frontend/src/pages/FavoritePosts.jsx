@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { PostEntry } from '../components/PostEntry'
-import { Container, Row } from 'react-bootstrap'
+import { Col, Container, Row } from 'react-bootstrap'
 import { getFavoritePosts } from '../api/userApi'
 
 export const FavoritePosts = () => {
@@ -19,7 +19,11 @@ export const FavoritePosts = () => {
         <Row>
           {posts && posts.length === 0 && <p className='text-center'>you have no favorite posts.</p> }
           {posts &&
-            posts.map((post) => <PostEntry key={post.id} post={post} />)
+            posts.map((post) => (
+              <Col md={12} key={post.id}>
+                <PostEntry post={post} />
+              </Col>
+            ))
           }
         </Row>
       </Container>

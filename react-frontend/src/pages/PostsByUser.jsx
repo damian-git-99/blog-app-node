@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Container, Row } from 'react-bootstrap'
+import { Col, Container, Row } from 'react-bootstrap'
 import { PostEntry } from '../components/PostEntry'
 import { getPostsByUsername } from '../api/postApi'
 import { useParams } from 'react-router-dom'
@@ -36,7 +36,11 @@ export const PostsByUser = () => {
             )
           : null }
         {posts &&
-          posts.map((post) => <PostEntry key={post.id} post={post} />)}
+          posts.map((post) => (
+            <Col md={12} key={post.id}>
+              <PostEntry post={post} />
+            </Col>
+          ))}
       </Row>
     </Container>
   )

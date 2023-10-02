@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { PostEntry } from '../components/PostEntry'
-import { Alert, Container, Row } from 'react-bootstrap'
+import { Alert, Col, Container, Row } from 'react-bootstrap'
 import { getPosts } from '../api/postApi'
 
 export const Home = () => {
@@ -28,12 +28,23 @@ export const Home = () => {
     <main className="mt-5 animate__animated animate__fadeIn">
       <Container className="mt-5 p-0 p-md-3">
         <Row>
-          {isLoading && <p className='text-center'>Loading...</p>}
-          {error && <Alert variant="danger" className='text-center'>{error}</Alert>}
-          {posts && posts.length === 0 ? <p className='text-center'>No user has posted anything</p> : null }
+          {isLoading && <p className="text-center">Loading...</p>}
+          {error && (
+            <Alert variant="danger" className="text-center">
+              {error}
+            </Alert>
+          )}
+          {posts && posts.length === 0
+            ? (
+            <p className="text-center">No user has posted anything</p>
+              )
+            : null}
           {posts &&
-            posts.map((post) => <PostEntry key={post.id} post={post} />)
-          }
+            posts.map((post) => (
+              <Col md={12} key={post.id}>
+                <PostEntry post={post} />
+              </Col>
+            ))}
         </Row>
       </Container>
     </main>
