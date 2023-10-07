@@ -1,8 +1,8 @@
-import Container from 'typedi'
-import { logger } from '../config/logger'
-import { UserNotFound } from '../user/errors/UserNotFound'
-import { User, UserModel } from '../user/userModel'
+import crypto from 'crypto'
+import { Container } from 'typedi'
+import { UserModel, User } from '../user/userModel'
 import { getUserByEmail, getUserByUsername } from '../user/userService'
+import { UserNotFound } from '../user/errors/UserNotFound'
 import { UserLogin } from './dto/UserLogin'
 import { BadCredential } from './errors/BadCredentials'
 import { EmailAlreadyExists } from './errors/EmailAlreadyExists'
@@ -12,7 +12,7 @@ import { JWTService } from './jwt/JWTService'
 import { PasswordEncoder } from './passwordEncoder/PasswordEncoder'
 import { EmailService } from '../shared/email/EmailService'
 import { googleVerify } from './helpers/googleVerify'
-import crypto from 'crypto'
+import { logger } from '../config/logger'
 
 const jwtService = Container.get<JWTService>('jwtService')
 const passwordEncoder = Container.get<PasswordEncoder>('passwordEncoder')

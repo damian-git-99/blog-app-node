@@ -58,6 +58,7 @@ export const editProfile = async (
   const password = newUser.password
     ? passwordEncoder.encode(newUser.password)
     : user.password
+
   const newValues = replaceEmptyFields(newUser, user)
   return UserModel.findByIdAndUpdate(id, {
     ...newValues,
@@ -97,6 +98,7 @@ export const deleteFavoritePost = async (userId: string, postId: string) => {
   )
   const user = await getUserById(userId)
   const objectId = new Mongoose.Types.ObjectId(postId)
+  // todo: check if post belongs to currentUser
   await user?.updateOne({ $pull: { favorites: objectId } })
 }
 
@@ -116,7 +118,9 @@ export const getFavoritePostsByUser = async (userId: string) => {
   logger.info(
     `searching user with id: ${userId} and getting their favorite posts`
   )
-  const user = await UserModel.findById(userId).populate('favorites')
+  const user = await UserModel.findById(userId)
+    .populate('favorites')
+    .sort({ createdAt: -1 })
   return user?.favorites?.map((post: any) => {
     // todo: change any to Post
     if (post.image && post.image !== '') {

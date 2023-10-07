@@ -2,6 +2,7 @@ import { JWTService, TokenPayload } from './JWTService'
 import { Service } from 'typedi'
 import jwt from 'jsonwebtoken'
 import * as dotenv from 'dotenv'
+
 dotenv.config()
 
 const key = process.env.JWT_SECRET

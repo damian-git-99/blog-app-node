@@ -8,7 +8,7 @@ export const createPost = async (req: Request, res: Response) => {
   logger.info(`Creating new post request from user ${userId}`)
   const categories = JSON.parse(req.body.categories)
   req.body.categories = categories
-  await postService.cratePost(userId, { ...req.body }, req.file)
+  await postService.createPost(req.currentUser!, { ...req.body }, req.file)
   res.send('ok')
 }
 
@@ -40,7 +40,7 @@ export const deletePostById = async (req: Request, res: Response) => {
   const userId = req.currentUser?.id!
   const postId = req.params.id
   logger.info(`Deleting post request post: ${postId} for user ${userId}`)
-  const posts = await postService.deletePostById(postId, userId)
+  const posts = await postService.deletePostById(postId, req.currentUser!)
   res.json({
     posts
   })
@@ -50,7 +50,7 @@ export const deletePostById = async (req: Request, res: Response) => {
 export const getPostById = async (req: Request, res: Response) => {
   const postId = req.params.id
   logger.info(`Getting post request: ${postId}`)
-  const post = await postService.getPostById(postId, req.currentUser)
+  const post = await postService.getPostById(postId, req.currentUser!)
   res.json(post)
 }
 

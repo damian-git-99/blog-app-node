@@ -1,4 +1,5 @@
 import express from 'express'
+import { body } from 'express-validator'
 import {
   login,
   logout,
@@ -10,8 +11,8 @@ import {
   googleSignIn
 } from './authController'
 import { validateFields } from '../middlewares/expressValidator'
-import { body } from 'express-validator'
 import { requireAuth } from '../middlewares/requireAuth'
+
 const router = express.Router()
 
 router.post(
