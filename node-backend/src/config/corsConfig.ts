@@ -1,8 +1,8 @@
-import * as dotenv from 'dotenv'
+import config from 'config'
 import { logger } from './logger'
-dotenv.config()
 
-const cors_domain = process.env.cors_domain || 'http://localhost:5173'
+const cors_domain =
+  (config.get('cors_domain') as string) || 'http://localhost:5173'
 
 export const corsOptions = {
   origin: cors_domain,

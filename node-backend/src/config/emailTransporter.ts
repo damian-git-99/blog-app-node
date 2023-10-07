@@ -1,13 +1,21 @@
 import nodemailer from 'nodemailer'
-import * as dotenv from 'dotenv'
-dotenv.config()
+import config from 'config'
+
+interface config {
+  host: string
+  port: number
+  user: string
+  password: string
+}
+
+const emailConfig = config.get<config>('email')
 
 const options = {
-  host: process.env.email_host,
-  port: parseInt(process.env.email_port || '0'),
+  host: emailConfig.host,
+  port: emailConfig.port,
   auth: {
-    user: process.env.email_user,
-    pass: process.env.email_pass
+    user: emailConfig.user,
+    pass: emailConfig.password
   }
 }
 

@@ -20,7 +20,8 @@ RUN npm install --omit-dev
 FROM node:18-alpine as production
 WORKDIR /app
 COPY package.json .
+COPY ./config ./config
 COPY --from=build /app/build ./build
 COPY --from=devendencies-prod /app/node_modules ./node_modules
 EXPOSE 3000
-CMD ["node", "build/index.js"]
+CMD ["npm", "run", "start"]

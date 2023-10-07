@@ -1,7 +1,4 @@
-import * as dotenv from 'dotenv'
 const { createLogger, format, transports, addColors } = require('winston')
-
-dotenv.config()
 
 const logLevels = {
   fatal: 0,
@@ -33,7 +30,7 @@ export const logger = createLogger({
   transports: [new transports.File({ filename: 'logs/app.log' })]
 })
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV != 'prod') {
   logger.add(
     new transports.Console({
       format: format.combine(format.colorize({ all: true }), myCustomFormat)
