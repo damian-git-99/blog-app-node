@@ -2,12 +2,15 @@ import express from 'express'
 import multer from 'multer'
 import { requireAuth } from '../middlewares/requireAuth'
 import { checkToken } from '../middlewares/checkToken'
-import * as postController from './postController'
 import { body } from 'express-validator'
 import { validateFields } from '../middlewares/expressValidator'
+import Container from 'typedi'
+import { PostController } from './postController'
 
 const router = express.Router()
 const upload = multer()
+
+const postController = Container.get(PostController)
 
 router.post(
   '/',
