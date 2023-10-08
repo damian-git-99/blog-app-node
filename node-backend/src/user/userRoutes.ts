@@ -1,18 +1,14 @@
 import express from 'express'
-import {
-  editProfile,
-  userProfileController,
-  addFavoritePost,
-  deleteFavoritePost,
-  isPostMarkedAsFavorite,
-  getFavoritePostsByUser
-} from './userController'
+import { UserController } from './userController'
 import { requireAuth } from '../middlewares/requireAuth'
 import { validateFields } from '../middlewares/expressValidator'
 import { body } from 'express-validator'
+import Container from 'typedi'
 const router = express.Router()
 
-router.get('/profile', requireAuth, userProfileController)
+const userController = Container.get(UserController)
+
+router.get('/profile', requireAuth, userController.userProfileController)
 router.put(
   '/profile/:id',
   [
@@ -20,12 +16,28 @@ router.put(
     validateFields
   ],
   requireAuth,
-  editProfile
+  userController.editProfile
 )
 
-router.post('/add-favorite-post/:postId', requireAuth, addFavoritePost)
-router.delete('/delete-favorite-post/:postId', requireAuth, deleteFavoritePost)
-router.get('/is-favorite-post/:postId', requireAuth, isPostMarkedAsFavorite)
-router.get('/favorite-posts', requireAuth, getFavoritePostsByUser)
+router.post(
+  '/add-favorite-post/:postId',
+  requireAuth,
+  userController.addFavoritePost
+)
+router.delete(
+  '/delete-favorite-post/:postId',
+  requireAuth,
+  userController.deleteFavoritePost
+)
+router.get(
+  '/is-favorite-post/:postId',
+  requireAuth,
+  userController.isPostMarkedAsFavorite
+)
+router.get(
+  '/favorite-posts',
+  requireAuth,
+  userController.getFavoritePostsByUser
+)
 
 export { router as userRouter }
