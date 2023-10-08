@@ -1,6 +1,6 @@
 import 'reflect-metadata'
 import './config/TypediContainer'
-import express from 'express'
+import express, { Application } from 'express'
 import cors from 'cors'
 import 'express-async-errors'
 import cookieParser from 'cookie-parser'
@@ -16,28 +16,45 @@ import { corsOptions } from './config/corsConfig'
 import './config/logger'
 import { logger } from './config/logger'
 
-const app = express()
+class Server {
+  private app: Application
 
-const port = process.env.PORT || 4000
+  constructor() {
+    this.app = express()
+    this.setupMiddlewares()
+    this.setupRoutes()
+    this.startServer()
+  }
 
-// Data sanitization against mongo query injection
-app.use(mongooseSanitize())
+  private setupMiddlewares() {
+    // Data sanitization against mongo query injection
+    this.app.use(mongooseSanitize())
 
-// Data sanitization against site script XSS
-app.use(xss())
+    // Data sanitization against site script XSS
+    this.app.use(xss())
 
-// Secure Headers HTTP
-app.use(helmet())
+    // Secure Headers HTTP
+    this.app.use(helmet())
 
-app.use(cors(corsOptions))
-app.use(express.json())
-app.use(cookieParser())
-app.use(authRouter)
-app.use('/users', userRouter)
-app.use('/posts', postRouter)
-app.use(errorHandler)
+    this.app.use(cors(corsOptions))
+    this.app.use(express.json())
+    this.app.use(cookieParser())
+  }
 
-app.listen(port, () => {
-  logger.info(`listening on port ${port}!`)
-  connectDB()
-})
+  private setupRoutes() {
+    this.app.use(authRouter)
+    this.app.use('/users', userRouter)
+    this.app.use('/posts', postRouter)
+    this.app.use(errorHandler)
+  }
+
+  private startServer() {
+    const port = process.env.PORT || 4000
+    this.app.listen(port, () => {
+      logger.info(`listening on port ${port}!`)
+      connectDB()
+    })
+  }
+}
+
+new Server()
