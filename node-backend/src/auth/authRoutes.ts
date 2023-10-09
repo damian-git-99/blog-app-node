@@ -22,7 +22,7 @@ router.post(
     body('password').notEmpty().withMessage('Password is required'),
     validateFields
   ],
-  authController.register
+  authController.register.bind(authController)
 )
 
 router.post(
@@ -37,7 +37,7 @@ router.post(
     body('password').notEmpty().withMessage('Password is required'),
     validateFields
   ],
-  authController.login
+  authController.login.bind(authController)
 )
 
 router.post(
@@ -46,25 +46,32 @@ router.post(
     body('clientId', 'El id_token is necessary').not().isEmpty(),
     validateFields
   ],
-  authController.googleSignIn
+  authController.googleSignIn.bind(authController)
 )
 
 router.post('/logout', authController.logout)
 
-router.get('/verify-token', requireAuth, authController.verifyToken)
+router.get(
+  '/verify-token',
+  requireAuth,
+  authController.verifyToken.bind(authController)
+)
 router.post(
   '/recover-password',
   [body('email').notEmpty().withMessage('Email is required'), validateFields],
-  authController.recoverPassword
+  authController.recoverPassword.bind(authController)
 )
-router.get('/reset-password/:token', authController.resetPasswordCheck)
+router.get(
+  '/reset-password/:token',
+  authController.resetPasswordCheck.bind(authController)
+)
 router.post(
   '/reset-password/:token',
   [
     body('password').notEmpty().withMessage('Password is required'),
     validateFields
   ],
-  authController.resetPassword
+  authController.resetPassword.bind(authController)
 )
 
 export { router as authRouter }

@@ -13,7 +13,7 @@ cloudinary.config({
 })
 
 @Service('imageService')
-class ImageCloudinaryService implements ImageService {
+export class ImageCloudinaryService implements ImageService {
   async uploadImage(file: Express.Multer.File): Promise<UploadImageResponse> {
     try {
       if (!isSupportedImageType(file)) {

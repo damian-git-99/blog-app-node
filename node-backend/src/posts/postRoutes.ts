@@ -22,25 +22,44 @@ router.post(
     body('time_to_read', 'Time to read is required').not().isEmpty(),
     validateFields
   ],
-  postController.createPost
+  postController.createPost.bind(postController)
 )
 
-router.get('/', postController.getRecentlyPublishedPosts)
-router.get('/my-posts', requireAuth, postController.getMyPosts)
-router.delete('/:id', requireAuth, postController.deletePostById)
-router.get('/:id', checkToken, postController.getPostById)
-router.put('/:id', requireAuth, upload.single('file'), postController.editPost)
+router.get('/', (req, res) =>
+  postController.getRecentlyPublishedPosts(req, res)
+)
+router.get(
+  '/my-posts',
+  requireAuth,
+  postController.getMyPosts.bind(postController)
+)
+router.delete(
+  '/:id',
+  requireAuth,
+  postController.deletePostById.bind(postController)
+)
+router.get('/:id', checkToken, postController.getPostById.bind(postController))
+router.put(
+  '/:id',
+  requireAuth,
+  upload.single('file'),
+  postController.editPost.bind(postController)
+)
 router.put(
   '/toggle-status/:id',
   requireAuth,
-  postController.togglePublicationStatus
+  postController.togglePublicationStatus.bind(postController)
 )
 router.get(
   '/by-username/:username',
   checkToken,
-  postController.getPostsByUsername
+  postController.getPostsByUsername.bind(postController)
 )
 
-router.post('/:id/comments', requireAuth, postController.createComment)
+router.post(
+  '/:id/comments',
+  requireAuth,
+  postController.createComment.bind(postController)
+)
 
 export { router as postRouter }

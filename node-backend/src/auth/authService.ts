@@ -1,5 +1,5 @@
 import crypto from 'crypto'
-import { Service } from 'typedi'
+import { Inject, Service } from 'typedi'
 import { UserModel, User } from '../user/userModel'
 import { UserNotFound } from '../user/errors/UserNotFound'
 import { UserLogin } from './dto/UserLogin'
@@ -17,8 +17,11 @@ import { UserService } from '../user/userService'
 @Service()
 export class AuthService {
   constructor(
+    @Inject('jwtService')
     private jwtService: JWTService,
+    @Inject('passwordEncoder')
     private passwordEncoder: PasswordEncoder,
+    @Inject('emailService')
     private emailService: EmailService,
     private userService: UserService
   ) {}
@@ -35,7 +38,6 @@ export class AuthService {
     if (userExistsByUsername) {
       throw new UsernameAlreadyExists(user.username)
     }
-
     const hashedPassword = this.passwordEncoder.encode(user.password)
     logger.info(`User Registered successfully: ${user.email}`)
     return await UserModel.create({ ...user, password: hashedPassword })
