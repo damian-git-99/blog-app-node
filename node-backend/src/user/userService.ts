@@ -9,14 +9,14 @@ import { UserNotFound } from './errors/UserNotFound'
 import { UserModel } from './userModel'
 import { logger } from '../config/logger'
 import { PasswordEncoder } from '../auth/passwordEncoder/PasswordEncoder'
-import { Service } from 'typedi'
+import { Inject, Service } from 'typedi'
 import { ImageService } from '../shared/image/ImageService'
 
 @Service()
 export class UserService {
   constructor(
     private passwordEncoder: PasswordEncoder,
-    private imageService: ImageService
+    @Inject('imageService') private imageService: ImageService
   ) {}
   public async userProfile(id: string) {
     logger.info(`searching user profile with id: ${id}`)

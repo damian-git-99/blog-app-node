@@ -1,16 +1,17 @@
 import { Request, Response } from 'express'
 import { UserNotFound } from '../user/errors/UserNotFound'
 import { logger } from '../config/logger'
-import { Service } from 'typedi'
+import Container, { Service } from 'typedi'
 import { JWTService } from './jwt/JWTService'
 import { AuthService } from './authService'
 import { UserService } from '../user/userService'
+import { Inject } from 'typedi'
 
 @Service()
 export class AuthController {
   constructor(
     private authService: AuthService,
-    private jwtService: JWTService,
+    @Inject('jwtService') private jwtService: JWTService,
     private userService: UserService
   ) {}
 
