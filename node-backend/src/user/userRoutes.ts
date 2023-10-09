@@ -8,7 +8,11 @@ const router = express.Router()
 
 const userController = Container.get(UserController)
 
-router.get('/profile', requireAuth, userController.userProfileController)
+router.get(
+  '/profile',
+  requireAuth,
+  userController.userProfileController.bind(userController)
+)
 router.put(
   '/profile/:id',
   [
@@ -16,28 +20,28 @@ router.put(
     validateFields
   ],
   requireAuth,
-  userController.editProfile
+  userController.editProfile.bind(userController)
 )
 
 router.post(
   '/add-favorite-post/:postId',
   requireAuth,
-  userController.addFavoritePost
+  userController.addFavoritePost.bind(userController)
 )
 router.delete(
   '/delete-favorite-post/:postId',
   requireAuth,
-  userController.deleteFavoritePost
+  userController.deleteFavoritePost.bind(userController)
 )
 router.get(
   '/is-favorite-post/:postId',
   requireAuth,
-  userController.isPostMarkedAsFavorite
+  userController.isPostMarkedAsFavorite.bind(userController)
 )
 router.get(
   '/favorite-posts',
   requireAuth,
-  userController.getFavoritePostsByUser
+  userController.getFavoritePostsByUser.bind(userController)
 )
 
 export { router as userRouter }

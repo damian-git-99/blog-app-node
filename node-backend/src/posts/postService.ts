@@ -1,5 +1,5 @@
 import { Types } from 'mongoose'
-import { Service } from 'typedi'
+import { Inject, Service } from 'typedi'
 import { replaceEmptyFields } from '../shared/utils'
 import { logger } from '../config/logger'
 import { UserNotFound } from '../user/errors/UserNotFound'
@@ -13,9 +13,11 @@ import { UserService } from '../user/userService'
 @Service()
 export class PostService {
   constructor(
-    private imageService: ImageService,
+    @Inject('imageService')
+    private imageService: ImageService, // todo: error : circular references ???
     private userService: UserService
   ) {}
+
   public async createPost(
     currentUser: CurrentUser,
     post: Post,
@@ -62,13 +64,14 @@ export class PostService {
     return updatedPost
   }
 
-  public async getRecentlyPublishedPosts() {
+  async getRecentlyPublishedPosts() {
     logger.info('searching recently published posts')
+
     const posts = await PostModel.find({ isPublish: true })
       .select('title time_to_read summary image createdAt categories')
       .populate('user', 'email username')
       .sort({ createdAt: -1 })
-    return posts.map(this.updatePostImageIfNotEmpty)
+    return posts.map((post) => this.updatePostImageIfNotEmpty(post))
   }
 
   public async getMyPostsById(userId: string) {
@@ -108,7 +111,7 @@ export class PostService {
       .populate('user', 'email username')
       .sort({ createdAt: -1 })
 
-    return posts.map(this.updatePostImageIfNotEmpty)
+    return posts.map((post) => this.updatePostImageIfNotEmpty(post))
   }
 
   public async deletePostById(postId: string, currentUser: CurrentUser) {
@@ -189,7 +192,7 @@ export class PostService {
    * @param {Post} post
    * @returns the updated post object.
    */
-  private async updatePostImageIfNotEmpty(post: Post) {
+  public updatePostImageIfNotEmpty(post: Post) {
     // Check if the post has a non-empty image and update it with the image full image URL.
     if (post.image && post.image !== '') {
       post.image = this.imageService.getImageURL(post.image)

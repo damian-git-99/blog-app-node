@@ -29,7 +29,7 @@ export class PostController {
   public async getRecentlyPublishedPosts(req: Request, res: Response) {
     logger.info('Getting recently published posts request')
     const posts = await this.postService.getRecentlyPublishedPosts()
-    res.json({ posts })
+    return res.json({ posts })
   }
 
   /**
