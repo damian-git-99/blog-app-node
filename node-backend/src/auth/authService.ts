@@ -23,6 +23,7 @@ export class AuthService {
     private passwordEncoder: PasswordEncoder,
     @Inject('emailService')
     private emailService: EmailService,
+    @Inject('userService')
     private userService: UserService
   ) {}
 
@@ -85,7 +86,7 @@ export class AuthService {
     }
     const FIVE_MINUTES_DURATION = 60 * 5
     const token = this.jwtService.generateToken(
-      { id: user.id, email: user.email },
+      { id: user.id!, email: user.email },
       FIVE_MINUTES_DURATION
     )
     const link = `${

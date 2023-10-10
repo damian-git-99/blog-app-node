@@ -15,6 +15,7 @@ export class PostService {
   constructor(
     @Inject('imageService')
     private imageService: ImageService, // todo: error : circular references ???
+    @Inject('userService')
     private userService: UserService
   ) {}
 
@@ -87,13 +88,13 @@ export class PostService {
       throw new UserNotFound()
     }
 
-    let query: { user: Types.ObjectId; isPublish?: boolean } = {
-      user: user._id,
+    let query: { user: string; isPublish?: boolean } = {
+      user: user.id!,
       isPublish: true
     }
 
     // todo: refactor improve readability
-    if (currentUser?.id === user.id.toString()) {
+    if (currentUser?.id === user.id!) {
       /*This code checks if the currentUser (authenticated user) is the same as the username parameter. 
       If they are the same, it means that all posts (published and unpublished) will be returned. 
       If they are not the same, it means that only published posts will be returned. 
@@ -102,7 +103,7 @@ export class PostService {
         'Searching for all posts, given that authenticated user is the same as the username'
       )
       query = {
-        user: user._id
+        user: user.id!
       }
     }
 

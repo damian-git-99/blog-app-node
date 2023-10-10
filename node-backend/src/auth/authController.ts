@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import { UserNotFound } from '../user/errors/UserNotFound'
 import { logger } from '../config/logger'
-import Container, { Service } from 'typedi'
+import { Service } from 'typedi'
 import { JWTService } from './jwt/JWTService'
 import { AuthService } from './authService'
 import { UserService } from '../user/userService'
@@ -12,6 +12,7 @@ export class AuthController {
   constructor(
     private authService: AuthService,
     @Inject('jwtService') private jwtService: JWTService,
+    @Inject('userService')
     private userService: UserService
   ) {}
 
@@ -49,7 +50,7 @@ export class AuthController {
     logger.info(`User logged in request: ${email}`)
     const user = await this.authService.login({ email, password })
     const token = this.jwtService.generateToken({
-      id: user.id,
+      id: user.id!,
       email: user.email
     })
     res
@@ -102,7 +103,7 @@ export class AuthController {
     if (!user) throw new UserNotFound()
     logger.info(`User verified request: ${user.email}`)
     const token = this.jwtService.generateToken({
-      id: user.id,
+      id: user.id!,
       email: user.email
     })
     res
