@@ -1,11 +1,11 @@
 import { Request, Response } from 'express'
-import { Service } from 'typedi'
+import { Inject, Service } from 'typedi'
 import { logger } from '../config/logger'
 import { UserService } from './userService'
 
 @Service()
 export class UserController {
-  constructor(private userService: UserService) {}
+  constructor(@Inject('userService') private userService: UserService) {}
 
   /**
    * @route Get users/profile

@@ -1,11 +1,11 @@
 import { Request, Response } from 'express'
 import { logger } from '../config/logger'
 import { PostService } from './postService'
-import { Service } from 'typedi'
+import { Inject, Service } from 'typedi'
 
 @Service()
 export class PostController {
-  constructor(private postService: PostService) {}
+  constructor(@Inject('postService') private postService: PostService) {}
 
   /**
    * @route POST posts/
