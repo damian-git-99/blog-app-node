@@ -10,8 +10,6 @@ export const googleVerify = async (idToken: string) => {
 
   const payload = response.getPayload()
 
-  console.log(payload)
-
   if (!payload) {
     throw new Error('Invalid token')
   }
