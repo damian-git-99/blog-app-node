@@ -148,7 +148,8 @@ export class UserServiceImpl implements UserService {
       id: userDocument._id,
       username: userDocument.username,
       email: userDocument.email,
-      password: userDocument.password
+      password: userDocument.password,
+      favorites: userDocument?.favorites
     } as User
   }
 }

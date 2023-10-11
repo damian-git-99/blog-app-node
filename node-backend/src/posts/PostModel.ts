@@ -1,6 +1,7 @@
 import mongoose from 'mongoose'
 
 export interface Post {
+  id?: string
   user: mongoose.Types.ObjectId
   title: string
   summary: string
@@ -10,6 +11,8 @@ export interface Post {
   isPublish: boolean
   comments: mongoose.Types.ObjectId[]
   categories: string[]
+  createdAt?: Date
+  updatedAt?: Date
 }
 
 interface Comment {
