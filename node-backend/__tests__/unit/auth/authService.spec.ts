@@ -1,4 +1,5 @@
 import { AuthServiceImpl } from '../../../src/auth/authServiceImpl'
+import { UserModel } from '../../../src/user/userModel'
 import { JWTService } from '../../../src/auth/jwt/JWTService'
 import { EmailService } from '../../../src/shared/email/EmailService'
 import { PasswordEncoder } from '../../../src/auth/passwordEncoder/PasswordEncoder'
@@ -9,6 +10,8 @@ import {
   jwtServiceMockShared,
   passwordEncoderMockShared
 } from '../shared'
+import { EmailAlreadyExists } from '../../../src/auth/errors/EmailAlreadyExists'
+import { UsernameAlreadyExists } from '../../../src/auth/errors/UsernameAlreadyExists'
 
 jest.mock('../../../src/user/userService')
 
@@ -16,7 +19,6 @@ let jwtServiceMock: JWTService
 let passwordEncoderMock: PasswordEncoder
 let emailServiceMock: EmailService
 let userServiceMock: UserService
-
 let authService: AuthServiceImpl
 
 beforeEach(async () => {
@@ -66,6 +68,69 @@ beforeEach(async () => {
     emailServiceMock,
     userServiceMock
   )
+})
+
+describe('register user tests', () => {
+  it('should register user', async () => {
+    const mockUser = {
+      id: '1',
+      email: 'XXXXXXXXXXXXXXX@ggmail.com',
+      username: 'XXXXXXXXXXXXXXX',
+      password: 'XXXXXXXXXXXXXXX',
+      createdAt: 'XXXXXXXXXXXXXXX',
+      updatedAt: 'XXXXXXXXXXXXXXX'
+    }
+
+    userServiceMock.getUserByEmail = jest.fn(async () => {
+      return undefined
+    })
+
+    userServiceMock.getUserByUsername = jest.fn(async () => {
+      return undefined
+    })
+
+    const createSpy = jest
+      .spyOn(UserModel, 'create')
+      .mockReturnValueOnce(mockUser as any)
+
+    await authService.registerUser(mockUser)
+
+    expect(createSpy).toBeCalled()
+    expect(userServiceMock.getUserByEmail).toBeCalled()
+    expect(userServiceMock.getUserByUsername).toBeCalled()
+    expect(passwordEncoderMock.encode).toBeCalled()
+    createSpy.mockRestore()
+  })
+  it('should throw EmailAlreadyExists when email already exists', async () => {
+    const mockUser = {
+      id: '1',
+      email: 'XXXXXXXXXXXXXXX@ggmail.com',
+      username: 'XXXXXXXXXXXXXXX',
+      password: 'XXXXXXXXXXXXXXX',
+      createdAt: 'XXXXXXXXXXXXXXX',
+      updatedAt: 'XXXXXXXXXXXXXXX'
+    }
+    await expect(authService.registerUser(mockUser)).rejects.toThrow(
+      EmailAlreadyExists
+    )
+    expect(passwordEncoderMock.encode).not.toBeCalled()
+  })
+  it('should throw UsernameAlreadyExists when username already exists', async () => {
+    const mockUser = {
+      id: '1',
+      email: 'XXXXXXXXXXXXXXX@ggmail.com',
+      username: 'XXXXXXXXXXXXXXX',
+      password: 'XXXXXXXXXXXXXXX',
+      createdAt: 'XXXXXXXXXXXXXXX',
+      updatedAt: 'XXXXXXXXXXXXXXX'
+    }
+    userServiceMock.getUserByEmail = jest.fn(async () => {
+      return undefined
+    })
+    await expect(authService.registerUser(mockUser)).rejects.toThrow(
+      UsernameAlreadyExists
+    )
+  })
 })
 
 describe('recoverPassword tests', () => {
