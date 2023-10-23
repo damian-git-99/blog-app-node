@@ -13,15 +13,13 @@ import {
 import { EmailAlreadyExists } from '../../../src/auth/errors/EmailAlreadyExists'
 import { UsernameAlreadyExists } from '../../../src/auth/errors/UsernameAlreadyExists'
 
-jest.mock('../../../src/user/userService')
-
 let jwtServiceMock: JWTService
 let passwordEncoderMock: PasswordEncoder
 let emailServiceMock: EmailService
 let userServiceMock: UserService
 let authService: AuthServiceImpl
 
-beforeEach(async () => {
+beforeEach(() => {
   jest.resetAllMocks()
   jwtServiceMock = jwtServiceMockShared
   passwordEncoderMock = passwordEncoderMockShared
@@ -61,7 +59,7 @@ beforeEach(async () => {
       return []
     })
   }
-
+  console.log(jwtServiceMock)
   authService = new AuthServiceImpl(
     jwtServiceMock,
     passwordEncoderMock,
