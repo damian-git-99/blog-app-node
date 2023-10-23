@@ -16,8 +16,10 @@ import { replaceEmptyFields } from '../shared/utils'
 @Service('userService')
 export class UserServiceImpl implements UserService {
   constructor(
+    @Inject('passwordEncoder')
     private passwordEncoder: PasswordEncoder,
-    @Inject('imageService') private imageService: ImageService
+    @Inject('imageService')
+    private imageService: ImageService
   ) {}
 
   public async userProfile(id: string) {
