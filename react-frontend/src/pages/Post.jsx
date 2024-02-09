@@ -7,7 +7,11 @@ import { confirmDialog, errorMessage, successMessage } from '../utils/alerts'
 import { useUserInfo } from '../hooks/useUserInfo'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Tooltip from 'react-bootstrap/Tooltip'
-import { addFavoritePost, deleteFavoritePost, isPostMarkedAsFavorite } from '../api/userApi'
+import {
+  addFavoritePost,
+  deleteFavoritePost,
+  isPostMarkedAsFavorite
+} from '../api/userApi'
 import { formatDateOrDaysAgo } from '../utils/date'
 import Comments from '../components/Comments'
 import CommentForm from '../components/CommentForm'
@@ -21,7 +25,7 @@ export const Post = () => {
 
   useEffect(() => {
     getPostById(postId)
-      .then(data => {
+      .then((data) => {
         setPost(data)
       })
       .catch((error) => {
@@ -43,11 +47,14 @@ export const Post = () => {
             <Col md={10} className="mt-5">
               <PostCategories post={post} />
             </Col>
-            { userInfo && (
+            {userInfo && (
               <Col md={10} className="mt-5">
-                <CommentForm postId={postId} setCommentCreated={setCommentCreated} />
+                <CommentForm
+                  postId={postId}
+                  setCommentCreated={setCommentCreated}
+                />
               </Col>
-            ) }
+            )}
             <Col md={10} className="mt-5 mb-5">
               <Comments comments={post?.comments} />
             </Col>
@@ -66,17 +73,16 @@ const PostHeader = ({ post, postId }) => {
 
   useEffect(() => {
     if (userInfo && userInfo.email) {
-      isPostMarkedAsFavorite(postId)
-        .then(data => {
-          const { isMarkedAsFavorite } = data
-          setIsFavorite(isMarkedAsFavorite)
-        })
+      isPostMarkedAsFavorite(postId).then((data) => {
+        const { isMarkedAsFavorite } = data
+        setIsFavorite(isMarkedAsFavorite)
+      })
     }
   }, [postId])
 
   const renderTooltip = (props) => (
     <Tooltip id="button-tooltip" {...props}>
-      { isFavorite ? 'Unmark as favorite' : 'Mark as favorite' }
+      {isFavorite ? 'Unmark as favorite' : 'Mark as favorite'}
     </Tooltip>
   )
 
@@ -106,45 +112,61 @@ const PostHeader = ({ post, postId }) => {
   return (
     <div>
       <h1 className="text-center mb-5 fw-bold fs-1">{post.title}</h1>
-      {
-        (userInfo && userInfo.username && userInfo.username === post.user.username) &&
-          (
+      {userInfo &&
+        userInfo.username &&
+        userInfo.username === post.user.username && (
           <div>
-            <Button onClick={editPost} variant='primary mb-3'>Edit Post</Button>
-            <Button onClick={deletePost} variant='danger mb-3 mx-1'>Delete post</Button>
+            <Button onClick={editPost} variant="primary mb-3">
+              Edit Post
+            </Button>
+            <Button onClick={deletePost} variant="danger mb-3 mx-1">
+              Delete post
+            </Button>
           </div>
-          )
-      }
-      <Row className='justify-content-between'>
+        )}
+      <Row className="justify-content-between">
         <Col md={6}>
           {post.isPublish === false && (
             <Alert variant="warning text-center">Post is not published</Alert>
           )}
           <p className="fw-bold">
-            <Link to={`/${post?.user?.username}`}>{post?.user?.username}</Link> - { post.createdAt ? <time>{formatDateOrDaysAgo(post.createdAt, 'yyyy MMMM dd hh:mm')}</time> : ' unknown date' }
+            <Link to={`/${post?.user?.username}`}>{post?.user?.username}</Link>{' '}
+            -{' '}
+            {post.createdAt ? (
+              <time>
+                {formatDateOrDaysAgo(post.createdAt, 'yyyy MMMM dd hh:mm')}
+              </time>
+            ) : (
+              ' unknown date'
+            )}
           </p>
-          <p className="fw-light">
-            {post.time_to_read} min read
-          </p>
+          <p className="fw-light">{post.time_to_read} min read</p>
         </Col>
 
         <Col md={1} className="d-block d-md-flex justify-content-end">
-          { userInfo && <OverlayTrigger
+          {userInfo && (
+            <OverlayTrigger
               placement="top"
               delay={{ show: 250, hide: 400 }}
               overlay={renderTooltip}
             >
               <a onClick={markPostAsFavorite}>
-                { isFavorite && <i className="bi bi-star-fill fs-4 text-warning text-right"></i> }
-                { !isFavorite && <i className="bi bi-star fs-4 text-warning text-right"></i> }
+                {isFavorite && (
+                  <i className="bi bi-star-fill fs-4 text-warning text-right"></i>
+                )}
+                {!isFavorite && (
+                  <i className="bi bi-star fs-4 text-warning text-right"></i>
+                )}
               </a>
             </OverlayTrigger>
-          }
+          )}
         </Col>
       </Row>
 
       {post.image && (
-        <img className="img-header img-fluid" src={post.image} alt="" />
+        <div className="img-header-container">
+          <img className="img-header" src={post.image} alt="" />
+        </div>
       )}
     </div>
   )
@@ -153,11 +175,11 @@ const PostHeader = ({ post, postId }) => {
 export const PostCategories = ({ post }) => {
   if (!post.categories) return null
   const categories = post.categories
-  return (
-    categories.map((category, index) => (
-      <span key={index} className="badge bg-secondary me-2">{category}</span>
-    ))
-  )
+  return categories.map((category, index) => (
+    <span key={index} className="badge bg-secondary me-2">
+      {category}
+    </span>
+  ))
 }
 
 const PostContent = ({ post }) => {
