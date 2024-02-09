@@ -9,11 +9,11 @@ h2 {
   font-weight: 700;
 }
 
-.img {
-  height: 12rem;
+/* .img {
+  height: 14rem;
   width: 100%;
-  object-fit: contain;
-}
+  object-fit: cover;
+} */
 
 .img-header {
   height: 26rem;

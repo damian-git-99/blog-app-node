@@ -155,7 +155,7 @@ export const PostCategories = ({ post }) => {
   const categories = post.categories
   return (
     categories.map((category, index) => (
-      <span key={index} className="badge bg-secondary fs-6 me-2 mb-2">{category}</span>
+      <span key={index} className="badge bg-secondary me-2">{category}</span>
     ))
   )
 }
