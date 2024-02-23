@@ -21,7 +21,8 @@
     "react-hook-form": "^7.43.9",
     "react-quill": "^2.0.0",
     "react-router-dom": "^6.6.1",
-    "sweetalert2": "11.4.38"
+    "sweetalert2": "11.4.38",
+    "zustand": "^4.5.1"
   },
   "devDependencies": {
     "@types/react": "^18.0.27",
