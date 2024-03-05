@@ -4,7 +4,7 @@ import {
   logoutRequest,
   registerRequest,
   verifyTokenRequest
-} from '../api/authApi'
+} from '@/api/authApi'
 
 export const useUserStore = create((set) => ({
   state: {

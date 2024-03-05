@@ -1,4 +1,4 @@
-import { useUserStore } from '../store/user-store'
+import { useUserStore } from '@/store/user-store'
 
 /**
  * Custom hook for managing global user information and authentication state.

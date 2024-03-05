@@ -2,19 +2,19 @@
 import React, { useEffect, useState } from 'react'
 import { Alert, Button, Col, Container, Row } from 'react-bootstrap'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import { deletePostById, getPostById } from '../api/postApi'
-import { confirmDialog, errorMessage, successMessage } from '../utils/alerts'
-import { useUserInfo } from '../hooks/useUserInfo'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Tooltip from 'react-bootstrap/Tooltip'
+import { formatDateOrDaysAgo } from '@/utils/date'
+import Comments from '@/components/Comments'
+import CommentForm from '@/components/CommentForm'
+import { useUserInfo } from '@/hooks/useUserInfo'
+import { deletePostById, getPostById } from '@/api/postApi'
+import { confirmDialog, errorMessage, successMessage } from '@/utils/alerts'
 import {
   addFavoritePost,
   deleteFavoritePost,
   isPostMarkedAsFavorite
-} from '../api/userApi'
-import { formatDateOrDaysAgo } from '../utils/date'
-import Comments from '../components/Comments'
-import CommentForm from '../components/CommentForm'
+} from '@/api/userApi'
 
 export const Post = () => {
   const { state } = useUserInfo()
@@ -123,7 +123,7 @@ const PostHeader = ({ post, postId }) => {
               Delete post
             </Button>
           </div>
-        )}
+      )}
       <Row className="justify-content-between">
         <Col md={6}>
           {post.isPublish === false && (
@@ -132,13 +132,15 @@ const PostHeader = ({ post, postId }) => {
           <p className="fw-bold">
             <Link to={`/${post?.user?.username}`}>{post?.user?.username}</Link>{' '}
             -{' '}
-            {post.createdAt ? (
+            {post.createdAt
+              ? (
               <time>
                 {formatDateOrDaysAgo(post.createdAt, 'yyyy MMMM dd hh:mm')}
               </time>
-            ) : (
-              ' unknown date'
-            )}
+                )
+              : (
+                  ' unknown date'
+                )}
           </p>
           <p className="fw-light">{post.time_to_read} min read</p>
         </Col>

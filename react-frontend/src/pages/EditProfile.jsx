@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { Button, Col, Container, Form, Row } from 'react-bootstrap'
-import { editProfile, userProfile } from '../api/userApi'
 import { useNavigate, useParams } from 'react-router-dom'
-import { successMessage } from '../utils/alerts'
+import { successMessage } from '@/utils/alerts'
+import { editProfile, userProfile } from '@/api/userApi'
 
 export const EditProfile = () => {
   const { register, handleSubmit, reset } = useForm()
@@ -22,11 +22,11 @@ export const EditProfile = () => {
 
   const onSubmit = (data) => {
     editProfile(userId, data)
-      .then(_ => {
+      .then((_) => {
         successMessage('Profile updated successfully')
         navigate('/')
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error)
       })
   }

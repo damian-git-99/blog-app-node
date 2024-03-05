@@ -1,15 +1,19 @@
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import ReactQuill from 'react-quill'
-import 'react-quill/dist/quill.snow.css'
 import { Col, Container, Row, Button, Form, Alert } from 'react-bootstrap'
-import { createPost } from '../api/postApi'
-import { errorMessage, successMessage } from '../utils/alerts'
+import 'react-quill/dist/quill.snow.css'
 import { useNavigate } from 'react-router-dom'
-import { formats, modules } from '../config/reactQuillConfigs'
+import { createPost } from '@/api/postApi'
+import { formats, modules } from '@/config/reactQuillConfigs'
+import { errorMessage, successMessage } from '@/utils/alerts'
 
 export const CreatePost = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm()
   const navigate = useNavigate()
   const [files, setFiles] = useState('')
   const [isPublish, setIsPublish] = useState(false)
@@ -58,7 +62,9 @@ export const CreatePost = () => {
     <Container className="mt-5 animate__animated animate__fadeIn">
       <Row className="justify-content-center align-items-center">
         <h3 className="text-center mb-4">Create Post</h3>
-        {Object.keys(errors).length > 0 && <Alert variant='danger'>All Fields are required</Alert>}
+        {Object.keys(errors).length > 0 && (
+          <Alert variant="danger">All Fields are required</Alert>
+        )}
         <Col md={10}>
           <Form onSubmit={handleSubmit(onSubmit)}>
             <Form.Control
@@ -96,37 +102,39 @@ export const CreatePost = () => {
               placeholder="Category..."
               {...register('category', { required: true })}
             /> */}
-            <div className='mt-5 d-flex'>
+            <div className="mt-5 d-flex">
               <Button
-                  className='align-self-start me-5'
-                  type="button"
-                  size="sm"
-                  variant="outline-secondary py-2 fs-5 mb-2"
-                  onClick={handleAddCategory}
-                >
+                className="align-self-start me-5"
+                type="button"
+                size="sm"
+                variant="outline-secondary py-2 fs-5 mb-2"
+                onClick={handleAddCategory}
+              >
                 Add Category
               </Button>
-              <div className='flex-grow-1'>
+              <div className="flex-grow-1">
                 {categories.map((category, index) => (
-                   <div key={index} className="d-flex align-items-center">
-                   <Form.Control
-                     name={`category-${index}`}
-                     className="mb-3 fw-light mt-2 flex-grow-1"
-                     type="text"
-                     placeholder="Category..."
-                     value={category}
-                     onChange={(e) => handleCategoryChange(index, e.target.value)}
-                   />
-                   <Button
-                     type="button"
-                     size="sm"
-                     variant="outline-danger"
-                     className="ms-3 mb-2"
-                     onClick={() => handleRemoveCategory(index)}
-                   >
-                     X
-                   </Button>
-                 </div>
+                  <div key={index} className="d-flex align-items-center">
+                    <Form.Control
+                      name={`category-${index}`}
+                      className="mb-3 fw-light mt-2 flex-grow-1"
+                      type="text"
+                      placeholder="Category..."
+                      value={category}
+                      onChange={(e) =>
+                        handleCategoryChange(index, e.target.value)
+                      }
+                    />
+                    <Button
+                      type="button"
+                      size="sm"
+                      variant="outline-danger"
+                      className="ms-3 mb-2"
+                      onClick={() => handleRemoveCategory(index)}
+                    >
+                      X
+                    </Button>
+                  </div>
                 ))}
               </div>
             </div>

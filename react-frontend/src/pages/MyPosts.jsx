@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Col, Container, Row, Table } from 'react-bootstrap'
-import { deletePostById, getMyPosts } from '../api/postApi'
-import { confirmDialog, errorMessage, successMessage } from '../utils/alerts'
 import { useNavigate } from 'react-router-dom'
+import { deletePostById, getMyPosts } from '@/api/postApi'
+import { confirmDialog, errorMessage, successMessage } from '@/utils/alerts'
 
 export const MyPosts = () => {
   const navigate = useNavigate()

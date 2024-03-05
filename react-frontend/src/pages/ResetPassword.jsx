@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Alert, Spinner } from 'react-bootstrap'
 import { Link, useLocation } from 'react-router-dom'
-import { resetPassword, resetPasswordCheck } from '../api/authApi'
+import { resetPassword, resetPasswordCheck } from '@/api/authApi'
 
 export const ResetPassword = () => {
   const location = useLocation()
@@ -14,13 +14,13 @@ export const ResetPassword = () => {
 
   useEffect(() => {
     resetPasswordCheck(token)
-      .then(_ => {
+      .then((_) => {
         console.log('valid Link')
       })
-      .catch(error => {
+      .catch((error) => {
         setError(error.message)
       })
-      .finally(_ => setIsLoading(false))
+      .finally((_) => setIsLoading(false))
   }, [token])
 
   const handleSubmit = (e) => {
@@ -31,20 +31,20 @@ export const ResetPassword = () => {
       .then(() => {
         setMessage('Password changed successfully')
       })
-      .catch(error => {
+      .catch((error) => {
         setError(error.message)
       })
-      .finally(_ => setIsLoading(false))
+      .finally((_) => setIsLoading(false))
   }
 
   return (
     <div className="container pt-3">
-      { message && (
-        <Alert variant='success text-center'>{message} <Link to="/">Return Home</Link> </Alert>
-      ) }
-      { error && (
-        <Alert variant='danger text-center'>{error}</Alert>
-      ) }
+      {message && (
+        <Alert variant="success text-center">
+          {message} <Link to="/">Return Home</Link>{' '}
+        </Alert>
+      )}
+      {error && <Alert variant="danger text-center">{error}</Alert>}
       {isLoading && (
         <div className="d-flex justify-content-center">
           <Spinner animation="grow" />
@@ -54,15 +54,19 @@ export const ResetPassword = () => {
         <div className="row">
           <div className="col">
             <h3 className="text-center">Enter your new password</h3>
-            <form onSubmit={handleSubmit} >
+            <form onSubmit={handleSubmit}>
               <input
                 type="password"
                 className="form-control"
                 name="password"
                 value={password}
-                onChange={e => setPassword(e.target.value)}
+                onChange={(e) => setPassword(e.target.value)}
               />
-              <button className="btn btn-success mt-3" type="submit" disabled={error}>
+              <button
+                className="btn btn-success mt-3"
+                type="submit"
+                disabled={error}
+              >
                 Send
               </button>
             </form>

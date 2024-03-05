@@ -3,10 +3,10 @@ import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Button, Col, Container, Form, Row } from 'react-bootstrap'
 import ReactQuill from 'react-quill'
-import { editPost, getPostById, togglePublicationStatus } from '../api/postApi'
 import { useNavigate, useParams } from 'react-router-dom'
-import { successMessage } from '../utils/alerts'
-import { formats, modules } from '../config/reactQuillConfigs'
+import { successMessage } from '@/utils/alerts'
+import { formats, modules } from '@/config/reactQuillConfigs'
+import { editPost, getPostById, togglePublicationStatus } from '@/api/postApi'
 
 export const EditPost = () => {
   const { register, handleSubmit, reset } = useForm()
@@ -68,10 +68,10 @@ export const EditPost = () => {
 
   const handlePublish = () => {
     togglePublicationStatus(postId)
-      .then(data => {
+      .then((data) => {
         setIsPublish(!isPublish)
       })
-      .catch(error => console.log(error))
+      .catch((error) => console.log(error))
   }
 
   return (
@@ -113,37 +113,39 @@ export const EditPost = () => {
               placeholder="Category..."
               {...register('category', { required: true })}
             /> */}
-            <div className='mt-5 d-flex'>
+            <div className="mt-5 d-flex">
               <Button
-                  className='align-self-start me-5'
-                  type="button"
-                  size="sm"
-                  variant="outline-secondary py-2 fs-5 mb-2"
-                  onClick={handleAddCategory}
-                >
+                className="align-self-start me-5"
+                type="button"
+                size="sm"
+                variant="outline-secondary py-2 fs-5 mb-2"
+                onClick={handleAddCategory}
+              >
                 Add Category
               </Button>
-              <div className='flex-grow-1'>
+              <div className="flex-grow-1">
                 {categories.map((category, index) => (
-                   <div key={index} className="d-flex align-items-center">
-                   <Form.Control
-                     name={`category-${index}`}
-                     className="mb-3 fw-light mt-2 flex-grow-1"
-                     type="text"
-                     placeholder="Category..."
-                     value={category}
-                     onChange={(e) => handleCategoryChange(index, e.target.value)}
-                   />
-                   <Button
-                     type="button"
-                     size="sm"
-                     variant="outline-danger"
-                     className="ms-3 mb-2"
-                     onClick={() => handleRemoveCategory(index)}
-                   >
-                     X
-                   </Button>
-                 </div>
+                  <div key={index} className="d-flex align-items-center">
+                    <Form.Control
+                      name={`category-${index}`}
+                      className="mb-3 fw-light mt-2 flex-grow-1"
+                      type="text"
+                      placeholder="Category..."
+                      value={category}
+                      onChange={(e) =>
+                        handleCategoryChange(index, e.target.value)
+                      }
+                    />
+                    <Button
+                      type="button"
+                      size="sm"
+                      variant="outline-danger"
+                      className="ms-3 mb-2"
+                      onClick={() => handleRemoveCategory(index)}
+                    >
+                      X
+                    </Button>
+                  </div>
                 ))}
               </div>
             </div>
@@ -158,7 +160,7 @@ export const EditPost = () => {
               type="submit"
               size="lg"
               variant="outline-secondary"
-              className='py-3 fs-5 mb-4 me-1'
+              className="py-3 fs-5 mb-4 me-1"
             >
               Edit Post
             </Button>
@@ -166,7 +168,7 @@ export const EditPost = () => {
               type="button"
               size="lg"
               variant="outline-info"
-              className='py-3 fs-5 mb-4'
+              className="py-3 fs-5 mb-4"
               onClick={handlePublish}
             >
               {isPublish ? 'Unpublish Post' : 'Publish Post'}

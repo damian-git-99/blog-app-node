@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Form, Button } from 'react-bootstrap'
-import { createComment } from '../api/postApi'
+import { createComment } from '@/api/postApi'
 
 const CommentForm = ({ postId, setCommentCreated }) => {
   const [content, setContent] = useState('')

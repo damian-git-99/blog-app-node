@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { getErrorMessage } from '../utils/handleErrors'
+import { getErrorMessage } from '@/utils/handleErrors'
 
 /* `axios.defaults.withCredentials = true` is setting the default value of the `withCredentials`
 property to `true` for all Axios requests. This property determines whether or not cross-site

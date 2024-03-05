@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { PostEntry } from '../components/PostEntry'
 import { Alert, Col, Container, Row } from 'react-bootstrap'
-import { getPosts } from '../api/postApi'
+import { PostEntry } from '@/components/PostEntry'
+import { getPosts } from '@/api/postApi'
 
 export const Home = () => {
   const [posts, setPosts] = useState(undefined)

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Nav, NavDropdown } from 'react-bootstrap'
-import { useUserInfo } from '../hooks/useUserInfo'
+import { useUserInfo } from '@/hooks/useUserInfo'
 
 export const Header = () => {
   const { state, verifyToken, logout } = useUserInfo()
@@ -49,10 +49,20 @@ export const Header = () => {
                 </Nav.Item>
                 <NavDropdown title={userInfo.email} id="nav-dropdown">
                   <NavDropdown.Item>
-                    <Link to={`/edit-profile/${userInfo.id}`} className='text-decoration-none'>Edit Profile</Link>
+                    <Link
+                      to={`/edit-profile/${userInfo.id}`}
+                      className="text-decoration-none"
+                    >
+                      Edit Profile
+                    </Link>
                   </NavDropdown.Item>
                   <NavDropdown.Item>
-                    <Link to={'/favorite-posts'} className='text-decoration-none'>Favorite Posts</Link>
+                    <Link
+                      to={'/favorite-posts'}
+                      className="text-decoration-none"
+                    >
+                      Favorite Posts
+                    </Link>
                   </NavDropdown.Item>
                 </NavDropdown>
                 <Nav.Item className="nav-item">

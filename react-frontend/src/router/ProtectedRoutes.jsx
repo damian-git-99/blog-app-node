@@ -1,6 +1,6 @@
 import React from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
-import { useUserInfo } from '../hooks/useUserInfo'
+import { useUserInfo } from '@/hooks/useUserInfo'
 
 export const ProtectedRoutes = () => {
   const { state } = useUserInfo()

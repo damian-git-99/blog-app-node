@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
-import { PostEntry } from '../components/PostEntry'
-import { getPostsByUsername } from '../api/postApi'
 import { useParams } from 'react-router-dom'
+import { PostEntry } from '@/components/PostEntry'
+import { getPostsByUsername } from '@/api/postApi'
 
 export const PostsByUser = () => {
   const [posts, setPosts] = useState(undefined)
@@ -22,19 +22,19 @@ export const PostsByUser = () => {
 
   return (
     <Container className="mt-5 p-0 p-md-3 animate__animated animate__fadeIn">
-      { error && (
+      {error && (
         <div className="alert alert-info text-center fs-2" role="alert">
           {error}
         </div>
       )}
       <Row>
-        { posts && posts.length === 0
+        {posts && posts.length === 0
           ? (
           <p className="text-center" role="alert">
             No posts found for this user
           </p>
             )
-          : null }
+          : null}
         {posts &&
           posts.map((post) => (
             <Col md={12} key={post.id}>
