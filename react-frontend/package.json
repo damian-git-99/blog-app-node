@@ -20,7 +20,7 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.43.9",
     "react-quill": "^2.0.0",
-    "react-router-dom": "^6.6.1",
+    "react-router-dom": "^6.30.3",
     "sweetalert2": "11.4.38",
     "zustand": "^4.5.1"
   },
